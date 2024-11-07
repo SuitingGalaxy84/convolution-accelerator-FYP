@@ -27,41 +27,41 @@ module DummyPEArray #(
     input wire rst,                       // 复位信号
 
     // ifmap 输入信号
-    input wire [0:PE_WIDTH-1] ifmap_conn_IN_00,     
-    input wire [0:PE_WIDTH-1] ifmap_conn_IN_01,     
-    input wire [0:PE_WIDTH-1] ifmap_conn_IN_02,     
-    input wire [0:PE_WIDTH-1] ifmap_conn_IN_10,
-    input wire [0:PE_WIDTH-1] ifmap_conn_IN_20,
+    input wire [PE_WIDTH-1:0] ifmap_conn_IN_00,     
+    input wire [PE_WIDTH-1:0] ifmap_conn_IN_01,     
+    input wire [PE_WIDTH-1:0] ifmap_conn_IN_02,     
+    input wire [PE_WIDTH-1:0] ifmap_conn_IN_10,
+    input wire [PE_WIDTH-1:0] ifmap_conn_IN_20,
 
     // ifmap 输出信号
-    output wire [0:PE_WIDTH-1] ifmap_conn_02_OUT,  
-    output wire [0:PE_WIDTH-1] ifmap_conn_12_OUT,  
-    output wire [0:PE_WIDTH-1] ifmap_conn_20_OUT,
-    output wire [0:PE_WIDTH-1] ifmap_conn_21_OUT,
-    output wire [0:PE_WIDTH-1] ifmap_conn_22_OUT,
+    output wire [PE_WIDTH-1:0] ifmap_conn_02_OUT,  
+    output wire [PE_WIDTH-1:0] ifmap_conn_12_OUT,  
+    output wire [PE_WIDTH-1:0] ifmap_conn_20_OUT,
+    output wire [PE_WIDTH-1:0] ifmap_conn_21_OUT,
+    output wire [PE_WIDTH-1:0] ifmap_conn_22_OUT,
 
     // psum 输出信号
-    output wire [0:PE_WIDTH-1] psum_conn_20_OUT,
-    output wire [0:PE_WIDTH-1] psum_conn_21_OUT,
-    output wire [0:PE_WIDTH-1] psum_conn_22_OUT
+    output wire [PE_WIDTH-1:0] psum_conn_20_OUT,
+    output wire [PE_WIDTH-1:0] psum_conn_21_OUT,
+    output wire [PE_WIDTH-1:0] psum_conn_22_OUT
 );
 
     /*
         中间连接线定义
     */
     // ifmap 信号连接
-    wire [0:PE_WIDTH-1] ifmap_conn_00_11;
-    wire [0:PE_WIDTH-1] ifmap_conn_01_12;
-    wire [0:PE_WIDTH-1] ifmap_conn_10_21;
-    wire [0:PE_WIDTH-1] ifmap_conn_11_22;
+    wire [PE_WIDTH-1:0] ifmap_conn_00_11;
+    wire [PE_WIDTH-1:0] ifmap_conn_01_12;
+    wire [PE_WIDTH-1:0] ifmap_conn_10_21;
+    wire [PE_WIDTH-1:0] ifmap_conn_11_22;
 
     // psum 信号连接
-    wire [0:PE_WIDTH-1] psum_conn_00_10;
-    wire [0:PE_WIDTH-1] psum_conn_01_11;
-    wire [0:PE_WIDTH-1] psum_conn_02_12;
-    wire [0:PE_WIDTH-1] psum_conn_10_20;
-    wire [0:PE_WIDTH-1] psum_conn_11_21;
-    wire [0:PE_WIDTH-1] psum_conn_12_22;
+    wire [PE_WIDTH-1:0] psum_conn_00_10;
+    wire [PE_WIDTH-1:0] psum_conn_01_11;
+    wire [PE_WIDTH-1:0] psum_conn_02_12;
+    wire [PE_WIDTH-1:0] psum_conn_10_20;
+    wire [PE_WIDTH-1:0] psum_conn_11_21;
+    wire [PE_WIDTH-1:0] psum_conn_12_22;
 
     // 实例化每个 PE（Processing Element）
 

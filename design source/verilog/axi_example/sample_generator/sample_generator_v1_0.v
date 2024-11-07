@@ -18,6 +18,8 @@
 	)
 	(
 		// Users to add ports here
+
+	
 		input [7:0] FrameSize, // merged to AXI_MASTER
 		input wire En, // merged to AXI_SLAVE
 		input wire AXI_En, // merged to AXI_MASTER

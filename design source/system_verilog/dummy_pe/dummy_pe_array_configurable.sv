@@ -24,7 +24,7 @@ module DummyPEArray_CONFIG #(
     parameter PE_WIDTH = 4,
     parameter NUM_ROWS = 3, // N
     parameter NUM_COLS = 3  // M
-) (
+    ) (
     input wire clk,
     input wire rst,
 
@@ -32,10 +32,14 @@ module DummyPEArray_CONFIG #(
     input wire [PE_WIDTH-1:0] ifmap_COL_IN [NUM_ROWS],  // Column-wise input
     input wire [PE_WIDTH-1:0] ifmap_ROW_IN [NUM_COLS-1], // Row-wise input
 
+    intput wire [NUM_ROWS-2:0] ifmap_SEL, //select ifmap: From either GLOBAL BUFFER or PE output
+
+
     output wire [PE_WIDTH-1:0] ifmap_COL_OUT [NUM_ROWS],
     output wire [PE_WIDTH-1:0] ifmap_ROW_OUT [NUM_COLS-1],
 
     output wire [PE_WIDTH-1:0] psum_OUT [NUM_COLS]  // OUTPUT number: N
+
 );
 
 //intermediate wires definition
@@ -44,12 +48,22 @@ wire [PE_WIDTH-1:0] ifmap_conn_out [0:NUM_ROWS-1][0:NUM_COLS-1];
 wire [PE_WIDTH-1:0] psum_conn [0:NUM_ROWS-1][0:NUM_COLS-1];
 
 
+
 genvar k;
 generate
     //MAPPING INPUT AND OUTPUT TO INTERCONNECTION
     for(k=0; k < NUM_ROWS; k=k+1) begin
-        assign ifmap_conn_in[k][0] = ifmap_COL_IN[k];
+        //assign ifmap_conn_in[k][0] = ifmap_COL_IN[k];     //FIX this line of code is merged to the if-else block below
         assign ifmap_conn_out[k][NUM_COLS-1] = ifmap_COL_OUT[k];
+
+        //MAPPING OUTPUT TO INPUT TERMINAL: if ifmap_SEL is 1, then output is redirected to input
+        if(k < NUM_ROWS-1) begin
+            assign ifmap_conn_in[k+1][0] =  ifmap_SEL[k] ? ifmap_conn_out[k][NUM_COLS-1] : ifmap_COL_IN[k+1];
+        end
+        else begin
+            assign ifmap_conn_in[k][0] = ifmap_COL_IN[k];
+        end
+
     end
     for(k=0;k < NUM_COLS-1; k=k+1) begin
         assign ifmap_conn_in[0][k+1] = ifmap_ROW_IN[k];
@@ -57,6 +71,11 @@ generate
     end
     for(k=0;k < NUM_COLS;k=k+1) begin
         assign psum_OUT[k] = psum_conn[NUM_ROWS-1][k];
+    end
+
+    
+    for(k=0; k < NUM_ROWS-1; k=k+1) begin
+        assign ifmap_conn_in[k+1][0] =  ifmap_SEL[k] ? ifmap_conn_out[k][NUM_COLS-1] : ifmap_COL_IN[k+1];
     end
 endgenerate
 
