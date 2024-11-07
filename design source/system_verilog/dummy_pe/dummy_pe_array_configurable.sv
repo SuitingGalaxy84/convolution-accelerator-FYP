@@ -32,7 +32,7 @@ module DummyPEArray_CONFIG #(
     input wire [PE_WIDTH-1:0] ifmap_COL_IN [NUM_ROWS],  // Column-wise input
     input wire [PE_WIDTH-1:0] ifmap_ROW_IN [NUM_COLS-1], // Row-wise input
 
-    intput wire [NUM_ROWS-2:0] ifmap_SEL, //select ifmap: From either GLOBAL BUFFER or PE output
+    input wire [NUM_ROWS-2:0] ifmap_SEL, //select ifmap: From either GLOBAL BUFFER or PE output
 
 
     output wire [PE_WIDTH-1:0] ifmap_COL_OUT [NUM_ROWS],
@@ -61,7 +61,7 @@ generate
             assign ifmap_conn_in[k+1][0] =  ifmap_SEL[k] ? ifmap_conn_out[k][NUM_COLS-1] : ifmap_COL_IN[k+1];
         end
         else begin
-            assign ifmap_conn_in[k][0] = ifmap_COL_IN[k];
+            assign ifmap_conn_in[k][0] = ifmap_COL_IN[k];  //TODO: PACKAGE this IF-ELSE BLOCK
         end
 
     end
