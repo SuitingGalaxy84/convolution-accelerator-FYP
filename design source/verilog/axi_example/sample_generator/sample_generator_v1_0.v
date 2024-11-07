@@ -18,6 +18,9 @@
 	)
 	(
 		// Users to add ports here
+		input [7:0] FrameSize, // merged to AXI_MASTER
+		input wire En, // merged to AXI_SLAVE
+		input wire AXI_En, // merged to AXI_MASTER
 
 		// User ports ends
 		// Do not modify the ports beyond this line
@@ -45,6 +48,7 @@
 	sample_generator_v1_0_S_AXIS # ( 
 		.C_S_AXIS_TDATA_WIDTH(C_S_AXIS_TDATA_WIDTH)
 	) sample_generator_v1_0_S_AXIS_inst (
+		.En(En),
 		.S_AXIS_ACLK(s_axis_aclk),
 		.S_AXIS_ARESETN(s_axis_aresetn),
 		.S_AXIS_TREADY(s_axis_tready),
@@ -59,6 +63,8 @@
 		.C_M_AXIS_TDATA_WIDTH(C_M_AXIS_TDATA_WIDTH),
 		.C_M_START_COUNT(C_M_AXIS_START_COUNT)
 	) sample_generator_v1_0_M_AXIS_inst (
+		.FrameSize(FrameSize),
+		.AXI_En(AXI_En),
 		.M_AXIS_ACLK(m_axis_aclk),
 		.M_AXIS_ARESETN(m_axis_aresetn),
 		.M_AXIS_TVALID(m_axis_tvalid),
