@@ -13,7 +13,7 @@
 // 
 // Dependencies: 
 // 
-// Revision:
+// Revision: 
 // Revision 0.01 - File Created
 // Additional Comments:
 // 
@@ -73,7 +73,6 @@ generate
         assign psum_OUT[k] = psum_conn[NUM_ROWS-1][k];
     end
 
-    
     for(k=0; k < NUM_ROWS-1; k=k+1) begin
         assign ifmap_conn_in[k+1][0] =  ifmap_SEL[k] ? ifmap_conn_out[k][NUM_COLS-1] : ifmap_COL_IN[k+1];
     end
