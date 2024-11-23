@@ -1,4 +1,7 @@
 # A Convolution Accelerator for PyTorch Deep Learning Framework
+
+Attention: This Project is at a very preliminary stage.
+
 ## Introduction
 This project aims to design and implement a configurable convolutional accelerator on a Xilinx’s PYNQ Z1 FPGA,
 optimized for integration with the PyTorch deep learning framework. The goal is to leverage FPGA’s reconfigurable
