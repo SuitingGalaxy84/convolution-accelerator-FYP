@@ -11,4 +11,4 @@ This implementation will build upon existing frameworks, such as the using AXI b
 PyTorch with the programmable logic. The result is expected to be a configurable, fast convolutional accelerator that
 making it suitable for edge computing and other real-time applications.
 Fig.1 shows the Project Outline 
-![Fig.1 Project Outline](img/outline.jpg)
+![Fig.1 Project Outline](img/outline.png)
