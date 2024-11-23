@@ -141,7 +141,8 @@ generate
         .PE_KEY_LOCK(
             {
                 row_bus,
-                col_bus
+                col_bus,
+                kl_type // FIXME: facilitate kl_type
             }
         )
 
