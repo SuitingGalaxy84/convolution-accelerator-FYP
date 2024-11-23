@@ -21,16 +21,16 @@
 
 
 module DummyPEConfig #(
-    parameters BUS_WIDTH
+    parameter BUS_WIDTH
 ) (
     input wire clk,
     input wire rst,
     input wire set,
-    logic struct packed{
-        input logic kl_type; // 0: lock, 1: key
-        input logic [BUS_WIDTH-1:0] kl_data;
-        output logic match;
-    } KL;
+    input logic struct packed{
+        logic kl_type; // 0: lock, 1: key
+        logic [BUS_WIDTH-1:0] kl_data;
+    } KL_DATA,
+    output wire KL_VALID
 );
 
     
@@ -43,7 +43,7 @@ module DummyPEConfig #(
         if(~rst) begin
             PE_KEY <= 0;
         end else begin
-            PE_KEY <= KL.kl_data
+            PE_KEY <= KL_DATA.kl_data
         end
     end
 
@@ -54,7 +54,7 @@ module DummyPEConfig #(
         .clk(clk),
         .rstn(~rst),
         .set(set),
-        .csr_in(KL.kl_type ? 0 : KL.kl_data),
+        .csr_in(KL_DATA.kl_type ? 0 : KL_DATA.kl_data),
         .csr_out(PE_LOCK)
     );
     
@@ -62,8 +62,8 @@ module DummyPEConfig #(
         .WIDTH(ROW_BUS_WIDTH+COL_BUS_WIDTH)
     ) KL_match (
         .lock(PE_LOCK),
-        .key(KL.kl_type ? PE_KEY : PE_KEY ^ PE_LOCK),
-        .match_out(KL.match) // FIXME: Create a calculation-control interface, question: what should be the purpose of this signal?
+        .key(KL_DATA.kl_type ? PE_KEY : PE_KEY ^ PE_LOCK),
+        .match_out(KL_VALID) // FIXME: Create a calculation-control interface, question: what should be the purpose of this signal?
     );
 
 

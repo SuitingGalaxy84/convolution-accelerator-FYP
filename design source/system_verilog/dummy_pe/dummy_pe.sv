@@ -58,21 +58,19 @@ module SV_DummyPE #(
 
 /* PE Configuration block begin */
 
-    wire match; //
+    wire KL_VALID; // FIXME: KL_VALID should be used to enable the PE calculation block
     DummyPEConfig #(
         .BUS_WIDTH(ROW_BUS_WIDTH+COL_BUS_WIDTH)
     ) PE_config (
         .clk(clk),
         .rst(rst),
         .set(flush),
-
-        .KL{
+        .KL_DATA{
             .kl_type(PE_KEY_LOCK.kl_type),
             .kl_data({PE_KEY_LOCK.row_value, PE_KEY_LOCK.col_value}),
-            .match(match)
-        }
+        },
+        .KL_VALID(KL_VALID)
     );
-
 
 
 /* PE Configuration block end */
