@@ -29,7 +29,7 @@ module SV_DummyPE #(
     input wire rst,               // Reset signal (active high), reset the calculation block 
     input wire flush,             // Flush signal (active high), reset the configuration block
 
-    input wire struct packed {         // Input signal structure
+    input struct packed {         // Input signal structure
         logic [PE_WIDTH-1:0] in_signal_1;
         logic [PE_WIDTH-1:0] in_signal_2;
     } in_signals,
