@@ -21,26 +21,71 @@
 
 module SV_DummyPE #(
     parameter DELAY_CYCLES = 10, // Default delay in clock cycles
-    parameter PE_WIDTH = 4
+    parameter PE_WIDTH = 16
+    parameter ROW_BUS_WIDTH = 2,
+    parameter COL_BUS_WIDTH = 2
 ) (
     input wire clk,               // Clock signal
-    input wire rst,               // Reset signal (active high)
+    input wire rst,               // Reset signal (active high), reset the calculation block 
+    input wire flush,             // Flush signal (active high), reset the configuration block
+
     input wire struct packed {         // Input signal structure
         logic [PE_WIDTH-1:0] in_signal_1;
         logic [PE_WIDTH-1:0] in_signal_2;
     } in_signals,
+
     output struct packed {        // Output signal structure
         logic [PE_WIDTH-1:0] out_signal_1;
         logic [PE_WIDTH-1:0] out_signal_2;
-    } out_signals
+    } out_signals,
+
+
+
+    /*
+    a LOCK-KEY scheme is created. Every PE is assgined with a unique ROW-COL tag at the initialization. The PE
+    can be activated only when the corresponding ROW-COL tag is provided. This facilitates an efficient control
+    of the PE array.
+    */
+    
+    input wire struct packed {   // Control signal structure
+        logic [ROW_BUS_WIDTH-1:0] row_value;
+        logic [COL_BUS_WIDTH-1:0] col_value;
+        logic kl_type; // 0: lock, 1: key
+    } PE_KEY_LOCK
+
+
 );
 
-    // Internal shift registers for 4-bit delay
+/* PE Configuration block begin */
+
+    wire match; //
+    DummyPEConfig #(
+        .BUS_WIDTH(ROW_BUS_WIDTH+COL_BUS_WIDTH)
+    ) PE_config (
+        .clk(clk),
+        .rst(rst),
+        .set(flush),
+
+        .KL{
+            .kl_type(PE_KEY_LOCK.kl_type),
+            .kl_data({PE_KEY_LOCK.row_value, PE_KEY_LOCK.col_value}),
+            .match(match)
+        }
+    );
+
+
+
+/* PE Configuration block end */
+    
+
+
+/* PE Calculation block begin */
+
     reg [PE_WIDTH-1:0] shift_reg_1 [DELAY_CYCLES-1:0];
     reg [PE_WIDTH-1:0] shift_reg_2 [DELAY_CYCLES-1:0];
 
     // Shift register logic
-    always @(posedge clk or posedge rst) begin
+    always_ff @(posedge clk or posedge rst) begin
 	integer i, j;
         if (rst) begin
             for (i = 0; i < DELAY_CYCLES; i = i + 1) begin
@@ -66,5 +111,6 @@ module SV_DummyPE #(
             out_signals.out_signal_2 <= shift_reg_2[DELAY_CYCLES-1]; //+ 1;
         end
     end
+/* PE Calculation block end */
 
 endmodule
