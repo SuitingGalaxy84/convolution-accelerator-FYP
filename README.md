@@ -14,8 +14,30 @@ This implementation will build upon existing frameworks, such as the using AXI b
 PyTorch with the programmable logic. The result is expected to be a configurable, fast convolutional accelerator that
 making it suitable for edge computing and other real-time applications.
 Fig.1 shows the Project Outline 
-![Fig.1 Project Outline](img/outline.png)
 
+<figure>
+  <div align="center">
+  <img src="img/outline.png" width=600 > 
+  </div>
+  <div align="center">
+  <figcaption>Fig2. Project Outline</figcaption>
+  </div>
+<figure>
+
+## Network on Chip (XY-Bus)
+Each PE unit is allocate with an unique tag (X, Y).
+
+
+<figure>
+  <div align="center">
+  <img src="img/NoC.png" width=700 > 
+  </div>
+  <div align="center">
+  <figcaption>Fig2. XY-Bus demonstration from [9]</figcaption>
+  </div>
+<figure>
+
+  
 ## References
 [1] H. Wang and B. Raj, “On the Origin of Deep Learning,” arXiv (Cornell University), Jan. 2017, doi:
 10.48550/arXiv.1702.07800.
