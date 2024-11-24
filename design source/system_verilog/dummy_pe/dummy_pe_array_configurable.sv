@@ -31,13 +31,15 @@ module SV_DummyPEArray_CONFIG #(
     parameter NUM_ROWS = 3, // N
     parameter NUM_COLS = 3  // M
     ) (
+
     input wire clk,
     input wire rst,
 
     /* Data Path IO definition begin */
+
         // Separate packed and unpacked arrays
-        input wire [PE_WIDTH-1:0] ifmap_COL_IN [NUM_ROWS],  // Column-wise input
-        input wire [PE_WIDTH-1:0] ifmap_ROW_IN [NUM_COLS-1], // Row-wise input
+        input wire [PE_WIDTH-1:0] ifmap_COL_IN [NUM_ROWS-1:0],  // Column-wise input
+        input wire [PE_WIDTH-1:0] ifmap_ROW_IN [NUM_COLS-2:0], // Row-wise input the origin is involved in COL_IN
         input wire [NUM_ROWS-2:0] ifmap_SEL, //select ifmap: From either GLOBAL BUFFER or PE output
 
 
@@ -45,12 +47,10 @@ module SV_DummyPEArray_CONFIG #(
         output wire [PE_WIDTH-1:0] ifmap_ROW_OUT [NUM_COLS-1],
 
         output wire [PE_WIDTH-1:0] psum_OUT [NUM_COLS]  // OUTPUT number: N
-        
+
     /* Data Path IO definition end */
     
 );
-
-
 
 
 
@@ -86,13 +86,13 @@ module SV_DummyPEArray_CONFIG #(
             //assign ifmap_conn_in[k][0] = ifmap_COL_IN[k];     //FIX this line of code is merged to the if-else block below
             assign ifmap_conn_out[k][NUM_COLS-1] = ifmap_COL_OUT[k];
 
-            //MAPPING OUTPUT TO INPUT TERMINAL: if ifmap_SEL is 1, then output ifmap is redirected to input
-            if(k < NUM_ROWS-1) begin
-                assign ifmap_conn_in[k+1][0] =  ifmap_SEL[k] ? ifmap_conn_out[k][NUM_COLS-1] : ifmap_COL_IN[k+1];
-            end
-            else begin
-                assign ifmap_conn_in[k][0] = ifmap_COL_IN[k];  //TODO: PACKAGE this IF-ELSE BLOCK
-            end
+            // //MAPPING OUTPUT TO INPUT TERMINAL: if ifmap_SEL is 1, then output ifmap is redirected to input
+            // if(k < NUM_ROWS-1) begin
+            //     assign ifmap_conn_in[k+1][0] =  ifmap_SEL[k] ? ifmap_conn_out[k][NUM_COLS-1] : ifmap_COL_IN[k+1];
+            // end
+            // else begin
+            //     assign ifmap_conn_in[k][0] = ifmap_COL_IN[k];  //TODO: PACKAGE this IF-ELSE BLOCK
+            // end
 
         end
         for(k=0;k < NUM_COLS-1; k=k+1) begin
@@ -103,6 +103,7 @@ module SV_DummyPEArray_CONFIG #(
             assign psum_OUT[k] = psum_conn[NUM_ROWS-1][k];
         end
 
+        assign ifmap_conn_in[0][0] = ifmap_COL_IN[0];
         for(k=0; k < NUM_ROWS-1; k=k+1) begin
             assign ifmap_conn_in[k+1][0] =  ifmap_SEL[k] ? ifmap_conn_out[k][NUM_COLS-1] : ifmap_COL_IN[k+1];
         end
@@ -167,6 +168,7 @@ module SV_DummyPEArray_CONFIG #(
     endgenerate
 
 /* PE Instantiation End */
+
 
 endmodule
 
