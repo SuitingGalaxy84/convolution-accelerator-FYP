@@ -44,8 +44,7 @@ Petersburg, FL, USA, 2023, pp. 42-50, doi: 10.1109/IPDPSW59300.2023.00019.
 Simulator," arXiv (Cornell University), Oct. 2018, doi: 10.48550/arXiv.1811.02883
 
 [8] Y. Chen, J. Emer, V. Sze, “Eyeriss: A Spatial Architecture for Energy-Efficient Dataflow for Convolution Neural
-Networks” [PowerPoint slides], Available: https://eems.mit.edu/wp-
-content/uploads/2016/06/eyeriss_isca_2016_slides.pdf
+Networks” [PowerPoint slides], Available: https://eems.mit.edu/wp-content/uploads/2016/06/eyeriss_isca_2016_slides.pdf
 
 [9] Y. Chen, T. Krishna, J. S. Emer and V. Sze, "Eyeriss: An Energy-Efficient Reconfigurable Accelerator for Deep
 Convolutional Neural Networks," in IEEE Journal of Solid-State Circuits, vol. 52, no. 1, pp. 127-138, Jan. 2017, doi:
