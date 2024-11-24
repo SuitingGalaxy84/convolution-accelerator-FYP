@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: University of Electronic Science and Technology of China
+// Engineer: Sun Yucheng
 // 
-// Create Date: 02/13/2024 05:47:50 PM
-// Design Name: 
-// Module Name: blk_mem_rd
-// Project Name: 
+// Create Date: XX
+// Design Name: Configurable Dummy PE Array
+// Module Name: SV_DummyPEArray_CONFIG
+// Project Name: A Convolution Accelerator for PyTorch Deep Learning Framework
 // Target Devices: 
 // Tool Versions: 
 // Description: 
-//
-// This is a configurable Dummy PE Array module. You can genrate a Dummy PE array of any size by changing the parameters.
-// PE_WIDTH: Data width of the PE
-// NUM_ROWS: Number of rows in the array
-// NUM_COLS: Number of columns in the array
-// DELAY_CYCLES: Number of cycles the PE takes to compute the output
-//
+/*
+    This is a configurable Dummy PE Array module. You can genrate a Dummy PE array of any size by changing the parameters.
+    PE_WIDTH: Data width of the PE  
+    NUM_ROWS: Number of rows in the array
+    NUM_COLS: Number of columns in the array
+    DELAY_CYCLES: Number of cycles the PE takes to compute the output
+*/
 // Dependencies: 
 // 
 // Revision: 
@@ -25,7 +25,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module DummyPEArray_CONFIG #(
+module SV_DummyPEArray_CONFIG #(
     parameter DELAY_CYCLES = 10,
     parameter PE_WIDTH = 16,
     parameter NUM_ROWS = 3, // N

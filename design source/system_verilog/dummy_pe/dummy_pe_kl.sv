@@ -1,16 +1,20 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: University of Electronic Science and Technology of China
+// Engineer: Sun Yucheng
 // 
-// Create Date: 02/13/2024 05:47:50 PM
-// Design Name: 
-// Module Name: blk_mem_rd
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
+// Create Date: XX
+// Design Name: PE Key-Lock Checker 
+// Module Name: SV_DummyPE_KL
+// Project Name: A Convolution Accelerator for PyTorch Deep Learning Framework
+// Target Devices: PYNQ Z1
+// Tool Versions: Vivado 20XX.XX
 // Description: 
-// 
+/*
+    a LOCK-KEY scheme is created. Every PE is assgined with a unique ROW-COL tag at the initialization. The PE
+    can be activated only when the corresponding ROW-COL tag is provided. This facilitates an efficient control
+    of the PE array.
+ */
 // Dependencies: 
 // 
 // Revision:
@@ -20,7 +24,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module DummyPEConfig #(
+module SV_DummyPE_KL #(
     parameter BUS_WIDTH
 ) (
     input wire clk,

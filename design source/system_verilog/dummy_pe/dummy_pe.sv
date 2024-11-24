@@ -1,16 +1,19 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: University of Electronic Science and Technology of China
+// Engineer: Sun Yucheng
 // 
-// Create Date: 02/13/2024 05:47:50 PM
-// Design Name: 
-// Module Name: blk_mem_rd
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
+// Create Date: XX
+// Design Name: Dummy PE
+// Module Name: SV_DummyPE
+// Project Name: A Convolution Accelerator for PyTorch Deep Learning Framework
+// Target Devices: PYNQ Z1
+// Tool Versions: Vivado 20XX.XX
 // Description: 
-// 
+/*
+    This is a dummy PE whose output is the input signal delayed by a fixed number of clock cycles. Not a functional
+    PE due to the lack of computation block. This is used to demonstrate the PE array configuration and control.
+*/
 // Dependencies: 
 // 
 // Revision:
@@ -40,12 +43,6 @@ module SV_DummyPE #(
     } out_signals,
 
 
-
-    /*
-    a LOCK-KEY scheme is created. Every PE is assgined with a unique ROW-COL tag at the initialization. The PE
-    can be activated only when the corresponding ROW-COL tag is provided. This facilitates an efficient control
-    of the PE array.
-    */
     
     input wire struct packed {   // Control signal structure
         logic [ROW_BUS_WIDTH-1:0] row_value;
@@ -59,9 +56,9 @@ module SV_DummyPE #(
 /* PE Configuration block begin */
 
     wire KL_VALID; // FIXME: KL_VALID should be used to enable the PE calculation block
-    DummyPEConfig #(
+    SV_DummyPE_KL #(
         .BUS_WIDTH(ROW_BUS_WIDTH+COL_BUS_WIDTH)
-    ) PE_config (
+    ) SV_DummyPE_KL (
         .clk(clk),
         .rst(rst),
         .set(flush),
