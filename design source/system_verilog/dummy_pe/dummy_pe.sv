@@ -32,23 +32,29 @@ module SV_DummyPE #(
     input wire rst,               // Reset signal (active high), reset the calculation block 
     input wire flush,             // Flush signal (active high), reset the configuration block
 
-    input struct packed {         // Input signal structure
-        logic [PE_WIDTH-1:0] in_signal_1;
-        logic [PE_WIDTH-1:0] in_signal_2;
-    } in_signals,
+    /* Data Path IO definition begin*/
+        input struct packed {         // Input signal structure
+            logic [PE_WIDTH-1:0] in_signal_1;
+            logic [PE_WIDTH-1:0] in_signal_2;
+        } in_signals,
 
-    output struct packed {        // Output signal structure
-        logic [PE_WIDTH-1:0] out_signal_1;
-        logic [PE_WIDTH-1:0] out_signal_2;
-    } out_signals,
+        output struct packed {        // Output signal structure
+            logic [PE_WIDTH-1:0] out_signal_1;
+            logic [PE_WIDTH-1:0] out_signal_2;
+        } out_signals,
+
+    /* Data Path IO definition end*/
 
 
-    
-    input wire struct packed {   // Control signal structure
-        logic [ROW_BUS_WIDTH-1:0] row_value;
-        logic [COL_BUS_WIDTH-1:0] col_value;
-        logic kl_type; // 0: lock, 1: key
-    } PE_KEY_LOCK
+    /* Control Bus IO definition begin */
+
+        input wire struct packed {   // Control signal structure
+            logic [ROW_BUS_WIDTH-1:0] row_value;
+            logic [COL_BUS_WIDTH-1:0] col_value;
+            logic kl_type; // 0: lock, 1: key
+        } PE_KEY_LOCK
+
+    /* Control Bus IO definition end */
 
 
 );
