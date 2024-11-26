@@ -69,27 +69,19 @@
     
     
         // CASTER modport: Used for the CASTER logic to interact with the BUS
-        modport CASTER_data(
+        modport CASTER_port(
             input data_B2C,
             output data_C2B,
             input data_P2C,
-            output data_C2P
-        );
-    
-        modport CASTER_ctrl(
+            output data_C2P,
             input ID,
             input TAG,
-    
             input PE_READY,
             input PE_VALID,
-    
             output CASTER_READY,
             output CASTER_VALID,
-    
             input CASTER_EN,
-            output PE_EN
-    
-            
+            output PE_EN     
         );
     endinterface // CASTER_IF
     
@@ -135,7 +127,7 @@
         
     
         // Interface signals
-        modport BUS_data(
+        modport BUS_port(
             input ifmap_data_B2M,
             output ifmap_data_M2B,
     
@@ -152,10 +144,7 @@
             output fltr_data_P2M,
     
             input psum_data_M2P,
-            output psum_data_P2M
-        );
-    
-        modport BUS_ctrl(
+            output psum_data_P2M,
             input CASTER_EN,
             output CASTER_READY,
             output CASTER_VALID,
@@ -168,6 +157,7 @@
             output ID,
             output TAG
         );
+
     
     endinterface
 

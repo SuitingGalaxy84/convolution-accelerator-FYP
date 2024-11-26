@@ -31,8 +31,7 @@ module caster#(
     input wire clk,
     input wire rstn,
 
-    CASTER_IF.CASTER_data CASTER_data,
-    CASTER_IF.CASTER_ctrl CASTER_ctrl
+    CASTER_IF.CASTER_port CASTER_port
     );
 
     reg [$clog2(NUM_COL)-1:0] caster_id; 
@@ -40,34 +39,34 @@ module caster#(
         if(~rstn) begin
             caster_id <= 0;
         end else begin
-            caster_id <= CASTER_ctrl.ID;
+            caster_id <= CASTER_port.ID;
         end 
     end
 
     always_comb begin: PE_to_BUS//facilitate hte data output from PE to bus
-        case ({CASTER_ctrl.PE_VALID, CASTER_ctrl.CASTER_EN, (CASTER_ctrl.TAG == caster_id ? 1'b1 : 1'b0)})
+        case ({CASTER_port.PE_VALID, CASTER_port.CASTER_EN, (CASTER_port.TAG == caster_id ? 1'b1 : 1'b0)})
             3'b111 : begin 
-                CASTER_data.data_C2B = CASTER_data.data_C2P;
+                CASTER_port.data_C2B = CASTER_port.data_P2C;
             end 
             default: begin 
-                CASTER_data.data_C2B = 0;
+                CASTER_port.data_C2B = 0;
             end 
         endcase
-        CASTER_ctrl.CASTER_VALID = CASTER_ctrl.PE_VALID; // notify the BUS that the PE has valid data
+        CASTER_port.CASTER_VALID = CASTER_port.PE_VALID; // notify the BUS that the PE has valid data
     end
 
     always_comb begin : BUS_to_PE//facilitate the data input from bus to PE
-        case ({CASTER_ctrl.PE_READY, CASTER_ctrl.CASTER_EN, (CASTER_ctrl.TAG == caster_id ? 1'b1 : 1'b0)})
+        case ({CASTER_port.PE_READY, CASTER_port.CASTER_EN, (CASTER_port.TAG == caster_id ? 1'b1 : 1'b0)})
             3'b111 : begin 
-                CASTER_ctrl.PE_EN = 1'b1;
-                CASTER_data.data_C2P = CASTER_data.data_B2C;
+                CASTER_port.PE_EN = 1'b1;
+                CASTER_port.data_C2P = CASTER_port.data_B2C;
             end 
             default: begin 
-                CASTER_ctrl.PE_EN = 1'b0;
-                CASTER_data.data_C2P = 0;
+                CASTER_port.PE_EN = 1'b0;
+                CASTER_port.data_C2P = 0;
             end
         endcase
-        CASTER_ctrl.CASTER_READY = CASTER_ctrl.PE_READY; // notify the BUS that the PE is ready to accept data
+        CASTER_port.CASTER_READY = CASTER_port.PE_READY; // notify the BUS that the PE is ready to accept data
     end
 
 
