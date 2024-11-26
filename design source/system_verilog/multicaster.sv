@@ -1,3 +1,5 @@
+`include "interface.sv"
+
 module MultiCaster #(
     parameter DATA_WIDTH = 16,
     parameter NUM_COL = 4

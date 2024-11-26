@@ -127,6 +127,7 @@
     
         logic [2:0] PE_EN;
         logic PE_READY;
+        logic PE_VALID;
     
     
     
