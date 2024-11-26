@@ -24,7 +24,7 @@
 
 module SV_DummyPE #(
     parameter DELAY_CYCLES = 10, // Default delay in clock cycles
-    parameter PE_WIDTH = 16
+    parameter PE_WIDTH = 16,
     parameter ROW_BUS_WIDTH = 2,
     parameter COL_BUS_WIDTH = 2
 ) (

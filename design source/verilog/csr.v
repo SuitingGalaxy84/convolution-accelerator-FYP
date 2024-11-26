@@ -29,7 +29,7 @@ module csr #(
     output wire [WIDTH-1:0] csr_out 
 );
 
-    always(posedge clk or negedge rstn) begin
+    always@(posedge clk or negedge rstn) begin
         if(~rstn) begin
             csr_out <= 0;
         end else if(set) begin

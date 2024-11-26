@@ -39,18 +39,18 @@ module MultiCaster #(
         assign psum_CASTER.CASTER_ctrl.CASTER_EN = BUS_ctrl.CASTER_EN[2]; // The BUS want to enable the psum_CASTER
 
         // READY (Output) signal notifies the BUS->BUFFER that the PE is ready to accept data ()
-        assign BUS_ctrl.CASTER_READY = ifmap_CASTER.CASTER_ctrl.CASTER_READY & \
-                                       fltr_CASTER.CASTER_ctrl.CASTER_READY & \
+        assign BUS_ctrl.CASTER_READY = ifmap_CASTER.CASTER_ctrl.CASTER_READY & 
+                                       fltr_CASTER.CASTER_ctrl.CASTER_READY & 
                                        psum_CASTER.CASTER_ctrl.CASTER_READY; 
 
         // VALID (Output) signal notifies the BUS that the calculation is done
-        assign BUS_ctrl.CASTER_VALID = ifmap_CASTER.CASTER_ctrl.CASTER_VALID & \
-                                       fltr_CASTER.CASTER_ctrl.CASTER_VALID & \
+        assign BUS_ctrl.CASTER_VALID = ifmap_CASTER.CASTER_ctrl.CASTER_VALID & 
+                                      fltr_CASTER.CASTER_ctrl.CASTER_VALID & 
                                        psum_CASTER.CASTER_ctrl.CASTER_VALID; // VALID (Output) signal notifies the BUS that the calculation is done
     
         // PE_EN signal enables the PE from the CASTER to perform the calculation
-        assign BUS_ctrl.PE_EN = ifmap_CASTER.CASTER_ctrl.PE_EN & \
-                               fltr_CASTER.CASTER_ctrl.PE_EN & \
+        assign BUS_ctrl.PE_EN = ifmap_CASTER.CASTER_ctrl.PE_EN & 
+                               fltr_CASTER.CASTER_ctrl.PE_EN & 
                                psum_CASTER.CASTER_ctrl.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
 
     /* Parsing Three Casters into One MultiCaster End */

@@ -28,7 +28,7 @@ module SV_PE #(
 )(
     input logic rstn,
     input logic clk,
-    PE_DATA.PE DATA // PE data interface
+    PE_DATA.PE DATA, // PE data interface
     PE_CTRL.PE CTRL // PE control interface
 );
 

@@ -40,12 +40,12 @@ module caster#(
         if(~rstn) begin
             caster_id <= 0;
         end else begin
-            caster_id <= CASTER.col;
+            caster_id <= CASTER.ID;
         end 
     end
 
-    always_comb begin: //facilitate hte data output from PE to bus
-        case ({CASTER_ctrl.PE_VALID, CASTER_ctrl.CASTER_en, (CASTER_ctrl.tag == caster_id ? 1'b1 : 1'b0)})
+    always_comb begin: PE_to_BUS//facilitate hte data output from PE to bus
+        case ({CASTER_ctrl.PE_VALID, CASTER_ctrl.CASTER_en, (CASTER_ctrl.TAG == caster_id ? 1'b1 : 1'b0)})
             3'b111 : begin 
                 CASTER_data.data_C2B = CASTER_data.data_C2P;
             end 
@@ -56,8 +56,8 @@ module caster#(
         CASTER_ctrl.CASTER_VALID = PE_VALID; // notify the BUS that the PE has valid data
     end
 
-    always_comb begin : //facilitate the data input from bus to PE
-        case ({CASTER_ctrl.PE_READY, CASTER_ctrl.CASTER_en, (CASTER_ctrl.tag == caster_id ? 1'b1 : 1'b0)})
+    always_comb begin : BUS_to_PE//facilitate the data input from bus to PE
+        case ({CASTER_ctrl.PE_READY, CASTER_ctrl.CASTER_en, (CASTER_ctrl.TAG == caster_id ? 1'b1 : 1'b0)})
             3'b111 : begin 
                 PE_en = 1'b1;
                 CASTER_data.data_C2P = CASTER_data.data_B2C;

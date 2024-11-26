@@ -43,7 +43,7 @@ module AsyncFIFO #(
     endfunction
 
     // Write logic
-    always_ff(posedge wr_clk or posedge rst) begin
+    always_ff@(posedge wr_clk or posedge rst) begin
         if (rst) begin
             wr_ptr <= 0;
         end else if (wr_en && !full) begin
