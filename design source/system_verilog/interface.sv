@@ -123,7 +123,7 @@
     
         logic [2:0] CASTER_EN;  // Enable signal for CASTER from BUS
         logic CASTER_READY;  // Indicates CASTER is ready
-        logic CASTER_VALID
+        logic CASTER_VALID;
     
         logic [2:0] PE_EN;
         logic PE_READY;
