@@ -2,7 +2,7 @@
 `ifndef INTERFACE_SV
 `define INTERFACE_SV
 
-    interface PE_DATA #(parameter DATA_WIDTH = 16) (input logic clk);
+    interface PE_DATA #(parameter DATA_WIDTH = 16)();
         logic [DATA_WIDTH-1:0] ifmap;
         logic [DATA_WIDTH-1:0] fltr;
         logic [2*DATA_WIDTH-1:0] ipsum;
@@ -41,9 +41,7 @@
     interface CASTER_IF #(
             parameter DATA_WIDTH = 16,
             parameter NUM_COL = 4
-        )(
-            input logic clk
-        );
+        )();
         // Interface signals
         logic [DATA_WIDTH-1:0] data_B2C;  // Data from BUS to CASTER
         logic [DATA_WIDTH-1:0] data_C2B;  // Data from CASTER to BUS
@@ -85,12 +83,11 @@
         );
     endinterface // CASTER_IF
     
+    
     interface BUS_IF #(
             parameter DATA_WIDTH = 16,
             parameter NUM_COL = 4
-        )(
-            input logic clk
-        );
+        )();
         logic [$clog2(NUM_COL)-1:0] ID;  // Column index
         logic [$clog2(NUM_COL)-1:0] TAG;  // Column tag
     
@@ -154,8 +151,8 @@
             input PE_READY,
             input PE_VALID,
     
-            output ID,
-            output TAG
+            input ID,
+            input TAG
         );
 
     
