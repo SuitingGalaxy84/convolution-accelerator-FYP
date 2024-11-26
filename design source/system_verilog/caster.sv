@@ -30,9 +30,9 @@ module caster#(
 )(
     input wire clk,
     input wire rstn,
-    input wire tag,
-    output wire PE_en,
-    BUS_CASTER_X.CASTER CASTER
+
+    CASTER_IF.CASTER_data CASTER_data,
+    CASTER_IF.CASTER_ctrl CASTER_ctrl
     );
 
     reg [$clog2(NUM_COL)-1:0] caster_id; 
@@ -44,18 +44,30 @@ module caster#(
         end 
     end
 
-    always_comb begin : //facilitate the data transfer between CASTER and PE
-        case ({CASTER.PE_ready, CASTER.CASTER_en, (tag == caster_id ? 1'b1 : 1'b0)})
+    always_comb begin: //facilitate hte data output from PE to bus
+        case ({CASTER_ctrl.PE_VALID, CASTER_ctrl.CASTER_en, (CASTER_ctrl.tag == caster_id ? 1'b1 : 1'b0)})
+            3'b111 : begin 
+                CASTER_data.data_C2B = CASTER_data.data_C2P;
+            end 
+            default: begin 
+                CASTER_data.data_C2B = 0;
+            end 
+        endcase
+        CASTER_ctrl.CASTER_VALID = PE_VALID; // notify the BUS that the PE has valid data
+    end
+
+    always_comb begin : //facilitate the data input from bus to PE
+        case ({CASTER_ctrl.PE_READY, CASTER_ctrl.CASTER_en, (CASTER_ctrl.tag == caster_id ? 1'b1 : 1'b0)})
             3'b111 : begin 
                 PE_en = 1'b1;
-                CASTER.data_C2P = CASTER.data_B2C;
+                CASTER_data.data_C2P = CASTER_data.data_B2C;
             end 
             default: begin 
                 PE_en = 1'b0;
-                CASTER.data_C2P = 0;
-            end 
+                CASTER_data.data_C2P = 0;
+            end
         endcase
-        CASTER.CASTER_ready = PE_ready;
+        CASTER_ctrl.CASTER_READY = PE_READY; // notify the BUS that the PE is ready to accept data
     end
 
 
