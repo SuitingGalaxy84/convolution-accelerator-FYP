@@ -35,22 +35,33 @@ module MultiCaster #(
         // assign fltr_CASTER.CASTER_data.data_B2C = BUS_data.fltr_data_P2M;
         // assign psum_CASTER.CASTER_data.data_B2C = BUS_data.psum_data_P2M;
 
-        always_comb begin : ParsingInterface
-            BUS_data.ifmap_data_B2M = ifmap_CASTER.CASTER_data.data_B2C;
-            BUS_data.fltr_data_B2M = fltr_CASTER.CASTER_data.data_B2C;
-            BUS_data.psum_data_B2M = psum_CASTER.CASTER_data.data_B2C;
+        alwyas_ff @(posedge clk or negedge rstn) begin
+            if (!rstn) begin
+                BUS_data.ifmap_data_B2M <= 0;
+                BUS_data.fltr_data_B2M <= 0;
+                BUS_data.psum_data_B2M <= 0;
 
-            ifmap_CASTER.CASTER_data.data_C2B = BUS_data.ifmap_data_M2B;
-            fltr_CASTER.CASTER_data.data_C2B = BUS_data.fltr_data_M2B;
-            psum_CASTER.CASTER_data.data_C2B = BUS_data.psum_data_M2B;
+                BUS_data.ifmap_data_M2B <= 0;
+                BUS_data.fltr_data_M2B <= 0;
+                BUS_data.psum_data_M2B <= 0;
 
-            BUS_data.ifmap_data_M2P = ifmap_CASTER.CASTER_data.data_C2P;
-            BUS_data.fltr_data_M2P = fltr_CASTER.CASTER_data.data_C2P;
-            BUS_data.psum_data_M2P = psum_CASTER.CASTER_data.data_C2P;
+                BUS_data.ifmap_data_M2P <= 0;
+                BUS_data.fltr_data_M2P <= 0;
+                BUS_data.psum_data_M2P <= 0;
+            end else begin
+                BUS_data.ifmap_data_B2M <= ifmap_CASTER.CASTER_data.data_B2C;
+                BUS_data.fltr_data_B2M <= fltr_CASTER.CASTER_data.data_B2C;
+                BUS_data.psum_data_B2M <= psum_CASTER.CASTER_data.data_B2C;
 
-            ifmap_CASTER.CASTER_data.data_B2C = BUS_data.ifmap_data_P2M;
-            fltr_CASTER.CASTER_data.data_B2C = BUS_data.fltr_data_P2M;
-            psum_CASTER.CASTER_data.data_B2C = BUS_data.psum_data_P2M;
+                ifmap_CASTER.CASTER_data.data_C2B <= BUS_data.ifmap_data_M2B;
+                fltr_CASTER.CASTER_data.data_C2B <= BUS_data.fltr_data_M2B;
+                psum_CASTER.CASTER_data.data_C2B <= BUS_data.psum_data_M2B;
+
+                BUS_data.ifmap_data_M2P <= ifmap_CASTER.CASTER_data.data_C2P;
+                BUS_data.fltr_data_M2P <= fltr_CASTER.CASTER_data.data_C2P;
+                BUS_data.psum_data_M2P <= psum_CASTER.CASTER_data.data_C2P;
+                
+            end
         end 
 
         // Allocate the CASTER_EN signal to the corresponding CASTER
