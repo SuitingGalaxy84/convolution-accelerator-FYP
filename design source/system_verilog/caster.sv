@@ -28,11 +28,42 @@ module MultiCaster#(
     parameter DATA_WIDTH = 16,
     parameter NUM_COL = 4
 )(
-    input clk,
-    input rstn,
-    input tag,
+    input wire clk,
+    input wire rstn,
+    input wire tag,
+    output wire PE_en,
+    output [DATA_WIDTH-1:0] data_C2P,
+
     BUS_CASTER_X.CASTER CASTER
-);
+    );
+
+    reg [$clog2(NUM_COL)-1:0] caster_id;
+    always_ff @(posedge clk or negedge rstn) begin
+        if(~rstn) begin
+            caster_id <= 0;
+        end else begin
+            caster_id <= CASTER.col;
+        end 
+    end
+
+    always_comb begin : 
+        case ({CASTER.PE_ready, CASTER.CASTER_en, (tag == caster_id ? 1'b1 : 1'b0)})
+            3'b111 : begin 
+                PE_en = 1'b1;
+                data_C2P = CASTER.data_B2C;
+            end 
+            default: begin 
+                PE_en = 1'b0;
+                data_C2P = 0;
+            end 
+        endcase
+    end
+
+    always_comb begin : get_data
+        
+    end 
+
+
 
 
 
