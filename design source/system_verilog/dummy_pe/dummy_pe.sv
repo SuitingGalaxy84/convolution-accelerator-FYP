@@ -34,12 +34,12 @@ module SV_DummyPE #(
 
     /* Data Path IO definition begin*/
         input struct packed {         // Input signal structure
-            logic [PE_WIDTH-1:0] in_signal_1;
-            logic [PE_WIDTH-1:0] in_signal_2;
+            logic [PE_WIDTH-1:0] input_fmap;
+            logic [PE_WIDTH-1:0] input_fltr;
         } in_signals,
 
         output struct packed {        // Output signal structure
-            logic [PE_WIDTH-1:0] out_signal_1;
+            logic [PE_WIDTH-1:0] output_fmap;
             logic [PE_WIDTH-1:0] out_signal_2;
         } out_signals,
 
@@ -93,12 +93,12 @@ module SV_DummyPE #(
                 shift_reg_1[i] <= 4'b0;
                 shift_reg_2[i] <= 4'b0;
             end
-            out_signals.out_signal_1 <= 4'b0;
+            out_signals.output_fmap <= 4'b0;
             out_signals.out_signal_2 <= 4'b0;
         end else begin
             // Shift left by 1, input at LSB
-            shift_reg_1[0] <= in_signals.in_signal_1;
-            shift_reg_2[0] <= in_signals.in_signal_2;
+            shift_reg_1[0] <= in_signals.input_fmap;
+            shift_reg_2[0] <= in_signals.input_fltr;
             
 
             // Propagate the shift register values
@@ -108,7 +108,7 @@ module SV_DummyPE #(
             end
 
             // Output the delayed signal with +1 adjustment
-            out_signals.out_signal_1 <= shift_reg_1[DELAY_CYCLES-1]; //+ 1;
+            out_signals.output_fmap <= shift_reg_1[DELAY_CYCLES-1]; //+ 1;
             out_signals.out_signal_2 <= shift_reg_2[DELAY_CYCLES-1]; //+ 1;
         end
     end
