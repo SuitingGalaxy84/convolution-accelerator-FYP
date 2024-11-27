@@ -23,20 +23,6 @@
         );
     endinterface // PE_DATA
     
-    interface PE_CTRL(input logic clk);
-        logic mult_seln;
-        logic acc_seln;
-    
-        // Modports for PE and CU roles
-        modport PE (
-            input mult_seln,
-            input acc_seln
-        );
-        modport CU (
-            output mult_seln,
-            output acc_seln
-        );
-    endinterface // PE_CTRL
     
     interface CASTER_IF #(
             parameter DATA_WIDTH = 16,
@@ -124,7 +110,7 @@
         
     
         // Interface signals
-        modport BUS_port(
+        modport MCASTER_port(
             input ifmap_data_B2M,
             output ifmap_data_M2B,
     
@@ -155,8 +141,55 @@
             input ID,
             input TAG
         );
+    endinterface
 
-    
+    interface PE_IF#(
+        parameter DATA_WIDTH = 16
+    )();
+        //data from multicaster to PE
+        logic [DATA_WIDTH-1:0] ifmap_data_M2P;
+        logic [DATA_WIDTH-1:0] fltr_data_M2P;
+        logic [2*DATA_WIDTH-1:0] psum_data_M2P;
+
+        //data from PE to mutlticaster
+        logic [DATA_WIDTH-1:0] ifmap_data_P2M;
+        logic [DATA_WIDTH-1:0] fltr_data_P2M;
+        logic [2*DATA_WIDTH-1:0] psum_data_P2M;
+
+        //PE enable signal
+        logic PE_EN;
+
+        //PE READY and VALID signals
+        logic PE_READY;
+        logic PE_VALID;
+
+
+        //PE modport
+        modport PE_port(
+            input ifmap_data_M2P,
+            input fltr_data_M2P,
+            input psum_data_M2P,
+            output ifmap_data_P2M,
+            output fltr_data_P2M,
+            output psum_data_P2M,
+            input PE_EN,
+            output PE_READY,
+            output PE_VALID
+        );
+
+        //MultiCaster modport
+        modport MC_port(
+            output ifmap_data_M2P,
+            output fltr_data_M2P,
+            output psum_data_M2P,
+            input ifmap_data_P2M,
+            input fltr_data_P2M,
+            input psum_data_P2M,
+            output PE_EN,
+            input PE_READY,
+            input PE_VALID
+        );
+
     endinterface
 
 `endif

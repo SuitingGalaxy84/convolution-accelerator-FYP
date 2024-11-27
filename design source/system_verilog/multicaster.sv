@@ -6,7 +6,8 @@ module MultiCaster #(
 )(
     input wire clk,
     input wire rstn,
-    BUS_IF.BUS_port BUS_IF
+    BUS_IF.MCASTER_port BUS_IF
+    PE_IF.MC_port PE_IF
 );
     
     CASTER_IF #(DATA_WIDTH, NUM_COL) ifmap_CASTER();
@@ -19,13 +20,38 @@ module MultiCaster #(
     
     
     /* Parsing Three Casters into One MultiCaster Begin */
-         assign BUS_IF.ifmap_data_B2M = ifmap_CASTER.data_B2C;
-         assign BUS_IF.fltr_data_B2M = fltr_CASTER.data_B2C;
-         assign BUS_IF.psum_data_B2M = psum_CASTER.data_B2C;
+        //transfer data from the BUS to the caster
+        assign BUS_IF.ifmap_data_B2M = ifmap_CASTER.data_B2C;
+        assign BUS_IF.fltr_data_B2M = fltr_CASTER.data_B2C;
+        assign BUS_IF.psum_data_B2M = psum_CASTER.data_B2C;
 
-         assign ifmap_CASTER.data_C2B = BUS_IF.ifmap_data_M2B;
-         assign fltr_CASTER.data_C2B = BUS_IF.fltr_data_M2B;
-         assign psum_CASTER.data_C2B = BUS_IF.psum_data_M2B;
+        //transfer data from the caster to the bus
+        assign ifmap_CASTER.data_C2B = BUS_IF.ifmap_data_M2B;
+        assign fltr_CASTER.data_C2B = BUS_IF.fltr_data_M2B;
+        assign psum_CASTER.data_C2B = BUS_IF.psum_data_M2B;
+
+        //transfer data from the PE to the caster
+        assign ifmap_CASTER.data_P2C = PE_IF.ifmap_data_P2M;
+        assign fltr_CASTER.data_P2C = PE_IF.fltr_data_P2M;
+        assign psum_CASTER.data_P2C = PE_IF.psum_data_P2M;
+
+        //transfer data from the caster to PE
+        assign PE_IF.ifmap_data_M2P = ifmap_CASTER.data_C2P;
+        assign PE_IF.fltr_data_M2P = fltr_CASTER.data_C2P;
+        assign PE_IF.psum_data_M2P = psum_CASTER.data_C2P;
+
+        assign PE_IF.PE_EN = ifmap_CASTER.PE_EN & 
+                             fltr_CASTER.PE_EN & 
+                             psum_CASTER.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
+
+        assign PE_IF.PE_READY = ifmap_CASTER.PE_READY;
+        assign PE_IF.PE_READY = fltr_CASTER.PE_READY;
+        assign PE_IF.PE_READY = psum_CASTER.PE_READY;
+
+        assign PE_IF.PE_VALID = ifmap_CASTER.PE_VALID;
+        assign PE_IF.PE_VALID = fltr_CASTER.PE_VALID;
+        assign PE_IF.PE_VALID = psum_CASTER.PE_VALID;
+
 
          //assign BUS_IF.ifmap_data_M2P = ifmap_CASTER.data_C2P;
          //assign BUS_IF.fltr_data_M2P = fltr_CASTER.data_C2P;

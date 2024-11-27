@@ -28,8 +28,9 @@ module SV_PE #(
 )(
     input logic rstn,
     input logic clk,
-    PE_DATA.PE DATA, // PE data interface
-    PE_CTRL.PE CTRL // PE control interface
+    PE_IF.PE_port PE_IF
+    input mult_seln,
+    input acc_seln// PE control interface
 );
 
     // Local signals for the PE datapath
@@ -43,14 +44,14 @@ module SV_PE #(
     ) mul_1 (
         .clk(clk),
         .rstn(rstn),
-        .a(DATA.ifmap),
-        .b(DATA.fltr),
+        .a(PE_IF.ifmap_data_M2P),
+        .b(PE_IF.fltr_data_M2P),
         .result(MULT_result)
     );
 
     // MAC operation
-    assign MAC_result = (DATA.ipsum + (CTRL.mult_seln ? MULT_result : pip_reg_2));
-    assign DATA.opsum = MAC_result;
+    assign MAC_result = (PE_IF.psum_data_M2P + (CTRL.mult_seln ? MULT_result : pip_reg_2));
+    assign PE_IF.psum_data_M2P = MAC_result;
 
     // Pipeline registers for the accumulator
     always_ff @(posedge clk or negedge rstn) begin
