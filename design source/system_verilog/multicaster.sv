@@ -6,7 +6,7 @@ module MultiCaster #(
 )(
     input wire clk,
     input wire rstn,
-    BUS_IF.MCASTER_port BUS_IF
+    BUS_IF.MCASTER_port BUS_IF,
     PE_IF.MC_port PE_IF
 );
     
