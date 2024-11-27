@@ -99,13 +99,13 @@
         logic [DATA_WIDTH-1:0] fltr_data_M2B;  // Filter from MultiCaster to BUS
         logic [2*DATA_WIDTH-1:0] psum_data_M2B;  // Partial sum from MultiCaster to BUS
     
-        logic [DATA_WIDTH-1:0] ifmap_data_M2P;  // IFMAP from BUS to PE
-        logic [DATA_WIDTH-1:0] fltr_data_M2P;  // Filter from BUS to PE
-        logic [2*DATA_WIDTH-1:0] psum_data_M2P;  // Partial sum from BUS to PE
+        //logic [DATA_WIDTH-1:0] ifmap_data_M2P;  // IFMAP from BUS to PE
+        //logic [DATA_WIDTH-1:0] fltr_data_M2P;  // Filter from BUS to PE
+        //logic [2*DATA_WIDTH-1:0] psum_data_M2P;  // Partial sum from BUS to PE
     
-        logic [DATA_WIDTH-1:0] ifmap_data_P2M;  // IFMAP from PE to BUS
-        logic [DATA_WIDTH-1:0] fltr_data_P2M;  // Filter from PE to BUS
-        logic [2*DATA_WIDTH-1:0] psum_data_P2M;  // Partial sum from PE to BUS
+        //logic [DATA_WIDTH-1:0] ifmap_data_P2M;  // IFMAP from PE to BUS
+        //logic [DATA_WIDTH-1:0] fltr_data_P2M;  // Filter from PE to BUS
+        //logic [2*DATA_WIDTH-1:0] psum_data_P2M;  // Partial sum from PE to BUS
     
     
     
@@ -114,9 +114,9 @@
         logic CASTER_READY;  // Indicates CASTER is ready
         logic CASTER_VALID;
     
-        logic [2:0] PE_EN;
-        logic PE_READY;
-        logic PE_VALID;
+        //logic [2:0] PE_EN;
+        //logic PE_READY;
+        //logic PE_VALID;
     
     
     
@@ -134,22 +134,23 @@
             input psum_data_B2M,
             output psum_data_M2B,
     
-            input ifmap_data_M2P,
-            output ifmap_data_P2M,
+            //input ifmap_data_M2P,
+            //output ifmap_data_P2M,
     
-            input fltr_data_M2P,
-            output fltr_data_P2M,
+            //input fltr_data_M2P,
+            //output fltr_data_P2M,
     
-            input psum_data_M2P,
-            output psum_data_P2M,
+            //input psum_data_M2P,
+            //output psum_data_P2M,
+            
             input CASTER_EN,
             output CASTER_READY,
             output CASTER_VALID,
     
     
-            output PE_EN,
-            input PE_READY,
-            input PE_VALID,
+            //output PE_EN,
+            //input PE_READY,
+            //input PE_VALID,
     
             input ID,
             input TAG

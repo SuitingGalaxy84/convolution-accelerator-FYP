@@ -27,14 +27,15 @@ module MultiCaster #(
          assign fltr_CASTER.data_C2B = BUS_IF.fltr_data_M2B;
          assign psum_CASTER.data_C2B = BUS_IF.psum_data_M2B;
 
-         assign BUS_IF.ifmap_data_M2P = ifmap_CASTER.data_C2P;
-         assign BUS_IF.fltr_data_M2P = fltr_CASTER.data_C2P;
-         assign BUS_IF.psum_data_M2P = psum_CASTER.data_C2P;
+         //assign BUS_IF.ifmap_data_M2P = ifmap_CASTER.data_C2P;
+         //assign BUS_IF.fltr_data_M2P = fltr_CASTER.data_C2P;
+         //assign BUS_IF.psum_data_M2P = psum_CASTER.data_C2P;
 
-         assign ifmap_CASTER.data_B2C = BUS_IF.ifmap_data_P2M;
-         assign fltr_CASTER.data_B2C = BUS_IF.fltr_data_P2M;
-         assign psum_CASTER.data_B2C = BUS_IF.psum_data_P2M;
+         //assign ifmap_CASTER.data_B2C = BUS_IF.ifmap_data_P2M;
+         //assign fltr_CASTER.data_B2C = BUS_IF.fltr_data_P2M;
+         //assign psum_CASTER.data_B2C = BUS_IF.psum_data_P2M;
          //Allocate the CASTER_EN signal to the corresponding CASTER
+        
         assign ifmap_CASTER.CASTER_EN = BUS_IF.CASTER_EN[0]; // The BUS want to enable the ifmap_CASTER
         assign fltr_CASTER.CASTER_EN = BUS_IF.CASTER_EN[1]; // The BUS want to enable the fltr_CASTER
         assign psum_CASTER.CASTER_EN = BUS_IF.CASTER_EN[2]; // The BUS want to enable the psum_CASTER
@@ -50,17 +51,17 @@ module MultiCaster #(
                                        psum_CASTER.CASTER_VALID; // VALID (Output) signal notifies the BUS that the calculation is done
     
         // PE_EN signal enables the PE from the CASTER to perform the calculation
-        assign BUS_IF.PE_EN = ifmap_CASTER.PE_EN & 
-                               fltr_CASTER.PE_EN & 
-                               psum_CASTER.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
+        //assign BUS_IF.PE_EN = ifmap_CASTER.PE_EN & 
+        //                       fltr_CASTER.PE_EN & 
+        //                       psum_CASTER.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
                                
-        assign ifmap_CASTER.PE_READY = BUS_IF.PE_READY;
-        assign fltr_CASTER.PE_READY = BUS_IF.PE_READY;
-        assign psum_CASTER.PE_READY = BUS_IF.PE_READY;
+        //assign ifmap_CASTER.PE_READY = BUS_IF.PE_READY;
+        //assign fltr_CASTER.PE_READY = BUS_IF.PE_READY;
+        //assign psum_CASTER.PE_READY = BUS_IF.PE_READY;
         
-        assign ifmap_CASTER.PE_VALID = BUS_IF.PE_VALID;
-        assign fltr_CASTER.PE_VALID = BUS_IF.PE_VALID;
-        assign psum_CASTER.PE_VALID = BUS_IF.PE_VALID;
+        //assign ifmap_CASTER.PE_VALID = BUS_IF.PE_VALID;
+        //assign fltr_CASTER.PE_VALID = BUS_IF.PE_VALID;
+        //assign psum_CASTER.PE_VALID = BUS_IF.PE_VALID;
                                 
         assign ifmap_CASTER.TAG = BUS_IF.TAG;
         assign fltr_CASTER.TAG = BUS_IF.TAG;

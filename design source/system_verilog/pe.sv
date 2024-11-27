@@ -42,7 +42,7 @@ module SV_PE #(
         .DATA_WIDTH(DATA_WIDTH)
     ) mul_1 (
         .clk(clk),
-        .rst(~rstn),
+        .rstn(rstn),
         .a(DATA.ifmap),
         .b(DATA.fltr),
         .result(MULT_result)
