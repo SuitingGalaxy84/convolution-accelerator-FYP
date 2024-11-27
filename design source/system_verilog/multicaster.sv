@@ -53,10 +53,22 @@ module MultiCaster #(
         assign BUS_IF.PE_EN = ifmap_CASTER.PE_EN & 
                                fltr_CASTER.PE_EN & 
                                psum_CASTER.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
+                               
+        assign ifmap_CASTER.PE_READY = BUS_IF.PE_READY;
+        assign fltr_CASTER.PE_READY = BUS_IF.PE_READY;
+        assign psum_CASTER.PE_READY = BUS_IF.PE_READY;
         
+        assign ifmap_CASTER.PE_VALID = BUS_IF.PE_VALID;
+        assign fltr_CASTER.PE_VALID = BUS_IF.PE_VALID;
+        assign psum_CASTER.PE_VALID = BUS_IF.PE_VALID;
+                                
         assign ifmap_CASTER.TAG = BUS_IF.TAG;
         assign fltr_CASTER.TAG = BUS_IF.TAG;
         assign psum_CASTER.TAG = BUS_IF.TAG;
+        
+        assign ifmap_CASTER.ID = BUS_IF.ID;
+        assign fltr_CASTER.ID =  BUS_IF.ID;
+        assign psum_CASTER.ID =  BUS_IF.ID;
         
     /* Parsing Three Casters into One MultiCaster End */
         
