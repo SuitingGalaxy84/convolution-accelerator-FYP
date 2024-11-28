@@ -107,8 +107,6 @@
     
     
     
-        
-    
         // Interface signals
         modport MCASTER_port(
             input ifmap_data_B2M,
