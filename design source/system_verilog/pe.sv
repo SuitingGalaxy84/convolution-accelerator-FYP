@@ -24,7 +24,6 @@
 // Processing Element (PE) Module
 module SV_PE #(
     parameter DATA_WIDTH = 16,
-    parameter BUFFER_DEPTH = 3
 )(
     input logic rstn,
     input logic clk,
