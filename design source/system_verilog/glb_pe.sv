@@ -1,7 +1,7 @@
 `include "interface.sv"
 
-module glb_PE() #(
-    parameter DATA_WIDTH = 16,
+module glb_PE #(
+    parameter DATA_WIDTH=16,
     parameter NUM_COL = 4
 )(
     input wire clk,
@@ -14,10 +14,10 @@ module glb_PE() #(
 );
 
 
-    PE_IF #(DATA_WIDTH=DATA_WIDTH) PE_IF();
+    PE_IF #(DATA_WIDTH) PE_IF();
 
     // Parsing the PE and the Multicaster
-    SV_PE #(DATA_WIDTH=DATA_WIDTH) PE(
+    SV_PE #(DATA_WIDTH) PE(
         .rstn(rstn),
         .clk(clk),
         .PE_IF(PE_IF),
@@ -25,11 +25,11 @@ module glb_PE() #(
         .acc_seln(acc_seln)
     );
 
-    MultiCaster #(DATA_WIDTH=DATA_WIDTH, NUM_COL=NUM_COL) MC(
+    MultiCaster #(DATA_WIDTH, NUM_COL) MC(
         .clk(clk),
         .rstn(rstn),
         .BUS_IF(BUS_IF),
         .PE_IF(PE_IF)
     );
 
-endmodule;
+endmodule
