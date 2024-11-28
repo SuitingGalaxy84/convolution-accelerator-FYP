@@ -50,7 +50,7 @@ module SV_PE #(
 
     // MAC operation
     assign MAC_result = (PE_IF.psum_data_M2P + (mult_seln ? MULT_result : pip_reg_2));
-    assign PE_IF.psum_data_M2P = MAC_result;
+    assign PE_IF.psum_data_P2M = MAC_result;
 
     // Pipeline registers for the accumulator
     always_ff @(posedge clk or negedge rstn) begin
