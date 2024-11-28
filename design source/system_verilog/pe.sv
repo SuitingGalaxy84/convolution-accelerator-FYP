@@ -23,7 +23,7 @@
 
 // Processing Element (PE) Module
 module SV_PE #(
-    parameter DATA_WIDTH = 16,
+    parameter DATA_WIDTH = 16
 )(
     input logic rstn,
     input logic clk,
