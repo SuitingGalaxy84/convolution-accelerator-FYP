@@ -4,16 +4,15 @@
 // Engineer: Sun Yucheng
 // 
 // Create Date: XX
-// Design Name: PE Key-Lock Checker 
-// Module Name: SV_DummyPE_KL
+// Design Name: PE Data Caster
+// Module Name: caster
 // Project Name: A Convolution Accelerator for PyTorch Deep Learning Framework
 // Target Devices: PYNQ Z1
 // Tool Versions: Vivado 20XX.XX
 // Description: 
 /*
-    a LOCK-KEY scheme is created. Every PE is assgined with a unique ROW-COL tag at the initialization. The PE
-    can be activated only when the corresponding ROW-COL tag is provided. This facilitates an efficient control
-    of the PE array.
+
+
  */
 // Dependencies: 
 // 

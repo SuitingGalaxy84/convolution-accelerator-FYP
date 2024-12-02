@@ -4,13 +4,15 @@
 // Engineer: Sun Yucheng
 // 
 // Create Date: XX
-// Design Name: PE
-// Module Name: SV_PE
+// Design Name: Processing Element
+// Module Name: PE
 // Project Name: A Convolution Accelerator for PyTorch Deep Learning Framework
 // Target Devices: PYNQ Z1
 // Tool Versions: Vivado 20XX.XX
 // Description: Processing Element for Convolution Accelerator
-//
+/*
+    
+*/
 // Dependencies: 
 // 
 // Revision:
