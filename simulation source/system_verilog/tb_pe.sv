@@ -34,40 +34,16 @@ module tb_SV_PE;
     // Initial reset and stimulus
     initial begin
         // Initialize Inputs
-        rstn = 0;
-        mult_seln = 0;
-        acc_seln = 0;
-        PE_IF_inst.ifmap_data_M2P = 0;
-        PE_IF_inst.fltr_data_M2P = 0;
-        PE_IF_inst.psum_data_M2P = 0;
-        PE_IF_inst.PE_EN = 0;
-
-        // Apply Reset
-        #20;
-        rstn = 1;
-
-        // Apply stimulus
-        #10;
-        PE_IF_inst.ifmap_data_M2P = 16'h0003;
-        PE_IF_inst.fltr_data_M2P = 16'h0002;
-        PE_IF_inst.psum_data_M2P = 32'h0000_0001;
-        PE_IF_inst.PE_EN = 1;
-        mult_seln = 1;
-        acc_seln = 0;
-
-        #10;
-        mult_seln = 0;
-        acc_seln = 1;
-
-        #10;
-        PE_IF_inst.ifmap_data_M2P = 16'h0004;
-        PE_IF_inst.fltr_data_M2P = 16'h0003;
-        PE_IF_inst.psum_data_M2P = 32'h0000_0002;
-        mult_seln = 1;
-        acc_seln = 0;
-
-        #10;
-        acc_seln = 1;
+        /*
+            测试用例 - 测试控制信号和时序 - 获得时序特征
+            输入数据：PE_IF.ifmap_data_M2P = 1, PE_IF.fltr_data_M2P = 2, PE_IF.psum_data_M2P = 3
+        clk      <rclk>      <rclk>      <rclk>   
+        input1   <DATA#1>    <DATA#2>    <...>
+        input2   <DATA#1>    <DATA#2>    <...>
+        mult     <xxx>       <xxx>       <DATA#1>
+        mult_slen
+        output   <xxx>       <xxx>
+        */
 
         #50;
         $stop; // Stop the simulation
