@@ -25,13 +25,14 @@
 
 // Processing Element (PE) Module
 module SV_PE #(
-    parameter DATA_WIDTH = 16
+    parameter DATA_WIDTH = 16,
+    parameter KERNEL_SIZE = 3
 )(
     input logic rstn,
     input logic clk,
     PE_IF.PE_port PE_IF,
-    input mult_seln,
-    input acc_seln// PE control interface
+    // input mult_seln,
+    // input acc_seln// PE control interface
 );
 
     // Local signals for the PE datapath
@@ -39,6 +40,11 @@ module SV_PE #(
     reg [2*DATA_WIDTH-1:0] pip_reg_1, pip_reg_2;
     wire [2*DATA_WIDTH-1:0] MAC_result;
 
+    // local control signals
+    wire mult_seln;
+    wire acc_seln;
+    wire opsum_seln;
+    
     // Multiplier instantiation
     Multiplier_2 #(
         .DATA_WIDTH(DATA_WIDTH)
@@ -49,10 +55,11 @@ module SV_PE #(
         .b(PE_IF.fltr_data_M2P),
         .result(MULT_result)
     );
+    
 
     // MAC operation
     assign MAC_result = (pip_reg_2 + (mult_seln ? MULT_result : PE_IF.psum_data_M2P));
-    assign PE_IF.psum_data_P2M = MAC_result;
+    assign PE_IF.psum_data_P2M = opsum_slen ? {DATA_WIDTH{1'b0}} : MAC_result;
 
     // Pipeline registers for the accumulator
     always_ff @(posedge clk or negedge rstn) begin
@@ -64,5 +71,18 @@ module SV_PE #(
             pip_reg_2 <= acc_seln ? {2*DATA_WIDTH{1'b0}} : pip_reg_1;
         end
     end
+
+    SV_PE_ctrl #(
+        .DATA_WIDTH(DATA_WIDTH),
+    ) PE_ctrl (
+        .clk(clk),
+        .en(PE_IF.PE_EN),
+        .rstn(rstn),
+        .mult_slen(mult_seln),
+        .acc_seln(acc_seln),
+        .opsum_seln(PE_IF.PE_VALID),
+    );
+
+
 
 endmodule
