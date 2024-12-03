@@ -59,7 +59,7 @@ module SV_PE #(
 
     // MAC operation
     assign MAC_result = (pip_reg_2 + (mult_seln ? MULT_result : PE_IF.psum_data_M2P));
-    assign PE_IF.psum_data_P2M = opsum_slen ? {DATA_WIDTH{1'b0}} : MAC_result;
+    assign PE_IF.psum_data_P2M = opsum_seln ? {DATA_WIDTH{1'b0}} : MAC_result;
 
     // Pipeline registers for the accumulator
     always_ff @(posedge clk or negedge rstn) begin
@@ -72,15 +72,14 @@ module SV_PE #(
         end
     end
 
-    SV_PE_ctrl #(
-        .DATA_WIDTH(DATA_WIDTH)
-    ) PE_ctrl (
+    SV_PE_ctrl PE_ctrl (
         .clk(clk),
         .en(PE_IF.PE_EN),
         .rstn(rstn),
-        .mult_slen(mult_seln),
+        .mult_seln(mult_seln),
         .acc_seln(acc_seln),
         .opsum_seln(PE_IF.PE_VALID),
+        .kernel_size(PE_IF.kernel_size) 
     );
 
 

@@ -1,12 +1,10 @@
-module SV_PE_ctrl#(
-    parameter DATA_WIDTH = 16
-)(
+module SV_PE_ctrl(
     input clk,
     input en,
     input rstn,
-    output mult_slen,
-    output acc_seln,
-    output opsum_seln,
+    output reg mult_seln,
+    output reg acc_seln,
+    output reg opsum_seln,
     input [7:0] kernel_size
 );
     parameter [2:0] STATE_IDLE = 3'b000;
@@ -18,10 +16,12 @@ module SV_PE_ctrl#(
     wire [2:0] next_state;
     reg [7:0] MAC_counter = 8'b0000_0000; 
 
-
-    always_ff @(poseedge clk or negedge rstn) begin : MAC_cunter
+    always_ff @(posedge clk or negedge rstn) begin : MAC_cunter
         if (~rstn) begin
             MAC_counter <= 8'b0000_0000;
+            mult_seln <= 1'b1;
+            acc_seln <= 1'b1;
+            opsum_seln <= 1'b1;
         end else begin
             if (current_state == STATE_OP) begin
                 MAC_counter <= MAC_counter + 1;
@@ -29,6 +29,9 @@ module SV_PE_ctrl#(
             else begin
                 MAC_counter <= 8'b0000_0000;
             end
+            mult_seln <= mult_seln_wire;
+            acc_seln <= acc_seln_wire;
+            opsum_seln <= opsum_seln_wire;
         end
     end
 
@@ -43,30 +46,30 @@ module SV_PE_ctrl#(
     always_comb begin : STATE_definition
         case (current_state)
             STATE_IDEL: begin 
-                mult_slen =1; //ipsum
-                acc_seln = 1; //pass 0 to pip_reg_2
-                opsum_seln = 1; //output in valid
+                mult_seln_wire =1; //ipsum
+                acc_seln_wire = 1; //pass 0 to pip_reg_2
+                opsum_seln_wire = 1; //output in valid
                 next_state = PE_EN ? STATE_IPSUM : STATE_IDLE;
             end
 
             STATE_IPSUM: begin
-                mult_slen = 1; //pass ipsum to pip_reg_1
-                acc_slen = 1; //pass 0 to pip_reg_2
-                opsum_seln = 1; //output in valid
+                mult_seln_wire = 1; //pass ipsum to pip_reg_1
+                acc_seln_wire = 1; //pass 0 to pip_reg_2
+                opsum_seln_wire = 1; //output in valid
                 next_state = STATE_OP;
             end 
 
             STATE_OP: begin
-                mult_slen = 0; //pass mult result to adder
-                acc_slen = 0; //pass psum to adder
-                opsum_seln = 1;
+                mult_seln_wire = 0; //pass mult result to adder
+                acc_seln_wire = 0; //pass psum to adder
+                opsum_seln_wire = 1;
                 next_state = (MAC_counter==kernel_size-1) ? STATE_OPSUM : STATE_OP;
             end 
 
             STATE_OPSUM: begin
-                mult_slen = 0; //pass mult result to adder
-                acc_seln = 0;
-                opsum_slen = 0;
+                mult_seln_wire = 0; //pass mult result to adder
+                acc_seln_wire = 0;
+                opsum_seln_wire = 0;
                 next_state = PE_EN ? STATE_IPSUM : STATE_IDLE;
             end 
         endcase
