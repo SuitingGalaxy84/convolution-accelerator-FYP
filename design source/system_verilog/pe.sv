@@ -30,7 +30,7 @@ module SV_PE #(
 )(
     input logic rstn,
     input logic clk,
-    PE_IF.PE_port PE_IF,
+    PE_IF.PE_port PE_IF
     // input mult_seln,
     // input acc_seln// PE control interface
 );
