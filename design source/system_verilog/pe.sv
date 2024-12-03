@@ -73,7 +73,7 @@ module SV_PE #(
     end
 
     SV_PE_ctrl #(
-        .DATA_WIDTH(DATA_WIDTH),
+        .DATA_WIDTH(DATA_WIDTH)
     ) PE_ctrl (
         .clk(clk),
         .en(PE_IF.PE_EN),

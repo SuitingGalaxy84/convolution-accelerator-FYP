@@ -233,9 +233,9 @@
     interface BUS_ITR #(
         parameter DATA_WIDTH = 16
         )();
-        logic [DATA_WIDTH-1:0] ifmap_data,
-        logic [DATA_WIDTH-1:0] fltr_data,
-        logic [2*DATA_WIDTH-1:0] psum_data
+        logic [DATA_WIDTH-1:0] ifmap_data;
+        logic [DATA_WIDTH-1:0] fltr_data;
+        logic [2*DATA_WIDTH-1:0] psum_data;
 
         modport IN(
             input ifmap_data,
