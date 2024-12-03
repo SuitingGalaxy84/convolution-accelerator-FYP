@@ -20,9 +20,7 @@ module tb_SV_PE;
     ) uut (
         .rstn(rstn),
         .clk(clk),
-        .PE_IF(PE_IF_inst),
-        .mult_seln(mult_seln),
-        .acc_seln(acc_seln)
+        .PE_IF(PE_IF_inst)
     );
 
     // Clock generation
@@ -35,7 +33,7 @@ module tb_SV_PE;
     initial begin
         // Initialize Inputs
         /*
-            测试用例 - 测试控制信号和时序 - 获得时序特征
+            测试用例 - 测试控制信号和时�? - 获得时序特征
             输入数据：PE_IF.ifmap_data_M2P = 1, PE_IF.fltr_data_M2P = 2, PE_IF.psum_data_M2P = 3
         clk      <rclk>      <rclk>      <rclk>   
         input1   <DATA#1>    <DATA#2>    <...>

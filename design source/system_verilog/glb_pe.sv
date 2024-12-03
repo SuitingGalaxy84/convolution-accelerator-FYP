@@ -43,9 +43,7 @@ module glb_PE #(
     SV_PE #(DATA_WIDTH) PE(
         .rstn(rstn),
         .clk(clk),
-        .PE_IF(PE_IF),
-        .mult_seln(mult_seln),
-        .acc_seln(acc_seln)
+        .PE_IF(PE_IF)
     );
 
     MultiCaster #(DATA_WIDTH, NUM_COL) MC(
