@@ -198,6 +198,7 @@
         //PE READY and VALID signals
         logic PE_READY;
         logic PE_VALID;
+        logic [7:0] kernel_size;
 
 
         //PE modport
@@ -210,7 +211,8 @@
             output psum_data_P2M,
             input PE_EN,
             output PE_READY,
-            output PE_VALID
+            output PE_VALID,
+            input kernel_size
         );
 
         //MultiCaster modport
@@ -223,7 +225,8 @@
             input psum_data_P2M,
             output PE_EN,
             input PE_READY,
-            input PE_VALID
+            input PE_VALID,
+            output kernel_size
         );
     endinterface
     
