@@ -24,5 +24,22 @@
 module xbus #(
     parameter NUM_COL = 4,
     parameter DATA_WIDTH = 16
-)();
+)(
+    input clk,
+    input rstn
+);
+    
+    
+    genvar i;
+    generate
+    for(i=0;i<NUM_COL;i++) begin: PE_Xbus
+        
+        glb_PE #(DATA_WIDTH, NUM_COL) glb_PE (
+            .clk(clk),
+            .rstn(rstn),
+            
+        );
+    end
+
+    endgenerate
 endmodule

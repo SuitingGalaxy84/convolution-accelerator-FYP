@@ -132,6 +132,28 @@
         
     
         // Interface signals
+
+        modport BUS_port(
+
+            output ifmap_data_B2M,
+            input ifmap_data_M2B,
+
+            output fltr_data_B2M,
+            input fltr_data_M2B,
+
+            output psum_data_B2M,
+            input psum_data_M2B,
+
+
+            output CASTER_EN,
+            input CASTER_READY,
+            input CASTER_VALID,
+
+            input ID,
+            input TAG
+        );
+
+
         modport MCASTER_port(
             input ifmap_data_B2M,
             output ifmap_data_M2B,
@@ -141,15 +163,7 @@
     
             input psum_data_B2M,
             output psum_data_M2B,
-    
-            //input ifmap_data_M2P,
-            //output ifmap_data_P2M,
-    
-            //input fltr_data_M2P,
-            //output fltr_data_P2M,
-    
-            //input psum_data_M2P,
-            //output psum_data_P2M,
+
             
             input CASTER_EN,
             output CASTER_READY,
@@ -167,7 +181,7 @@
 
     interface PE_IF#(
         parameter DATA_WIDTH = 16
-    )();
+         )();
         //data from multicaster to PE
         logic [DATA_WIDTH-1:0] ifmap_data_M2P;
         logic [DATA_WIDTH-1:0] fltr_data_M2P;
@@ -211,9 +225,28 @@
             input PE_READY,
             input PE_VALID
         );
+    endinterface
+    
+    interface BUS_ITR #(
+        parameter DATA_WIDTH = 16
+        )();
+        logic [DATA_WIDTH-1:0] ifmap_data,
+        logic [DATA_WIDTH-1:0] fltr_data,
+        logic [2*DATA_WIDTH-1:0] psum_data
+
+        modport IN(
+            input ifmap_data,
+            input fltr_data,
+            input psum_data
+        );
+
+        modport OUT(
+            output ifmap_data,
+            output fltr_data,
+            output psum_data
+        );
 
     endinterface
-
 `endif
 
 
