@@ -4,12 +4,14 @@ module tb_SV_PE;
 
     // Parameters
     localparam DATA_WIDTH = 16;
+    localparam CLK_PERIOD = 10;
+    localparam KERNEL_SIZE = 3;
+    
 
     // Inputs
     logic rstn;
     logic clk;
-    logic mult_seln;
-    logic acc_seln;
+
 
     // Interface instance
     PE_IF #(DATA_WIDTH) PE_IF_inst();
@@ -23,17 +25,22 @@ module tb_SV_PE;
         .PE_IF(PE_IF_inst)
     );
 
-    // Clock generation
-    initial begin
-        clk = 0;
-        forever #5 clk = ~clk; // 10ns clock period
-    end
-
+    SV_PE_driver #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .CLK_PERIOD(CLK_PERIOD),
+        .KERNEL_SIZE(KERNEL_SIZE)
+    ) driver (
+        .rstn(rstn),
+        .clk(clk),
+        .PE_IF(PE_IF_inst),
+        .kernel_size(8'b0),
+        .PE_EN(1)
+    )
     // Initial reset and stimulus
     initial begin
         // Initialize Inputs
         /*
-            测试用例 - 测试控制信号和时�? - 获得时序特征
+            测试用例 - 测试控制信号和时�? - 获得时序特征
             输入数据：PE_IF.ifmap_data_M2P = 1, PE_IF.fltr_data_M2P = 2, PE_IF.psum_data_M2P = 3
         clk      <rclk>      <rclk>      <rclk>   
         input1   <DATA#1>    <DATA#2>    <...>
@@ -43,7 +50,7 @@ module tb_SV_PE;
         output   <xxx>       <xxx>
         */
 
-        #50;
+        #500;
         $stop; // Stop the simulation
     end
 
