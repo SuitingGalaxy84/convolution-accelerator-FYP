@@ -71,9 +71,6 @@
         logic CASTER_EN;                  // Enable signal for CASTER
     
     
-        
-    
-    
         // CASTER modport: Used for the CASTER logic to interact with the BUS
         modport CASTER_port(
             input data_B2C,
