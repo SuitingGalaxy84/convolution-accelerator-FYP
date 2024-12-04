@@ -37,7 +37,7 @@ module SV_PE_ctrl(
     end
 
     always_ff @(posedge clk or negedge rstn) begin : STATE_machine 
-        if (~rstn) begin
+        if (~rstn || kerenl_size == 8'b0) begin
             current_state <= STATE_IDLE;
         end else begin
             current_state <= next_state;
@@ -64,7 +64,7 @@ module SV_PE_ctrl(
                 mult_seln = 0; //pass mult result to adder
                 acc_seln = 0; //pass psum to adder
                 opsum_seln = 1;
-                next_state = (MAC_counter==kernel_size-1) ? STATE_OPSUM : STATE_OP;
+                next_state = (MAC_counter==kernel_size*kernel_size-1) ? STATE_OPSUM : STATE_OP;
             end 
 
             STATE_OPSUM: begin
