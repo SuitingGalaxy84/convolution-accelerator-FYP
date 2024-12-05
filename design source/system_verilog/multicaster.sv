@@ -44,15 +44,16 @@ module MultiCaster #(
     
     /* Parsing Three Casters into One MultiCaster Begin */
         //transfer data from the BUS to the caster
-        assign BUS_IF.ifmap_data_B2M = ifmap_CASTER.data_B2C;
-        assign BUS_IF.fltr_data_B2M = fltr_CASTER.data_B2C;
-        assign BUS_IF.psum_data_B2M = psum_CASTER.data_B2C;
+        assign ifmap_CASTER.data_B2C = BUS_IF.ifmap_data_B2M;
+        assign fltr_CASTER.data_B2C = BUS_IF.fltr_data_B2M;
+        assign psum_CASTER.data_B2C = BUS_IF.psum_data_B2M;
+   
 
         //transfer data from the caster to the bus
-        assign ifmap_CASTER.data_C2B = BUS_IF.ifmap_data_M2B;
-        assign fltr_CASTER.data_C2B = BUS_IF.fltr_data_M2B;
-        assign psum_CASTER.data_C2B = BUS_IF.psum_data_M2B;
-
+        assign BUS_IF.ifmap_data_M2B = ifmap_CASTER.data_C2B;
+        assign BUS_IF.fltr_data_M2B = fltr_CASTER.data_C2B;
+        assign BUS_IF.psum_data_M2B = psum_CASTER.data_C2B;
+        
         //transfer data from the PE to the caster
         assign ifmap_CASTER.data_P2C = PE_IF.ifmap_data_P2M;
         assign fltr_CASTER.data_P2C = PE_IF.fltr_data_P2M;
@@ -67,14 +68,11 @@ module MultiCaster #(
                              fltr_CASTER.PE_EN & 
                              psum_CASTER.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
 
-        assign PE_IF.READY = ifmap_CASTER.CASTER_READY;
-        assign PE_IF.READY = fltr_CASTER.CASTER_READY;
-        assign PE_IF.READY = psum_CASTER.CASTER_READY;
+        assign PE_IF.READY = ifmap_CASTER.PE_READY & fltr_CASTER.PE_READY & psum_CASTER.PE_READY;
 
-        assign PE_IF.VALID = ifmap_CASTER.PE_VALID;
-        assign PE_IF.VALID = fltr_CASTER.PE_VALID;
-        assign PE_IF.VALID = psum_CASTER.PE_VALID;
-
+        assign ifmap_CASTER.PE_VALID = PE_IF.VALID;
+        assign fltr_CASTER.PE_VALID = PE_IF.VALID;
+        assign psum_CASTER.PE_VALID = PE_IF.VALID;
 
          //assign BUS_IF.ifmap_data_M2P = ifmap_CASTER.data_C2P;
          //assign BUS_IF.fltr_data_M2P = fltr_CASTER.data_C2P;
@@ -85,15 +83,15 @@ module MultiCaster #(
          //assign psum_CASTER.data_B2C = BUS_IF.psum_data_P2M;
          //Allocate the CASTER_EN signal to the corresponding CASTER
         
-        assign ifmap_CASTER.CASTER_EN = BUS_IF.CASTER_EN[0]; // The BUS want to enable the ifmap_CASTER
-        assign fltr_CASTER.CASTER_EN = BUS_IF.CASTER_EN[1]; // The BUS want to enable the fltr_CASTER
-        assign psum_CASTER.CASTER_EN = BUS_IF.CASTER_EN[2]; // The BUS want to enable the psum_CASTER
+        assign ifmap_CASTER.CASTER_EN = BUS_IF.CASTER_EN; // The BUS want to enable the ifmap_CASTER
+        assign fltr_CASTER.CASTER_EN = BUS_IF.CASTER_EN; // The BUS want to enable the fltr_CASTER
+        assign psum_CASTER.CASTER_EN = BUS_IF.CASTER_EN; // The BUS want to enable the psum_CASTER
 
          //READY (Output) signal notifies the BUS->BUFFER that the PE is ready to accept data ()
-        assign BUS_IF.READY = ifmap_CASTER.CASTER_READY & 
-                                       fltr_CASTER.CASTER_READY & 
-                                       psum_CASTER.CASTER_READY; 
-
+        assign ifmap_CASTER.CASTER_READY = BUS_IF.READY;
+        assign fltr_CASTER.CASTER_READY = BUS_IF.READY;
+        assign psum_CASTER.CASTER_READY = BUS_IF.READY;
+        
         // VALID (Output) signal notifies the BUS that the calculation is done
         assign BUS_IF.VALID = ifmap_CASTER.CASTER_VALID & 
                                       fltr_CASTER.CASTER_VALID & 

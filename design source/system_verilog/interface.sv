@@ -81,7 +81,9 @@
             input TAG,
             output PE_READY,
             input PE_VALID,
-            output CASTER_READY,
+            
+            
+            input CASTER_READY,
             output CASTER_VALID,
             input CASTER_EN,
             output PE_EN     
@@ -115,7 +117,7 @@
     
     
     
-        logic [2:0] CASTER_EN;  // Enable signal for CASTER from BUS
+        logic CASTER_EN;  // Enable signal for CASTER from BUS
         logic READY;  // Indicates CASTER is ready
         logic VALID;
         logic [7:0] kernel_size;
@@ -163,7 +165,6 @@
             input psum_data_B2M,
             output psum_data_M2B,
 
-            
             input CASTER_EN,
             input READY,
             output VALID,
@@ -225,7 +226,7 @@
             input fltr_data_P2M,
             input psum_data_P2M,
             output PE_EN,
-            input READY,
+            output READY,
             input VALID,
             output kernel_size
         );

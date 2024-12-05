@@ -34,7 +34,7 @@ module glb_PE #(
 
 
     PE_IF #(DATA_WIDTH) PE_IF();
-
+    
     // Parsing the PE and the Multicaster
     SV_PE #(DATA_WIDTH) PE(
         .rstn(rstn),

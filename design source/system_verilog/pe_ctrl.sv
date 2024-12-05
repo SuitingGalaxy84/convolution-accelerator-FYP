@@ -74,7 +74,7 @@ module SV_PE_ctrl(
                 acc_seln = 0;
                 opsum_seln = 0;
                 ipsum_seln = 1; 
-                next_state = PE_IF.READY ? STATE_IPSUM : STATE_IDLE;
+                next_state = READY ? STATE_IPSUM : STATE_IDLE;
             end 
             
             default : begin

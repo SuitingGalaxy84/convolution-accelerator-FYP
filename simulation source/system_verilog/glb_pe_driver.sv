@@ -26,27 +26,34 @@
 module SV_glb_PE_driver #(
     parameter DATA_WIDTH = 16,
     parameter NUM_COL = 4,
-    parameter CLK_PERIOD = 10,
+    parameter CLK_PERIOD = 10
     )(
         output reg clk,
         input rstn,
         BUS_IF.BUS_port BUS_IF,
         input [$clog2(NUM_COL)-1:0] ID,
         input [$clog2(NUM_COL)-1:0] TAG,
-        input READY
+        input READY,
+        input EN,
+        input [7:0] kernel_size
     );
     
     localparam MAX_NUM = 2^(DATA_WIDTH) - 1;
-    localparam MIN_NUM = 0;
+    localparam MIN_NUM = 1;
     reg [DATA_WIDTH-1:0] ifmap_data_B2M;
     reg [DATA_WIDTH-1:0] fltr_data_B2M;
-    reg [2*DATA_WIDTH-1:0] psum_data_B2M;8
+    reg [2*DATA_WIDTH-1:0] psum_data_B2M;
+    assign BUS_IF.ifmap_data_B2M = ifmap_data_B2M;
+    assign BUS_IF.fltr_data_B2M = fltr_data_B2M;
+    assign BUS_IF.psum_data_B2M = psum_data_B2M;
     assign BUS_IF.ID = ID;
     assign BUS_IF.TAG = TAG;
     assign BUS_IF.READY = READY;
+    assign BUS_IF.CASTER_EN = EN;
+    assign BUS_IF.kernel_size = kernel_size;
     
     initial begin
-        clk = 1'b0;
+        clk = 1'b1;
         forever #(CLK_PERIOD/2) clk = ~clk;
     end
 
