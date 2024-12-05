@@ -83,7 +83,8 @@ module SV_PE #(
                 pip_reg_2 <= {2*DATA_WIDTH{1'b0}};
                 pip_reg_1 <= {2*DATA_WIDTH{1'b0}};
             end else begin
-                pip_reg_2 <= acc_seln ? {2*DATA_WIDTH{1'b0}} : pip_reg_1;
+                //pip_reg_2 <= acc_seln ? {2*DATA_WIDTH{1'b0}} : pip_reg_1;
+                pip_reg_2 <= acc_seln || hold_psum ? pip_reg_1 : MAC_result;
                 pip_reg_1 <= MAC_result;
             end 
            

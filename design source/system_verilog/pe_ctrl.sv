@@ -28,7 +28,7 @@ module SV_PE_ctrl(
         end else begin
             MAC_counter <= MAC_counter + 1;
         end
-        if(MAC_counter == kernel_size-1) begin
+        if(MAC_counter == kernel_size*kernel_size-2) begin
             out_valid <= 1'b1;
         end else begin
             out_valid <= 1'b0;
@@ -55,7 +55,7 @@ module SV_PE_ctrl(
 
             STATE_IPSUM: begin
                 mult_seln = 1; //pass ipsum to pip_reg_1
-                acc_seln = 1; //pass 0 to pip_reg_2
+                acc_seln = 1; //pass MAC_result to pip_reg_2
                 opsum_seln = 1; //output in valid
                 ipsum_seln = 0; //ipsum_valid
                 next_state = STATE_OP;

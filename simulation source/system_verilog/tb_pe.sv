@@ -5,7 +5,7 @@ module tb_SV_PE;
     // Parameters
     localparam DATA_WIDTH = 16;
     localparam CLK_PERIOD = 10;
-    localparam KERNEL_SIZE = 9;
+    localparam KERNEL_SIZE = 3;
     
 
     // Inputs
