@@ -12,6 +12,7 @@ module tb_SV_PE;
     reg rstn;
     wire clk;
     reg en;
+    reg ready;
 
 
     // Interface instance
@@ -34,7 +35,8 @@ module tb_SV_PE;
         .rstn(rstn),
         .clk(clk),
         .PE_IF(PE_IF_inst),
-        .PE_EN(en)
+        .PE_EN(en),
+        .PE_READY(ready)
     );
     // Initial reset and stimulus
     initial begin
@@ -49,10 +51,11 @@ module tb_SV_PE;
         mult_slen
         output   <xxx>       <xxx>
         */
-        rstn = 1; en = 0;
+        rstn = 1; en = 0; ready = 0;
         #50 rstn = 0;
         #50 rstn = 1;
         #50 en = 1;
+        #50 ready = 1;
         #300 rstn = 0;
         $stop; // Stop the simulation
     end

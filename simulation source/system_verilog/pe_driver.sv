@@ -8,7 +8,8 @@ module SV_PE_driver#(
         input rstn,
         output reg clk,
         PE_IF.MC_port PE_IF,
-        input PE_EN
+        input PE_EN,
+        input PE_READY
     );
 
     parameter MAX_NUM = 2^(DATA_WIDTH) - 1;
@@ -22,6 +23,7 @@ module SV_PE_driver#(
     assign PE_IF.psum_data_M2P = psum_data_M2P;
     assign PE_IF.PE_EN = PE_EN;
     assign PE_IF.kernel_size = KERNEL_SIZE;
+    assign PE_IF.READY = PE_READY;
     /*
         MC_port:
             output ifmap_data_M2P,

@@ -93,7 +93,7 @@ module SV_PE #(
 
     SV_PE_ctrl PE_ctrl (
         .clk(clk),
-        .en(PE_IF.PE_EN),
+        .READY(PE_IF.READY),
         .rstn(rstn),
         .mult_seln(mult_seln),
         .acc_seln(acc_seln),

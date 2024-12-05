@@ -1,6 +1,6 @@
 module SV_PE_ctrl(
     input clk,
-    input en,
+    input READY,
     input rstn,
     output reg mult_seln,
     output reg acc_seln,
@@ -50,7 +50,7 @@ module SV_PE_ctrl(
                 acc_seln = 1; //pass 0 to pip_reg_2
                 opsum_seln = 1; //output in valid
                 ipsum_seln = 1;
-                next_state = en ? STATE_IPSUM : STATE_IDLE;
+                next_state = READY ? STATE_IPSUM : STATE_IDLE;
             end
 
             STATE_IPSUM: begin
@@ -74,7 +74,7 @@ module SV_PE_ctrl(
                 acc_seln = 0;
                 opsum_seln = 0;
                 ipsum_seln = 1; 
-                next_state = en ? STATE_IPSUM : STATE_IDLE;
+                next_state = PE_IF.READY ? STATE_IPSUM : STATE_IDLE;
             end 
             
             default : begin
