@@ -79,7 +79,7 @@
             output data_C2P,
             input ID,
             input TAG,
-            input PE_READY,
+            output PE_READY,
             input PE_VALID,
             output CASTER_READY,
             output CASTER_VALID,
@@ -116,9 +116,9 @@
     
     
         logic [2:0] CASTER_EN;  // Enable signal for CASTER from BUS
-        logic CASTER_READY;  // Indicates CASTER is ready
-        logic CASTER_VALID;
-    
+        logic READY;  // Indicates CASTER is ready
+        logic VALID;
+        logic [7:0] kernel_size;
         //logic [2:0] PE_EN;
         //logic PE_READY;
         //logic PE_VALID;
@@ -143,11 +143,13 @@
 
 
             output CASTER_EN,
-            input CASTER_READY,
-            input CASTER_VALID,
+            output READY,
+            input VALID,
 
             input ID,
-            input TAG
+            input TAG,
+            
+            output kernel_size
         );
 
 
@@ -163,8 +165,8 @@
 
             
             input CASTER_EN,
-            output CASTER_READY,
-            output CASTER_VALID,
+            input READY,
+            output VALID,
     
     
             //output PE_EN,
@@ -172,7 +174,9 @@
             //input PE_VALID,
     
             input ID,
-            input TAG
+            input TAG,
+            
+            input kernel_size
         );
     endinterface
 
@@ -193,8 +197,8 @@
         logic PE_EN;
 
         //PE READY and VALID signals
-        logic PE_READY;
-        logic PE_VALID;
+        logic READY;
+        logic VALID;
         logic [7:0] kernel_size;
 
 
@@ -207,8 +211,8 @@
             output fltr_data_P2M,
             output psum_data_P2M,
             input PE_EN,
-            output PE_READY,
-            output PE_VALID,
+            input READY,
+            output VALID,
             input kernel_size
         );
 
@@ -221,8 +225,8 @@
             input fltr_data_P2M,
             input psum_data_P2M,
             output PE_EN,
-            input PE_READY,
-            input PE_VALID,
+            input READY,
+            input VALID,
             output kernel_size
         );
     endinterface

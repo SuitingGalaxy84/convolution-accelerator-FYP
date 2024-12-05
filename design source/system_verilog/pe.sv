@@ -72,7 +72,7 @@ module SV_PE #(
     assign MAC_result = pip_reg_2 + (mult_seln ? ipsum_data : MULT_result);
     
     assign PE_IF.psum_data_P2M = opsum_seln ? {2*DATA_WIDTH{1'b0}} : MAC_result;
-    assign PE_IF.PE_VALID = ~opsum_seln;
+    assign PE_IF.VALID = ~opsum_seln;
     // Pipeline registers for the accumulator
     always_ff @(posedge clk or negedge rstn) begin
         if (~rstn) begin

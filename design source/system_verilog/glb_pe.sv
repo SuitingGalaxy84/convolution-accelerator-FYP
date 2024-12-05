@@ -29,11 +29,7 @@ module glb_PE #(
 )(
     input wire clk,
     input wire rstn,
-    BUS_IF.MCASTER_port BUS_IF,
-
-    //temorarily IOed Signals
-    input wire mult_seln,
-    input wire acc_seln
+    BUS_IF.MCASTER_port BUS_IF
 );
 
 

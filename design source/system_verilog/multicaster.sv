@@ -67,13 +67,13 @@ module MultiCaster #(
                              fltr_CASTER.PE_EN & 
                              psum_CASTER.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
 
-        assign PE_IF.PE_READY = ifmap_CASTER.PE_READY;
-        assign PE_IF.PE_READY = fltr_CASTER.PE_READY;
-        assign PE_IF.PE_READY = psum_CASTER.PE_READY;
+        assign PE_IF.READY = ifmap_CASTER.CASTER_READY;
+        assign PE_IF.READY = fltr_CASTER.CASTER_READY;
+        assign PE_IF.READY = psum_CASTER.CASTER_READY;
 
-        assign PE_IF.PE_VALID = ifmap_CASTER.PE_VALID;
-        assign PE_IF.PE_VALID = fltr_CASTER.PE_VALID;
-        assign PE_IF.PE_VALID = psum_CASTER.PE_VALID;
+        assign PE_IF.VALID = ifmap_CASTER.PE_VALID;
+        assign PE_IF.VALID = fltr_CASTER.PE_VALID;
+        assign PE_IF.VALID = psum_CASTER.PE_VALID;
 
 
          //assign BUS_IF.ifmap_data_M2P = ifmap_CASTER.data_C2P;
@@ -90,12 +90,12 @@ module MultiCaster #(
         assign psum_CASTER.CASTER_EN = BUS_IF.CASTER_EN[2]; // The BUS want to enable the psum_CASTER
 
          //READY (Output) signal notifies the BUS->BUFFER that the PE is ready to accept data ()
-        assign BUS_IF.CASTER_READY = ifmap_CASTER.CASTER_READY & 
+        assign BUS_IF.READY = ifmap_CASTER.CASTER_READY & 
                                        fltr_CASTER.CASTER_READY & 
                                        psum_CASTER.CASTER_READY; 
 
         // VALID (Output) signal notifies the BUS that the calculation is done
-        assign BUS_IF.CASTER_VALID = ifmap_CASTER.CASTER_VALID & 
+        assign BUS_IF.VALID = ifmap_CASTER.CASTER_VALID & 
                                       fltr_CASTER.CASTER_VALID & 
                                        psum_CASTER.CASTER_VALID; // VALID (Output) signal notifies the BUS that the calculation is done
     
@@ -122,7 +122,7 @@ module MultiCaster #(
         
     /* Parsing Three Casters into One MultiCaster End */
         
-
+        assign PE_IF.kernel_size = BUS_IF.kernel_size;
 
 
 
