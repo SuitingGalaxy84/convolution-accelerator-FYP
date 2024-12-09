@@ -29,5 +29,5 @@ module glb_PE_Loop #(
     parameter NUM_ROW = 4
 )();
 
-    
+
 endmodule

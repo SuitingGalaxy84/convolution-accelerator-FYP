@@ -42,10 +42,11 @@ module SV_PE #(
     wire [DATA_WIDTH-1:0] fltr_data;
     wire [2*DATA_WIDTH-1:0] ipsum_data;
     wire [2*DATA_WIDTH-1:0] opsum_data;
+    wire READY = PE_IF.READY || PE_IITR.READY;
 
-    assign ifmap_data = external ? PE_IF.ifmap_data_M2P : PE_IITR.ifmap_data_P2P;
-    assign fltr_data = external ? PE_IF.fltr_data_M2P : PE_IITR.fltr_data_P2P;
-    assign ipsum_data = ipsum_seln ? 0 : (external ? PE_IF.psum_data_M2P : PE_IITR.psum_data_P2P)
+    assign ifmap_data = READY ? (external ? PE_IF.ifmap_data_M2P : PE_IITR.ifmap_data_P2P) : 0;
+    assign fltr_data = READY ? (external ? PE_IF.fltr_data_M2P : PE_IITR.fltr_data_P2P) : 0;
+    assign ipsum_data = READY ? (ipsum_seln ? 0 : (external ? PE_IF.psum_data_M2P : PE_IITR.psum_data_P2P)) : 0;
 
     shifter #(
         .DATA_WIDTH(DATA_WIDTH),
@@ -132,7 +133,7 @@ module SV_PE #(
 
     SV_PE_ctrl PE_ctrl (
         .clk(clk),
-        .READY(PE_IF.READY || PE_OITR.READY),
+        .READY(),
         .rstn(rstn),
         .mult_seln(mult_seln),
         .acc_seln(acc_seln),
