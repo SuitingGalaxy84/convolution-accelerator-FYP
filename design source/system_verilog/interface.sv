@@ -24,28 +24,6 @@
 `ifndef INTERFACE_SV
 `define INTERFACE_SV
 
-    interface PE_DATA #(parameter DATA_WIDTH = 16)();
-        logic [DATA_WIDTH-1:0] ifmap;
-        logic [DATA_WIDTH-1:0] fltr;
-        logic [2*DATA_WIDTH-1:0] ipsum;
-        logic [2*DATA_WIDTH-1:0] opsum;
-    
-        // Modports for PE and BUS roles
-        modport PE (
-            input ifmap, 
-            input fltr,
-            input ipsum,
-            output opsum
-        );
-        modport BUS (
-            output ifmap, 
-            output fltr, 
-            output ipsum,
-            input opsum
-        );
-    endinterface // PE_DATA
-    
-    
     interface CASTER_IF #(
             parameter DATA_WIDTH = 16,
             parameter NUM_COL = 4
@@ -88,7 +66,7 @@
             input CASTER_EN,
             output PE_EN     
         );
-    endinterface // CASTER_IF
+    endinterface // caster interface
     
     
     interface BUS_IF #(
@@ -179,7 +157,7 @@
             
             input kernel_size
         );
-    endinterface
+    endinterface // bus interface
 
     interface PE_IF#(
         parameter DATA_WIDTH = 16
@@ -230,8 +208,35 @@
             input VALID,
             output kernel_size
         );
-    endinterface
+    endinterface // pe interface
     
+    interface PE_ITR #(
+        parameter DATA_WDITH = 16
+        )();
+        logic [DATA_WIDTH-1:0] ifmap_data_P2P;
+        logic [DATA_WIDTH-1:0] fltr_data_P2P;
+        logic [2*DATA_WIDTH-1:0] psum_data_P2P;
+        logic READY;
+        logic VALID;
+
+        modport IN_port(
+            input ifmap_data_P2P,
+            input fltr_data_P2P,
+            input psum_data_P2P,
+            output READY
+            input VALID
+        );
+
+        modport OUT_port(
+            output ifmap_data_P2P,
+            output fltr_data_P2P,
+            output psum_data_P2P,
+            input READY,
+            output VALID
+        );
+
+    endinterface // pe interconnect
+
     interface BUS_ITR #(
         parameter DATA_WIDTH = 16
         )();
@@ -250,8 +255,58 @@
             output fltr_data,
             output psum_data
         );
+    endinterface // bus interconnect
 
+    interface GLB_IF #(
+        parameter DATA_WDITH = 16
+        parameter GLB_DEPTH = 1024
+        )();
+        logic [$clog2(GLB_DEPTH)-1:0] ADDR;
+        logic [DATA_WIDTH-1:0] DATA_IN;
+        logic [DATA_WIDTH-1:0] DATA_OUT;
+        logic RST;
+        logic WEN;
+        logic RST_BUSY;
+        logic EN;
+
+        modport GLB_port(
+            input ADDR,
+            input DATA_IN,
+            output DATA_OUT,
+            input RST,
+            input WEN,
+            output RST_BUSY,
+            input EN
+        );
     endinterface
+
+    interface FIFO_IF #(
+        parameter DATA_WIDTH = 8,
+        parameter FIFO_DEPTH = 16
+        )();
+            logic wr_clk;
+            logic rd_clk;
+            logic rst;
+            logic wr_en;
+            logic rd_en;
+            logic [DATA_WIDTH-1:0] wr_data;
+            logic [DATA_WIDTH-1:0] rd_data;
+            logic full;
+            logic empty;
+
+            modport FIFO_port(
+                input wr_clk,
+                input rd_clk,
+                input rst,
+                input wr_en,
+                input rd_en,
+                output wr_data,
+                input rd_data,
+                output full,
+                output empty
+            );
+    endinterface
+
 `endif
 
 

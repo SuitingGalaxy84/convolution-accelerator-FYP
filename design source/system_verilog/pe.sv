@@ -30,10 +30,46 @@ module SV_PE #(
 )(
     input logic rstn,
     input logic clk,
+    input logic external,
     PE_IF.PE_port PE_IF
     // input mult_seln,
     // input acc_seln// PE control interface
+    PE_ITR.IN_port PE_IITR,
+    PE_ITR.OUT_port PE_OITR
 );
+
+    wire [DATA_WIDTH-1:0] ifmap_data;
+    wire [DATA_WIDTH-1:0] fltr_data;
+    wire [2*DATA_WIDTH-1:0] ipsum_data;
+    wire [2*DATA_WIDTH-1:0] opsum_data;
+
+    assign ifmap_data = external ? PE_IF.ifmap_data_M2P : PE_IITR.ifmap_data_P2P;
+    assign fltr_data = external ? PE_IF.fltr_data_M2P : PE_IITR.fltr_data_P2P;
+    assign ipsum_data = ipsum_seln ? 0 : (external ? PE_IF.psum_data_M2P : PE_IITR.psum_data_P2P)
+
+    shifter #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .KERNEL_SIZE(KERNEL_SIZE)
+        ) shifter_IFMAP (
+            .clk(clk),
+            .rstn(rstn),
+            .serial_in(LINK_ifmap),
+            .serial_out(0)
+            .output_depth(PE_IF.kernel_size+1),
+            .depth_output(PE_OITR.ifmap_data_P2P)
+        );
+    shifter #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .KERNEL_SIZE(KERNEL_SIZE)
+        ) shifter_FLTR (
+            .clk(clk),
+            .rstn(rstn),
+            .serial_in(LINK_fltr),
+            .serial_out(0)
+            .output_depth(PE_IF.kernel_size+1),
+            .depth_output(PE_OITR.fltr_data_P2P)
+        );
+
 
     // Local signals for the PE datapath
     wire [2*DATA_WIDTH-1:0] MULT_result;
@@ -60,19 +96,22 @@ module SV_PE #(
 //    );
     mult_gen_0 mult_gen_0(
         .CLK(clk),
-        .A(PE_IF.ifmap_data_M2P),
-        .B(PE_IF.fltr_data_M2P),
+        .A(ifmap_data),
+        .B(fltr_data),
         .P(MULT_result),
         .SCLR(~PE_IF.PE_EN)
     );
 
     // MAC operation
-    wire [2*DATA_WIDTH-1:0] ipsum_data;
-    assign ipsum_data = ipsum_seln ? 0 : PE_IF.psum_data_M2P;
     assign MAC_result = pip_reg_2 + (mult_seln ? ipsum_data : MULT_result);
     
     assign PE_IF.psum_data_P2M = opsum_seln ? {2*DATA_WIDTH{1'b0}} : MAC_result;
+    assign opsum_data = opsum_seln ? {2*DATA_WIDTH{1'b0}} : MAC_result;
+    assign PE_OITR.psum_data_P2P = opsum_data;
+
     assign PE_IF.VALID = ~opsum_seln;
+    assign PE_OITR.VALID = ~opsum_seln;
+
     // Pipeline registers for the accumulator
     always_ff @(posedge clk or negedge rstn) begin
         if (~rstn) begin
@@ -93,7 +132,7 @@ module SV_PE #(
 
     SV_PE_ctrl PE_ctrl (
         .clk(clk),
-        .READY(PE_IF.READY),
+        .READY(PE_IF.READY || PE_OITR.READY),
         .rstn(rstn),
         .mult_seln(mult_seln),
         .acc_seln(acc_seln),
