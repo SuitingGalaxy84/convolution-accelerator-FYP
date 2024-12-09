@@ -25,7 +25,7 @@
 
 module Data_Enc #(
     parameter DATA_WIDTH=16,
-    parameter NUM_COL = 4
+    parameter NUM_COL = 4,
     parameter NUM_ROW = 4
 )(
     input clk,

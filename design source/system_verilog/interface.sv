@@ -211,7 +211,7 @@
     endinterface // pe interface
     
     interface PE_ITR #(
-        parameter DATA_WDITH = 16
+        parameter DATA_WIDTH = 16
         )();
         logic [DATA_WIDTH-1:0] ifmap_data_P2P;
         logic [DATA_WIDTH-1:0] fltr_data_P2P;
@@ -223,7 +223,7 @@
             input ifmap_data_P2P,
             input fltr_data_P2P,
             input psum_data_P2P,
-            output READY
+            output READY,
             input VALID
         );
 
@@ -258,7 +258,7 @@
     endinterface // bus interconnect
 
     interface GLB_IF #(
-        parameter DATA_WDITH = 16
+        parameter DATA_WIDTH = 16,
         parameter GLB_DEPTH = 1024
         )();
         logic [$clog2(GLB_DEPTH)-1:0] ADDR;

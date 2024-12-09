@@ -29,8 +29,9 @@ module glb_PE #(
 )(
     input wire clk,
     input wire rstn,
-    BUS_IF.MCASTER_port BUS_IF
-    PE_ITR.IN_port PE_IITR
+    input wire external,
+    BUS_IF.MCASTER_port BUS_IF,
+    PE_ITR.IN_port PE_IITR,
     PE_ITR.OUT_port PE_OITR
 );
 
@@ -41,6 +42,7 @@ module glb_PE #(
     SV_PE #(DATA_WIDTH) PE(
         .rstn(rstn),
         .clk(clk),
+        .external(external),
         .PE_IF(PE_IF),
         .PE_IITR(PE_IITR),
         .PE_OITR(PE_OITR)

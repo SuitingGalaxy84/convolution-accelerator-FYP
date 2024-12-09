@@ -25,13 +25,12 @@
 
 // Processing Element (PE) Module
 module SV_PE #(
-    parameter DATA_WIDTH = 16,
-    parameter KERNEL_SIZE = 3
+    parameter DATA_WIDTH = 16
 )(
     input logic rstn,
     input logic clk,
     input logic external,
-    PE_IF.PE_port PE_IF
+    PE_IF.PE_port PE_IF,
     // input mult_seln,
     // input acc_seln// PE control interface
     PE_ITR.IN_port PE_IITR,
@@ -42,31 +41,45 @@ module SV_PE #(
     wire [DATA_WIDTH-1:0] fltr_data;
     wire [2*DATA_WIDTH-1:0] ipsum_data;
     wire [2*DATA_WIDTH-1:0] opsum_data;
-    wire READY = PE_IF.READY || PE_IITR.READY;
-
-    assign ifmap_data = READY ? (external ? PE_IF.ifmap_data_M2P : PE_IITR.ifmap_data_P2P) : 0;
-    assign fltr_data = READY ? (external ? PE_IF.fltr_data_M2P : PE_IITR.fltr_data_P2P) : 0;
-    assign ipsum_data = READY ? (ipsum_seln ? 0 : (external ? PE_IF.psum_data_M2P : PE_IITR.psum_data_P2P)) : 0;
-
+    wire READY; 
+    
+    assign READY = external ? PE_IF.READY : PE_IITR.READY;
+    assign ifmap_data = external ? PE_IF.ifmap_data_M2P : PE_IITR.ifmap_data_P2P;
+    assign fltr_data = external ? PE_IF.fltr_data_M2P : PE_IITR.fltr_data_P2P;
+    assign ipsum_data = ipsum_seln ? 0 : (external ? PE_IF.psum_data_M2P : PE_IITR.psum_data_P2P);
+    
+    shifter #(
+        .DATA_WIDTH(2*DATA_WIDTH),
+        .SHIFT_DEPTH(2)
+        ) shifter_PSUM (
+            .clk(clk),
+            .rstn(rstn),
+            .serial_in(opsum_data),
+            .serial_out(),
+            .output_depth(0),
+            .depth_output(PE_OITR.psum_data_P2P)
+        );
+        
     shifter #(
         .DATA_WIDTH(DATA_WIDTH),
-        .KERNEL_SIZE(KERNEL_SIZE)
+        .SHIFT_DEPTH(8)
         ) shifter_IFMAP (
             .clk(clk),
             .rstn(rstn),
-            .serial_in(LINK_ifmap),
-            .serial_out(0)
+            .serial_in(ifmap_data),
+            .serial_out(),
             .output_depth(PE_IF.kernel_size+1),
             .depth_output(PE_OITR.ifmap_data_P2P)
         );
+        
     shifter #(
         .DATA_WIDTH(DATA_WIDTH),
-        .KERNEL_SIZE(KERNEL_SIZE)
+        .SHIFT_DEPTH(8)
         ) shifter_FLTR (
             .clk(clk),
             .rstn(rstn),
-            .serial_in(LINK_fltr),
-            .serial_out(0)
+            .serial_in(fltr_data),
+            .serial_out(),
             .output_depth(PE_IF.kernel_size+1),
             .depth_output(PE_OITR.fltr_data_P2P)
         );
@@ -95,12 +108,14 @@ module SV_PE #(
 //        .b(PE_IF.fltr_data_M2P),
 //        .result(MULT_result)
 //    );
+    wire mult_en;
+    assign mult_en = ~opsum_seln;
     mult_gen_0 mult_gen_0(
         .CLK(clk),
         .A(ifmap_data),
         .B(fltr_data),
         .P(MULT_result),
-        .SCLR(~PE_IF.PE_EN)
+        .SCLR(mult_en)
     );
 
     // MAC operation
@@ -108,7 +123,6 @@ module SV_PE #(
     
     assign PE_IF.psum_data_P2M = opsum_seln ? {2*DATA_WIDTH{1'b0}} : MAC_result;
     assign opsum_data = opsum_seln ? {2*DATA_WIDTH{1'b0}} : MAC_result;
-    assign PE_OITR.psum_data_P2P = opsum_data;
 
     assign PE_IF.VALID = ~opsum_seln;
     assign PE_OITR.VALID = ~opsum_seln;
@@ -133,7 +147,7 @@ module SV_PE #(
 
     SV_PE_ctrl PE_ctrl (
         .clk(clk),
-        .READY(),
+        .READY(READY),
         .rstn(rstn),
         .mult_seln(mult_seln),
         .acc_seln(acc_seln),

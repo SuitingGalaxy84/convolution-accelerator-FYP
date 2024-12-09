@@ -36,18 +36,23 @@ module tb_glb_PE_Loop #(
     reg en;
     reg [7:0] kernel_size;
     
-    BUS_IF#(DATA_WIDTH) BUS_IF_inst();
+    BUS_IF#(DATA_WIDTH) BUS_IF_inst_1();
+    BUS_IF#(DATA_WIDTH) BUS_IF_inst_2();
+    
     PE_ITR#(DATA_WIDTH) PE_ITR_inst_1();
     PE_ITR#(DATA_WIDTH) PE_ITR_inst_2();
     
+    PE_ITR#(DATA_WIDTH) PE_ITR_inst_3();
+    PE_ITR#(DATA_WIDTH) PE_ITR_inst_4();
+    
     SV_glb_PE_driver #(
-        .DATA_WIDTH(DATA_WIDTH),
+        .DATA_WIDTH(2*DATA_WIDTH),
         .NUM_COL(NUM_COL),
         .CLK_PERIOD(CLK_PERIOD)
         ) SV_glb_PE_driver_inst(
             .clk(clk),
             .rstn(rstn),
-            .BUS_IF(BUS_IF_inst),
+            .BUS_IF(BUS_IF_inst_1),
             .ID(ID),
             .TAG(TAG),
             .READY(READY),
@@ -62,12 +67,17 @@ module tb_glb_PE_Loop #(
         ) glb_PE_inst_1 (
             .clk(clk),
             .rstn(rstn),
-            .BUS_IF(BUS_IF_inst),
+            .external(1),
+            .BUS_IF(BUS_IF_inst_1),
             .PE_IITR(PE_ITR_inst_1),
             .PE_OITR(PE_ITR_inst_2)
         );
     
-    assign PE_ITR_inst_2.READY = PE_ITR_inst_1.VALID;
+    assign PE_ITR_inst_3.READY = PE_ITR_inst_2.VALID;
+    assign BUS_IF_inst_2.kernel_size = kernel_size;
+    assign PE_ITR_inst_3.ifmap_data_P2P = PE_ITR_inst_2.ifmap_data_P2P;
+    assign PE_ITR_inst_3.fltr_data_P2P = PE_ITR_inst_2.fltr_data_P2P;
+    assign PE_ITR_inst_3.psum_data_P2P = PE_ITR_inst_2.psum_data_P2P;
     
     glb_PE #(
         .DATA_WIDTH(DATA_WIDTH),
@@ -75,8 +85,18 @@ module tb_glb_PE_Loop #(
         ) glb_PE_inst_2 (
             .clk(clk),
             .rstn(rstn),
-           .PE_IITR(PE_ITR_inst_1),
-           .PE_OITR(PE_ITR_inst_2)
+            .external(0),
+            .BUS_IF(BUS_IF_inst_2),
+            .PE_IITR(PE_ITR_inst_3),
+            .PE_OITR(PE_ITR_inst_4)
         );
-
+        
+    initial begin
+        rstn = 1; READY = 0; TAG = 3; ID = 1; en = 0; kernel_size = 3;
+        #50 rstn = 0;
+        #50 rstn = 1;
+        #50 en = 1;
+        #50 ID = 3; READY = 1;
+        #300 $stop;
+    end 
 endmodule
