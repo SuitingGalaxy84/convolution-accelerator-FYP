@@ -68,7 +68,6 @@
         );
     endinterface // caster interface
     
-    
     interface BUS_IF #(
             parameter DATA_WIDTH = 16,
             parameter NUM_COL = 4
@@ -234,7 +233,6 @@
             input READY,
             output VALID
         );
-
     endinterface // pe interconnect
 
     interface BUS_ITR #(
