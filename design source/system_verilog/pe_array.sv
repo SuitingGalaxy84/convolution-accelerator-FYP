@@ -4,8 +4,8 @@
 // Engineer: Sun Yucheng
 // 
 // Create Date: XX
-// Design Name: Global PE interconnected on a Row Bus
-// Module Name: X_glb_PE
+// Design Name: Row Bus
+// Module Name: xbus
 // Project Name: A Convolution Accelerator for PyTorch Deep Learning Framework
 // Target Devices: PYNQ Z1
 // Tool Versions: Vivado 20XX.XX
@@ -21,46 +21,48 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`include "interface.sv"
+module xbus(
+    parameter DATA_WIDTH = 16,
+    parameter NUM_COL = 4,
+    parameter NUM_ROW = 4
+    )(
+        input wire clk,
+        input wire rstn,
+        BUS_CTRL #(DATA_WIDTH, NUM_COL, NUM_ROW) UniV_BUS_CTRL
+    );
 
-module X_glb_PE #(
-    parameter DATA_WIDTH=16,
-    parameter NUM_COL = 4
-    )();
+    BUS_IF #(DATA_WIDTH) UniV_XBUS_IF;
+    
+    
 
-    // instantiate interfaces
-    PE_ITR#(DATA_WIDTH) PE_IITR[NUM_COL]();
-    PE_ITR#(DATA_WIDTH) PE_OITR[NUM_COL]();
-    BUS_IF#(DATA_WIDTH) BUS_IF[NUM_COL]();
+    X_BusCtrl #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .NUM_COL(NUM_COL),
+        .NUM_ROW(NUM_ROW)
+    ) X_BusCtrl(
+        .clk(clk),
+        .rstn(rstn),
+        .flush(flush),
+        .rst_busy(rst_busy),
+        .UniV_XBUS_IF(UniV_XBUS_IF),
+        .UniV_BUS_CTRL(UniV_BUS_CTRL)
+    )
 
     genvar i;
-    generate // instantiate PE
-
-        for(i=0; i<NUM_COL; i=i+1) begin: PE_instantiation
+    generate
+        for(i=0; i<NUM_ROW; i=i+1) begin: GLB_PE_INST
+            
             glb_PE #(
                 .DATA_WIDTH(DATA_WIDTH),
                 .NUM_COL(NUM_COL)
-            ) glb_PE (
+            ) glb_PE_inst(
                 .clk(clk),
                 .rstn(rstn),
                 .external(external),
-                .BUS_IF(BUS_IF),
-                .PE_IITR(PE_IITR[i]),
-                .PE_OITR(PE_OITR[i])
+                .BUS_IF(UniV_XBUS_IF),
+
             )
-        end
-    endgenerate
-
-    genvar i;
-    generate // connect interfaces
-
-        for(i=0; i<NUM_COL-1; i=i+1) begin: Connect_interface
-
-
-            assign BUS_IF[i+1].kernel_size = BUS_IF[i].kernel_size;
-
         end 
-
     endgenerate
 
 endmodule

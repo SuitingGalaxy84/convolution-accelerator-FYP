@@ -109,14 +109,33 @@ module MultiCaster #(
         //assign ifmap_CASTER.PE_VALID = BUS_IF.PE_VALID;
         //assign fltr_CASTER.PE_VALID = BUS_IF.PE_VALID;
         //assign psum_CASTER.PE_VALID = BUS_IF.PE_VALID;
-                                
-        assign ifmap_CASTER.TAG = BUS_IF.TAG;
-        assign fltr_CASTER.TAG = BUS_IF.TAG;
-        assign psum_CASTER.TAG = BUS_IF.TAG;
         
-        assign ifmap_CASTER.ID = BUS_IF.ID;
-        assign fltr_CASTER.ID =  BUS_IF.ID;
-        assign psum_CASTER.ID =  BUS_IF.ID;
+        reg [$clog2(NUM_COL)-1:0] id;
+        always_ff @(posedge clk or negedge rstn) begin : GET_ID // facilitate the PE matching
+            if(~rstn) begin
+                id <= 0;
+            end else begin
+                id <= BUS_IF.ID;
+            end 
+        end
+
+        reg [$clog2(NUM_COL)-1:0] tag;
+        always_ff @(posedge clk) begin : STORE_TAG
+            if(BUS_IF.flush) begin
+                tag <= BUS_IF.TAG;
+            end else begin
+                tag <= tag;
+            end
+        end 
+
+
+        assign ifmap_CASTER.TAG = tag;
+        assign fltr_CASTER.TAG = tag;
+        assign psum_CASTER.TAG = tag;
+        
+        assign ifmap_CASTER.ID = id;
+        assign fltr_CASTER.ID =  id;
+        assign psum_CASTER.ID =  id;
         
     /* Parsing Three Casters into One MultiCaster End */
         

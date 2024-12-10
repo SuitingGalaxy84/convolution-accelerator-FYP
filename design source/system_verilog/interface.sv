@@ -98,6 +98,7 @@
         logic READY;  // Indicates CASTER is ready
         logic VALID;
         logic [7:0] kernel_size;
+        logic flush;
         //logic [2:0] PE_EN;
         //logic PE_READY;
         //logic PE_VALID;
@@ -127,7 +128,7 @@
 
             input ID,
             input TAG,
-            
+            input flush,
             output kernel_size
         );
 
@@ -153,7 +154,7 @@
     
             input ID,
             input TAG,
-            
+            input flush,
             input kernel_size
         );
     endinterface // bus interface
@@ -254,6 +255,45 @@
             output psum_data
         );
     endinterface // bus interconnect
+
+    interface BUS_CTRL #(
+        parameter DATA_WIDTH = 16,
+        parameter NUM_COL = 4,
+        parameter NUM_ROW = 4
+        )();
+
+        logic [DATA_WIDTH-1:0] ifmap_data_G2B;
+        logic [DATA_WIDTH-1:0] fltr_data_G2B;
+        logic [2*DATA_WIDTH-1:0] psum_data_G2B;
+
+        logic [DATA_WIDTH-1:0] ifmap_data_B2G;
+        logic [DATA_WIDTH-1:0] fltr_data_B2G;
+        logic [2*DATA_WIDTH-1:0] psum_data_B2G;
+
+        logic [$clog2(NUM_COL)-1:0] X_ID;
+        logic [$clog2(NUM_COL)-1:0] X_TAG;
+
+        logic [$clog2(NUM_ROW)-1:0] Y_ID;
+        logic [$clog2(NUM_ROW)-1:0] Y_TAG;
+
+        logic flush
+
+        modport X_BUS_CTRL(
+            input ifmap_data_G2B,
+            input fltr_data_G2B,
+            input psum_data_G2B,
+
+            output ifmap_data_B2G,
+            output fltr_data_B2G,
+            output psum_data_B2G
+
+
+        )
+
+
+
+
+    endinterface // bus control
 
     interface GLB_IF #(
         parameter DATA_WIDTH = 16,
