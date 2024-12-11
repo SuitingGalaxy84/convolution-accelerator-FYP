@@ -33,12 +33,14 @@ module X_BusCtrl #(
         input flush,
         output rst_busy,
 
-        BUS_IF#(DATA_WIDTH) UniV_XBUS_IF, // a master interfaces for all the EPs
-        BUS_CTRL#(DATA_WIDTH) UniV_BUS_CTRL,
+        BUS_IF.BUS_port UniV_XBUS_IF, // a master interfaces for all the EPs
+        BUS_CTRL.X_BUS_CTRL UniV_BUS_CTRL
 
     );
     reg [$clog2(NUM_ROW)-1:0] Y_TAG;
     reg [$clog2(NUM_ROW)-1:0] Y_ID;
+    
+    reg [$clog2(NUM_COL)-1:0] X_ID;
 
     always_ff @(posedge clk) begin : STORE_Y_TAG
         if(flush) begin
@@ -61,14 +63,15 @@ module X_BusCtrl #(
     wire [DATA_WIDTH-1:0] ifmap_data;
     wire [DATA_WIDTH-1:0] fltr_data;    
     wire [2*DATA_WIDTH-1:0] psum_data;
-
+    
     assign ifmap_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.ifmap_data_G2B : 0;
     assign fltr_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.fltr_data_G2B : 0;
-    assign psum_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRLpsum_data_G2B : 0;
+    assign psum_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.psum_data_G2B : 0;
 
     assign UniV_XBUS_IF.ifmap_data_B2M = ifmap_data;
     assign UniV_XBUS_IF.fltr_data_B2M = fltr_data;
     assign UniV_XBUS_IF.psum_data_B2M = psum_data;
+    assign UniV_XBUS_IF.ID = X_ID;
 
 
     

@@ -23,7 +23,7 @@
 
 `include "interface.sv"
 
-module PEArray_CONFIG #(
+module pe_array_CONFIG #(
     parameter DATA_WIDTH = 16,
     parameter NUM_COL = 3,
     parameter NUM_ROW = 3

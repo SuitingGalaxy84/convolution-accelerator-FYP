@@ -126,8 +126,8 @@
             output READY,
             input VALID,
 
-            input ID,
-            input TAG,
+            output ID,
+            output TAG,
             input flush,
             output kernel_size
         );
@@ -276,7 +276,7 @@
         logic [$clog2(NUM_ROW)-1:0] Y_ID;
         logic [$clog2(NUM_ROW)-1:0] Y_TAG;
 
-        logic flush
+        logic flush;
 
         modport X_BUS_CTRL(
             input ifmap_data_G2B,
@@ -285,10 +285,14 @@
 
             output ifmap_data_B2G,
             output fltr_data_B2G,
-            output psum_data_B2G
-
-
-        )
+            output psum_data_B2G,
+            
+            input X_ID,
+            input X_TAG, 
+            
+            input Y_ID,
+            input Y_TAG
+        );
 
 
 
