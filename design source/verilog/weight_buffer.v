@@ -21,8 +21,6 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`include "interface.sv"
-
 module WeightBuff #(
         parameter DATA_WIDTH = 16,
         parameter BUFFER_DEPTH = 16
@@ -30,14 +28,13 @@ module WeightBuff #(
     input clk,
     input rstn,
     input flush, //write enable 
-    input en, //read enable
     input [7:0] kernel_size,
     input [DATA_WIDTH-1:0] data_in,
     output [DATA_WIDTH-1:0] data_out,
     output [DATA_WIDTH-1:0] pseudo_out,
     output flush_READY,
 
-    input PE_VALID
+    input PE_VALID,
     output FLTR_READY
     
 );
@@ -53,16 +50,12 @@ module WeightBuff #(
 
     
     wire [1:0] flush_ctrl = {flush, flush_READY};
-
-    always @(posedge clk) begin //read
-        if(flush_READY)
-    end
-
+    assign data_out = weight_buff[kernel_size-1];
+    integer i;
     always @(posedge clk or negedge rstn) begin // write
         if(~rstn) begin
             wr_ptr <= 0;
-            rd_ptr <= 0;
-            for (int i = 0; i < BUFFER_DEPTH; i = i + 1) begin
+            for (i = 0; i < BUFFER_DEPTH; i = i + 1) begin
                 weight_buff[i] <= 0;
             end
         end else begin
@@ -70,7 +63,7 @@ module WeightBuff #(
                 weight_buff[wr_ptr] <= data_in;
                 wr_ptr <= wr_ptr + 1;
             end else if (flush_ctrl==FLUSH_READY || flush_ctrl==FLUSH_IDLE) begin
-                for (int i = 0; i < BUFFER_DEPTH; i = i + 1) begin
+                for (i = 0; i < BUFFER_DEPTH; i = i + 1) begin
                     weight_buff[i] <= weight_buff[i];
                 end
                 wr_ptr <= wr_ptr;

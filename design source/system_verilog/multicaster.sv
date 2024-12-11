@@ -50,13 +50,12 @@ module MultiCaster #(
         .clk(clk),
         .rstn(rstn),
         .flush(flush),
-        .flush_READY(flush_READY)
-        .en(CASTER_IF.PE_EN),
+        .flush_READY(flush_READY),
         .kernel_size(BUS_IF.kernel_size),
         .data_in(BUS_IF.fltr_data_B2M),
-        .data_otu(fltr_CASTER.fltr_data_B2C)
+        .data_out(fltr_CASTER.data_B2C),
         .pseudo_out()
-    )
+    );
 
 
     /* Parsing Three Casters into One MultiCaster Begin */

@@ -132,7 +132,6 @@
             output kernel_size
         );
 
-
         modport MCASTER_port(
             input ifmap_data_B2M,
             output ifmap_data_M2B,
