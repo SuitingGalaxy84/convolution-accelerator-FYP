@@ -4,8 +4,8 @@
 // Engineer: Sun Yucheng
 // 
 // Create Date: XX
-// Design Name: Row_Bus Control
-// Module Name: X_glb_PE
+// Design Name: Row Bus
+// Module Name: xbus
 // Project Name: A Convolution Accelerator for PyTorch Deep Learning Framework
 // Target Devices: PYNQ Z1
 // Tool Versions: Vivado 20XX.XX
@@ -21,6 +21,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`include "interface.sv"
 
 module X_BusCtrl #(
     parameter DATA_WIDTH=16,
