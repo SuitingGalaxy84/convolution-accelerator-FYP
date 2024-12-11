@@ -41,11 +41,28 @@ module MultiCaster #(
     caster #(DATA_WIDTH, NUM_COL) fltr_caster(clk, rstn, fltr_CASTER.CASTER_port);
     caster #(2*DATA_WIDTH, NUM_COL) psum_caster(clk, rstn, psum_CASTER.CASTER_port);
     
-    
+    wire flush_READY;
+
+    WeightBuff #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .BUFFER_DEPTH(32)
+    ) WeightBuff(
+        .clk(clk),
+        .rstn(rstn),
+        .flush(flush),
+        .flush_READY(flush_READY)
+        .en(CASTER_IF.PE_EN),
+        .kernel_size(BUS_IF.kernel_size),
+        .data_in(BUS_IF.fltr_data_B2M),
+        .data_otu(fltr_CASTER.fltr_data_B2C)
+        .pseudo_out()
+    )
+
+
     /* Parsing Three Casters into One MultiCaster Begin */
         //transfer data from the BUS to the caster
         assign ifmap_CASTER.data_B2C = BUS_IF.ifmap_data_B2M;
-        assign fltr_CASTER.data_B2C = BUS_IF.fltr_data_B2M;
+        // assign fltr_CASTER.data_B2C = BUS_IF.fltr_data_B2M;
         assign psum_CASTER.data_B2C = BUS_IF.psum_data_B2M;
    
 
@@ -66,7 +83,8 @@ module MultiCaster #(
 
         assign PE_IF.PE_EN = ifmap_CASTER.PE_EN & 
                              fltr_CASTER.PE_EN & 
-                             psum_CASTER.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
+                             psum_CASTER.PE_EN &
+                             flush_READY; // PE_EN signal enables the PE from the CASTER to perform the calculation
 
         assign PE_IF.READY = ifmap_CASTER.PE_READY & fltr_CASTER.PE_READY & psum_CASTER.PE_READY;
 
