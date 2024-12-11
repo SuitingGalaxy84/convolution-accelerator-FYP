@@ -138,12 +138,16 @@ module MultiCaster #(
         end
 
         reg [$clog2(NUM_COL)-1:0] tag;
-        always_ff @(posedge clk) begin : STORE_TAG
-            if(BUS_IF.flush) begin
-                tag <= BUS_IF.TAG;
+        always_ff @(posedge clk or negedge rstn) begin : STORE_TAG
+            if(~rstn) begin
+                tag <= 0;
             end else begin
-                tag <= tag;
-            end
+                if(BUS_IF.flush) begin
+                    tag <= BUS_IF.TAG;
+                end else begin
+                    tag <= tag;
+                end
+            end 
         end 
 
 
