@@ -35,6 +35,7 @@ module tb_glb_PE_Loop #(
     reg READY;
     reg en;
     reg [7:0] kernel_size;
+    reg flush;
     
     BUS_IF#(DATA_WIDTH) BUS_IF_inst_1();
     BUS_IF#(DATA_WIDTH) BUS_IF_inst_2();
@@ -75,6 +76,7 @@ module tb_glb_PE_Loop #(
     
     assign PE_ITR_inst_3.READY = PE_ITR_inst_2.VALID;
     assign BUS_IF_inst_2.kernel_size = kernel_size;
+    assign BUS_IF_inst_1.flush = flush;
     assign PE_ITR_inst_3.ifmap_data_P2P = PE_ITR_inst_2.ifmap_data_P2P;
     assign PE_ITR_inst_3.fltr_data_P2P = PE_ITR_inst_2.fltr_data_P2P;
     assign PE_ITR_inst_3.psum_data_P2P = PE_ITR_inst_2.psum_data_P2P;
@@ -92,11 +94,13 @@ module tb_glb_PE_Loop #(
         );
         
     initial begin
-        rstn = 1; READY = 0; TAG = 3; ID = 1; en = 0; kernel_size = 3;
-        #50 rstn = 0;
-        #50 rstn = 1;
-        #50 en = 1;
-        #50 ID = 3; READY = 1;
-        #300 $stop;
+        rstn = 1; READY = 0; TAG = 3; ID = 1; en = 0; kernel_size = 3; flush = 0;
+        #30 rstn = 0; 
+        #30 rstn = 1;
+        #30 en = 1;
+        #30 ID = 3; 
+        #30 flush = 1;READY = 1;
+        #10 flush = 0;
+        #250 $stop;
     end 
 endmodule
