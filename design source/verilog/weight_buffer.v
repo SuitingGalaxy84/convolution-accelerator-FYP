@@ -32,7 +32,7 @@ module WeightBuff #(
     input [DATA_WIDTH-1:0] data_in,
     output [DATA_WIDTH-1:0] data_out,
     output [DATA_WIDTH-1:0] pseudo_out,
-    output flush_VALID,
+    output flush_BUSY,
     output read_VALID,
     input en   
 );
@@ -45,48 +45,52 @@ module WeightBuff #(
     reg [7:0] next_wr_ptr;
     reg [7:0] next_rd_ptr;
 
-    assign flush_VALID = write_current_state;
-    assign read_VALID = read_currnet_state;
+    
 
 
     localparam FLUSH_IDLE = 1'b0;
     localparam FLUSH_OP = 1'b1;
 
 
-    localparam READ_IDEL = 2'b0;
-    localparam READ_OP = 2'b1;
+    localparam READ_IDEL = 1'b0;
+    localparam READ_OP = 1'b1;
     
-    reg read_currnet_state;
+    reg read_current_state;
     reg read_next_state;
-    reg write_currnet_state;
+    
+    reg write_current_state;
     reg write_next_state;
 
-
+    assign flush_BUSY = write_current_state;
+    assign read_VALID = read_current_state;
 
     assign pseudo_out = weight_buff[BUFFER_DEPTH-1];
-    assign data_out = weight_buff[rd_ptr];
+    
+
+    assign data_out = read_VALID ? weight_buff[rd_ptr] : 0;
+        
     always @(*) begin //write_state_transition
-        case(write_currnet_state)
+        case(write_current_state)
             FLUSH_IDLE: begin
                 write_next_state = flush ? FLUSH_OP : FLUSH_IDLE;
                 next_wr_ptr = 0;
             end 
             FLUSH_OP: begin
                 next_wr_ptr = wr_ptr+1;
-                write_next_state = (wr_ptr==kernel_size-1) ? FLUSH_IDEL : FLUSH_OP;
+                write_next_state = (wr_ptr==kernel_size-1) ? FLUSH_IDLE : FLUSH_OP;
             end
         endcase
     end 
 
     always @(*) begin // read_state_transition
-        case(read_currnet_state)
+        case(read_current_state)
             READ_IDEL: begin
-                read_next_state = READY ? READ_OP : READ_IDEL;
+                read_next_state = en ? READ_OP : 0;
                 next_rd_ptr = 0;
             end 
             READ_OP: begin
                 next_rd_ptr = rd_ptr+1;
-                read_next_state = (rd_ptr==kernel_size-1) ? READ_IDEL : READ_OP;
+                read_next_state = (rd_ptr==kernel_size) ? READ_IDEL : READ_OP;
             end
         endcase
     end  
@@ -96,10 +100,10 @@ module WeightBuff #(
     always @(posedge clk or negedge rstn) begin // read
         if(~rstn) begin
             rd_ptr <= 0;
-            read_currnet_state = 0;
+            read_current_state <= 0;
         end else begin
             rd_ptr <= next_rd_ptr;
-            read_currnet_state <= read_next_state;
+            read_current_state <= read_next_state;
         end 
     end
 
@@ -107,13 +111,13 @@ module WeightBuff #(
     always @(posedge clk or negedge rstn) begin // write
         if(~rstn) begin
             wr_ptr <= 0;
-            write_current_state = 0;
+            write_current_state <= 0;
             for (i = 0; i < BUFFER_DEPTH; i = i + 1) begin
                 weight_buff[i] <= 0;
             end
         end else begin
             wr_ptr <= next_wr_ptr;
-            write_currnet_state <= write_next_state;
+            write_current_state <= write_next_state;
             if(write_current_state == FLUSH_OP) begin
                 weight_buff[wr_ptr] <= data_in;
             end
