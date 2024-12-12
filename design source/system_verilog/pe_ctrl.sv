@@ -28,7 +28,7 @@ module SV_PE_ctrl(
         end else begin
             MAC_counter <= MAC_counter + 1;
         end
-        if(MAC_counter == kernel_size*kernel_size-2) begin
+        if(MAC_counter == kernel_size-2) begin
             out_valid <= 1'b1;
         end else begin
             out_valid <= 1'b0;
