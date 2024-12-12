@@ -33,7 +33,7 @@ module tb_WeightBuff #(
     reg flush;
     reg en;
 
-    wire flush_VALID;
+    wire flush_BUSY;
     wire read_VALID;
 
     reg [7:0] kernel_size;
@@ -46,7 +46,8 @@ module tb_WeightBuff #(
         .clk(clk),
         .rstn(rstn),
         .data_in(data_in),
-        .flush(flush)
+        .flush(flush),
+        .flush_BUSY(flush_BUSY)
     );
 
     WeightBuff #(
@@ -59,9 +60,21 @@ module tb_WeightBuff #(
         .kernel_size(kernel_size),
         .data_in(data_in),
         .data_out(data_out),
-        .pseusdo_out(),
-        .flush_VALID(flush_VALID),
-        .read_VALID(read_VALID)
+        .pseudo_out(),
+        .flush_BUSY(flush_BUSY),
+        .read_VALID(read_VALID),
         .en(en)
     );
+    
+    
+    initial begin
+        rstn=1; en=0; flush = 0; kernel_size=3;
+        #50 rstn=0;
+        #50 rstn=1;
+        #50 flush=1; 
+        #10 flush=0;
+        #20 en=1;
+        #10 en=0;
+        #100 $stop;
+    end
 endmodule 

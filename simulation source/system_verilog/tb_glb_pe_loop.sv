@@ -77,6 +77,9 @@ module tb_glb_PE_Loop #(
     assign PE_ITR_inst_3.READY = PE_ITR_inst_2.VALID;
     assign BUS_IF_inst_2.kernel_size = kernel_size;
     assign BUS_IF_inst_1.flush = flush;
+    assign BUS_IF_inst_2.flush = flush;
+    assign BUS_IF_inst_2.kernel_size = BUS_IF_inst_1.kernel_size;
+    assign BUS_IF_inst_2.fltr_data_B2M = BUS_IF_inst_1.fltr_data_B2M;
     assign PE_ITR_inst_3.ifmap_data_P2P = PE_ITR_inst_2.ifmap_data_P2P;
     assign PE_ITR_inst_3.fltr_data_P2P = PE_ITR_inst_2.fltr_data_P2P;
     assign PE_ITR_inst_3.psum_data_P2P = PE_ITR_inst_2.psum_data_P2P;
@@ -99,8 +102,9 @@ module tb_glb_PE_Loop #(
         #30 rstn = 1;
         #30 en = 1;
         #30 ID = 3; 
-        #30 flush = 1;READY = 1;
+        #20 flush = 1; 
         #10 flush = 0;
+        #30 READY = 1;
         #250 $stop;
     end 
 endmodule

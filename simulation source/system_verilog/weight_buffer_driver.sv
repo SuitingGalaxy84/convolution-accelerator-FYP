@@ -29,14 +29,14 @@ module WeightBuff_driver #(
     input rstn, 
     output [DATA_WIDTH-1:0] data_in,
     input flush,
-    input flsh_VALID
+    input flush_BUSY
 );
     parameter MAX_NUM = 2^(DATA_WIDTH) - 1;
     parameter MIN_NUM = 0;
 
 
     reg [DATA_WIDTH-1:0] data_in_reg;
-    assign data_in = flush_VALID ? data_in_reg : 0;
+    assign data_in = flush_BUSY ? data_in_reg : 0;
     initial begin
         clk = 1;
         forever #(CLK_PERIOD/2) clk = ~clk;
@@ -49,7 +49,6 @@ module WeightBuff_driver #(
             data_in_reg <= $urandom_range(MIN_NUM, MAX_NUM);
         end
     end 
-
 
 
 endmodule
