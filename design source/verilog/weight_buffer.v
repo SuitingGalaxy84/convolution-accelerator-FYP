@@ -63,7 +63,7 @@ module WeightBuff #(
 
 
 
-    assign pseudo_out = weight_buff[BUFFER_DEPTH-1:0];
+    assign pseudo_out = weight_buff[BUFFER_DEPTH-1];
     assign data_out = weight_buff[rd_ptr];
     always @(*) begin //write_state_transition
         case(write_currnet_state)
@@ -93,7 +93,7 @@ module WeightBuff #(
 
 
 
-    always @(posedge clk or rstn) begin // read
+    always @(posedge clk or negedge rstn) begin // read
         if(~rstn) begin
             rd_ptr <= 0;
             read_currnet_state = 0;
