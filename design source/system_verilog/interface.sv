@@ -82,7 +82,7 @@
         logic [DATA_WIDTH-1:0] ifmap_data_M2B;  // IFMAP from MultiCaster to BUS
         logic [DATA_WIDTH-1:0] fltr_data_M2B;  // Filter from MultiCaster to BUS
         logic [2*DATA_WIDTH-1:0] psum_data_M2B;  // Partial sum from MultiCaster to BUS
-    
+        
         //logic [DATA_WIDTH-1:0] ifmap_data_M2P;  // IFMAP from BUS to PE
         //logic [DATA_WIDTH-1:0] fltr_data_M2P;  // Filter from BUS to PE
         //logic [2*DATA_WIDTH-1:0] psum_data_M2P;  // Partial sum from BUS to PE
@@ -99,6 +99,7 @@
         logic VALID;
         logic [7:0] kernel_size;
         logic flush;
+        logic flush_BUSY;
         //logic [2:0] PE_EN;
         //logic PE_READY;
         //logic PE_VALID;
@@ -129,6 +130,7 @@
             output ID,
             output TAG,
             input flush,
+            input flush_BUSY,
             output kernel_size
         );
 
@@ -154,6 +156,7 @@
             input ID,
             input TAG,
             input flush,
+            output flush_BUSY,
             input kernel_size
         );
     endinterface // bus interface
@@ -222,15 +225,14 @@
             input ifmap_data_P2P,
             input fltr_data_P2P,
             input psum_data_P2P,
-            output READY,
-            input VALID
+            input READY
+            
         );
 
         modport OUT_port(
             output ifmap_data_P2P,
             output fltr_data_P2P,
             output psum_data_P2P,
-            input READY,
             output VALID
         );
     endinterface // pe interconnect
