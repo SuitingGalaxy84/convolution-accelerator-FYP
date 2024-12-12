@@ -45,7 +45,7 @@ module SV_PE #(
     
     assign READY = external ? PE_IF.READY : PE_IITR.READY;
     assign ifmap_data = external ? PE_IF.ifmap_data_M2P : PE_IITR.ifmap_data_P2P;
-    assign fltr_data = external ? PE_IF.fltr_data_M2P : PE_IITR.fltr_data_P2P;
+    assign fltr_data = PE_IF.fltr_data_M2P;//external ? PE_IF.fltr_data_M2P : PE_IITR.fltr_data_P2P;
     assign ipsum_data = ipsum_seln ? 0 : (external ? PE_IF.psum_data_M2P : PE_IITR.psum_data_P2P);
     
     shifter #(
