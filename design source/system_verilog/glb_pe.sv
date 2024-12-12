@@ -52,7 +52,9 @@ module glb_PE #(
         .clk(clk),
         .rstn(rstn),
         .BUS_IF(BUS_IF),
-        .PE_IF(PE_IF)
+        .PE_IF(PE_IF),
+        .PE_ITR_READY(PE_IITR.READY),
+        .external(external)
     );
 
 endmodule
