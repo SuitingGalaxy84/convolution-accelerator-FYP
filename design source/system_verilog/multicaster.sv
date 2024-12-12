@@ -30,9 +30,11 @@ module MultiCaster #(
     input wire clk,
     input wire rstn,
     BUS_IF.MCASTER_port BUS_IF,
-    PE_IF.MC_port PE_IF
+    PE_IF.MC_port PE_IF,
+    input PE_ITR_READY,
+    input external
 );
-    
+    wire [DATA_WIDTH-1:0] WeightBuff_OUT;
     CASTER_IF #(DATA_WIDTH, NUM_COL) ifmap_CASTER();
     CASTER_IF #(DATA_WIDTH, NUM_COL) fltr_CASTER();
     CASTER_IF #(2*DATA_WIDTH, NUM_COL) psum_CASTER();
@@ -41,21 +43,8 @@ module MultiCaster #(
     caster #(DATA_WIDTH, NUM_COL) fltr_caster(clk, rstn, fltr_CASTER.CASTER_port);
     caster #(2*DATA_WIDTH, NUM_COL) psum_caster(clk, rstn, psum_CASTER.CASTER_port);
     
-    wire flush_READY;
-
-    WeightBuff #(
-        .DATA_WIDTH(DATA_WIDTH),
-        .BUFFER_DEPTH(32)
-    ) WeightBuff(
-        .clk(clk),
-        .rstn(rstn),
-        .flush(flush),
-        .flush_READY(flush_READY),
-        .kernel_size(BUS_IF.kernel_size),
-        .data_in(BUS_IF.fltr_data_B2M),
-        .data_out(fltr_CASTER.data_B2C),
-        .pseudo_out()
-    );
+    
+    
 
 
     /* Parsing Three Casters into One MultiCaster Begin */
@@ -77,13 +66,12 @@ module MultiCaster #(
 
         //transfer data from the caster to PE
         assign PE_IF.ifmap_data_M2P = ifmap_CASTER.data_C2P;
-        assign PE_IF.fltr_data_M2P = fltr_CASTER.data_C2P;
+        assign PE_IF.fltr_data_M2P = WeightBuff_OUT; //fltr_CASTER.data_C2P;
         assign PE_IF.psum_data_M2P = psum_CASTER.data_C2P;
 
         assign PE_IF.PE_EN = ifmap_CASTER.PE_EN & 
                              fltr_CASTER.PE_EN & 
-                             psum_CASTER.PE_EN &
-                             flush_READY; // PE_EN signal enables the PE from the CASTER to perform the calculation
+                             psum_CASTER.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
 
         assign PE_IF.READY = ifmap_CASTER.PE_READY & fltr_CASTER.PE_READY & psum_CASTER.PE_READY;
 
@@ -105,9 +93,9 @@ module MultiCaster #(
         assign psum_CASTER.CASTER_EN = BUS_IF.CASTER_EN; // The BUS want to enable the psum_CASTER
 
          //READY (Output) signal notifies the BUS->BUFFER that the PE is ready to accept data ()
-        assign ifmap_CASTER.CASTER_READY = BUS_IF.READY;
-        assign fltr_CASTER.CASTER_READY = BUS_IF.READY;
-        assign psum_CASTER.CASTER_READY = BUS_IF.READY;
+        assign ifmap_CASTER.CASTER_READY = BUS_IF.READY & Buff_READY;
+        assign fltr_CASTER.CASTER_READY = BUS_IF.READY & Buff_READY;
+        assign psum_CASTER.CASTER_READY = BUS_IF.READY & Buff_READY;
         
         // VALID (Output) signal notifies the BUS that the calculation is done
         assign BUS_IF.VALID = ifmap_CASTER.CASTER_VALID & 
@@ -148,7 +136,43 @@ module MultiCaster #(
                 end
             end 
         end 
-
+        
+        reg [7:0] kernel_size;
+        always_ff @(posedge clk or negedge rstn) begin: STORE_KERNEL_SIZE
+            if(~rstn) begin
+                kernel_size <= 0;
+            end else begin
+                if(BUS_IF.flush) begin
+                    kernel_size <= BUS_IF.kernel_size;
+                end else begin
+                    kernel_size <= kernel_size;
+                end
+            end
+        end  
+        
+        wire flush_BUSY;
+        assign BUS_IF.flush_BUSY = flush_BUSY;
+        
+        wire Buff_READY;
+        assign Buff_READY = ~flush_BUSY;
+        wire Buff_rden;
+        assign Buff_rden = (external ? BUS_IF.READY : PE_ITR_READY) && Buff_READY;
+       
+        WeightBuff #(
+            .DATA_WIDTH(DATA_WIDTH),
+            .BUFFER_DEPTH(16)
+        ) WeightBuff(
+            .clk(clk),
+            .rstn(rstn),
+            .flush(BUS_IF.flush),
+            .kernel_size(kernel_size),
+            .data_in(BUS_IF.fltr_data_B2M),
+            .data_out(WeightBuff_OUT),//fltr_CASTER.data_B2C),
+            .pseudo_out(),
+            .flush_BUSY(flush_BUSY),
+            .read_VALID(read_VALID),
+            .en(Buff_rden) // include:
+        );
 
         assign ifmap_CASTER.TAG = tag;
         assign fltr_CASTER.TAG = tag;
@@ -160,7 +184,7 @@ module MultiCaster #(
         
     /* Parsing Three Casters into One MultiCaster End */
         
-        assign PE_IF.kernel_size = BUS_IF.kernel_size;
+        assign PE_IF.kernel_size = kernel_size;
 
 
 
