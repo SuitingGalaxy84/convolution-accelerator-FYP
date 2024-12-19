@@ -294,34 +294,7 @@
             input Y_ID,
             input Y_TAG
         );
-
-
-
-
     endinterface // bus control
-
-    interface GLB_IF #(
-        parameter DATA_WIDTH = 16,
-        parameter GLB_DEPTH = 1024
-        )();
-        logic [$clog2(GLB_DEPTH)-1:0] ADDR;
-        logic [DATA_WIDTH-1:0] DATA_IN;
-        logic [DATA_WIDTH-1:0] DATA_OUT;
-        logic RST;
-        logic WEN;
-        logic RST_BUSY;
-        logic EN;
-
-        modport GLB_port(
-            input ADDR,
-            input DATA_IN,
-            output DATA_OUT,
-            input RST,
-            input WEN,
-            output RST_BUSY,
-            input EN
-        );
-    endinterface
 
     interface FIFO_IF #(
         parameter DATA_WIDTH = 8,
@@ -350,6 +323,42 @@
             );
     endinterface
 
+    interface GLB_BUFF #(
+        parameter DATA_WIDTH, 
+        parameter NUM_COL,
+        parameter NUM_ROW
+        )();
+
+        logic [DATA_WIDTH-1:0] ifmap_data_G2B,
+        logic [DATA_WIDTH-1:0] fltr_data_G2B,
+        logic [2*DATA_WIDTH-1:0] psum_data_G2B;
+
+        logic [DATA_WIDTH-1:0] ifmap_data_B2G;
+        logic [DATA_WIDTH-1:0] fltr_data_B2G;
+        logic [2*DATA_WIDTH-1:0] psum_data_B2G;
+
+        logic [$clog2(NUM_COL)-1:0] X_ID;
+        logic [$clog2(NUM_COL)-1:0] X_TAG;
+
+        logic [$clog2(NUM_ROW)-1:0] Y_ID;
+        logic [$clog2(NUM_ROW)-1:0] Y_TAG;
+
+        modport BUFF_port(
+            output ifmap_data_G2B,
+            output fltr_data_G2B,
+            output psum_data_G2B,
+
+            input ifmap_data_B2G,
+            input fltr_data_B2G,
+            input psum_data_B2G,
+
+            output X_ID,
+            output X_TAG,
+
+            output Y_ID, 
+            output Y_TAG
+        );
+    endinterface
 `endif
 
 
