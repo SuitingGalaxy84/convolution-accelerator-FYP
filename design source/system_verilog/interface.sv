@@ -294,6 +294,23 @@
             input Y_ID,
             input Y_TAG
         );
+
+        modport Test_XBUS_CTRL(
+            output ifmap_data_G2B,
+            output fltr_data_G2B,
+            output psum_data_G2B,
+
+            input ifmap_data_B2G,
+            input fltr_data_B2G,
+            input psum_data_B2G,
+
+            output X_ID, 
+            output X_TAG,
+
+            output Y_ID, 
+            output Y_TAG    
+        );
+        
     endinterface // bus control
 
     interface FIFO_IF #(
