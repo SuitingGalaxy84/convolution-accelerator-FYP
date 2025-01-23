@@ -33,12 +33,12 @@ module pe_array_CONFIG #(
     );
 
     BUS_IF #(DATA_WIDTH) UniV_XBUS_IF [NUM_ROW-1:0] ();
-    BUS_CTRL #(DATA_WIDTH, NUM_ROW, NUM_COL) UniV_BUS_CTRL ();
+    BUS_CTRL #(DATA_WIDTH, NUM_ROW, NUM_COL) UniV_BUS_CTRL_IF ();
     PE_ITR #(DATA_WIDTH) PE_IITR [NUM_ROW-1:0][NUM_COL-1:0] ();
     PE_ITR #(DATA_WIDTH) PE_OITR [NUM_ROW-1:0][NUM_COL-1:0] ();
 
     
-
+    
   
     
     genvar m;
@@ -54,7 +54,7 @@ module pe_array_CONFIG #(
                 .flush(flush),
                 .rst_busy(rst_busy),
                 .UniV_XBUS_IF(UniV_XBUS_IF[m]),
-                .UniV_BUS_CTRL(UniV_BUS_CTRL)
+                .UniV_BUS_CTRL(UniV_BUS_CTRL_IF)
             );
         end 
 

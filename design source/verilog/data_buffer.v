@@ -6,7 +6,7 @@ module DataBuff #(
     input wire clk_r,
     input wire rstn,
 
-
+    //???
 
     input wire wr_en,
     input wire [7:0] kernel_size,
@@ -21,7 +21,10 @@ module DataBuff #(
 );
     reg rd_en;
     always @(posedge rd_clk or negedge rstn) begin
-        if(~rstn) 
+        if(~rstn) begin
+        end else begin
+            
+        end 
     end 
     
     AsyncFIFO #(
