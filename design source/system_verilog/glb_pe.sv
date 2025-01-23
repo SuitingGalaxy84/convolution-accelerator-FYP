@@ -30,6 +30,7 @@ module glb_PE #(
     input wire clk,
     input wire rstn,
     input wire external,
+    output wire tag_lock,
     BUS_IF.MCASTER_port BUS_IF,
     PE_ITR.IN_port PE_IITR,
     PE_ITR.OUT_port PE_OITR
@@ -54,7 +55,8 @@ module glb_PE #(
         .BUS_IF(BUS_IF),
         .PE_IF(PE_IF),
         .PE_ITR_READY(PE_IITR.READY),
-        .external(external)
+        .external(external),
+        .tag_lock(tag_lock)
     );
 
 endmodule

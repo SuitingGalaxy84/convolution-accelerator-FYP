@@ -18,6 +18,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
+`include "interface.sv"
 
 module tb_ccd_pe();
 
@@ -28,15 +29,29 @@ module tb_ccd_pe();
 
     BUS_IF #(DATA_WIDTH) UniV_XBUS_IF();
     BUS_CTRL #(DATA_WIDTH, NUM_ROW, NUM_COL) UniV_BUS_CTRL_IF();
+    PE_ITR #(DATA_WIDTH) PE_ITR_inst1();
+    PE_ITR #(DATA_WIDTH) PE_ITR_inst2();    
 
     
-
+    reg [7:0] kernel_size;
+    reg [$clog2(NUM_COL)-1:0] X_ID;
+    reg [$clog2(NUM_COL)-1:0] X_TAG;
+    
+    reg [$clog2(NUM_ROW)-1:0] Y_ID;
+    reg [$clog2(NUM_ROW)-1:0] Y_TAG;
+    
+    reg external;
+    reg flush;
+    wire rst_busy;
+    reg rstn;
+    
     // instantiate ccd_pe_driver
     ccd_pe_driver #(
         .DATA_WIDTH(DATA_WIDTH),
-        .NUM_COLq(NUM_COL),
+        .NUM_COL(NUM_COL),
+        .NUM_ROW(NUM_ROW),
         .CLK_PERIOD(CLK_PERIOD)
-    )(
+    )ccd_pe_driver (
         .rstn(rstn),
         .pe_clk(pe_clk),
         .clk(clk),
@@ -44,8 +59,8 @@ module tb_ccd_pe();
         .X_TAG(X_TAG),
         .Y_ID(Y_ID),
         .Y_TAG(Y_TAG),
-        .X_BUS_CTR(UniV_BUS_CTRL_IF)
-    )
+        .Test_XBUS_CTRL(UniV_BUS_CTRL_IF)
+    );
     
     // instantiate glb_PE
 
@@ -58,6 +73,8 @@ module tb_ccd_pe();
         .rstn(rstn),
         .flush(flush),
         .rst_busy(rst_busy),
+        
+        .kernel_size(kernel_size),
         .UniV_XBUS_IF(UniV_XBUS_IF),
         .UniV_BUS_CTRL(UniV_BUS_CTRL_IF)
     );
@@ -74,10 +91,15 @@ module tb_ccd_pe();
                 .rstn(rstn),
                 .external(external),
                 .BUS_IF(UniV_XBUS_IF),
-                .PE_ITR(PE_IITR[i]),
-                .PE_ITR(PE_OITR[i])
+                .PE_IITR(PE_ITR_inst1),
+                .PE_OITR(PE_ITR_inst2)
             );
         end
     endgenerate
     
+    initial begin
+    external=1; rstn = 1;
+    #30 rstn = 0;
+    #300 $stop;
+    end  
 endmodule 

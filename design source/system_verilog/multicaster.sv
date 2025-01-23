@@ -32,7 +32,8 @@ module MultiCaster #(
     BUS_IF.MCASTER_port BUS_IF,
     PE_IF.MC_port PE_IF,
     input PE_ITR_READY,
-    input external
+    input external,
+    output tag_lock
 );
     wire [DATA_WIDTH-1:0] WeightBuff_OUT;
     CASTER_IF #(DATA_WIDTH, NUM_COL) ifmap_CASTER();
@@ -123,19 +124,32 @@ module MultiCaster #(
                 id <= BUS_IF.ID;
             end 
         end
-
-        reg [$clog2(NUM_COL)-1:0] tag;
-        always_ff @(posedge clk or negedge rstn) begin : STORE_TAG
-            if(~rstn) begin
-                tag <= 0;
-            end else begin
-                if(BUS_IF.flush) begin
-                    tag <= BUS_IF.TAG;
-                end else begin
-                    tag <= tag;
-                end
-            end 
-        end 
+            
+        wire [$clog2(NUM_COL)-1:0] tag;    
+        
+        tagBuff #(
+            .NUM_COL(NUM_COL)
+        ) tagBuff_inst(
+            .clk(clk),
+            .rstn(rstn),
+            .flush(flush),
+            .tag_in(BUS_IF.TAG),
+            .tag_out(tag),
+            .tag_lock(tag_lock)
+        );
+//        reg [$clog2(NUM_COL)-1:0] tag;
+//        always_ff @(posedge clk or negedge rstn) begin : STORE_TAG
+//            if(~rstn) begin // the difference btw flush signal and rst signal is !!!!!
+//                tag <= 0;
+//            end else begin
+//                if(BUS_IF.flush) begin
+//                    tag <= BUS_IF.TAG;                  
+//                end else begin
+//                    tag <= tag;
+//                end
+//            end 
+//        end 
+        
         
         reg [7:0] kernel_size;
         always_ff @(posedge clk or negedge rstn) begin: STORE_KERNEL_SIZE

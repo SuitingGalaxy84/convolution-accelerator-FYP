@@ -32,7 +32,8 @@ module X_BusCtrl #(
         input wire rstn,
         input flush,
         output rst_busy,
-
+        
+        input [7:0] kernel_size,
         BUS_IF.BUS_port UniV_XBUS_IF, // a master interfaces for all the EPs
         BUS_CTRL.X_BUS_CTRL UniV_BUS_CTRL
 
@@ -41,7 +42,8 @@ module X_BusCtrl #(
     reg [$clog2(NUM_ROW)-1:0] Y_ID;
     
     reg [$clog2(NUM_COL)-1:0] X_ID;
-
+    
+    assign UniV_XBUS_IF.kernel_size = kernel_size;
     always_ff @(posedge clk) begin : STORE_Y_TAG
         if(flush) begin
             Y_TAG <= UniV_BUS_CTRL.Y_TAG;
@@ -54,10 +56,14 @@ module X_BusCtrl #(
         if(~rstn) begin
             Y_ID <= 0;
             X_ID <= 0;
-        end else begin
+        end else if (~rst_busy) begin
             Y_ID <= UniV_BUS_CTRL.Y_ID;
             X_ID <= UniV_BUS_CTRL.X_ID;
-        end 
+        end else begin
+            Y_ID <= 0;
+            X_ID <=0;
+        end
+        
     end 
 
     wire [DATA_WIDTH-1:0] ifmap_data;
