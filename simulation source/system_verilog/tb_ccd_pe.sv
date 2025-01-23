@@ -79,10 +79,26 @@ module tb_ccd_pe();
         .UniV_BUS_CTRL(UniV_BUS_CTRL_IF)
     );
 
-
+    wire tag_locks;
+    wire [NUM_COL-1:0] tag_lock;
     genvar i;
+
+    tagAlloc #(
+        .NUM_COL(NUM_COL), 
+        .DATA_WIDTH(DATA_WIDTH)
+    ) tagAlloc(
+        .clk(clk),
+        .rstn(rstn),
+        .flush(UniV_BUS_CTRL_IF.flush),
+        .tag_in(),
+        .tag_out(),
+        .tag_lock(tag_locks)
+    )
+    
     generate
         for(i=0; i<NUM_COL; i=i+1) begin : glb_PE
+
+            assign tag_locks = &tag_lock[i];
             glb_PE #(
                 .DATA_WIDTH(DATA_WIDTH),
                 .NUM_COL(NUM_COL)
@@ -90,6 +106,7 @@ module tb_ccd_pe();
                 .clk(clk),
                 .rstn(rstn),
                 .external(external),
+                .tag_lock(tag_lock[i])
                 .BUS_IF(UniV_XBUS_IF),
                 .PE_IITR(PE_ITR_inst1),
                 .PE_OITR(PE_ITR_inst2)
