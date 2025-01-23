@@ -38,7 +38,15 @@ module pe_array_CONFIG #(
     PE_ITR #(DATA_WIDTH) PE_OITR [NUM_ROW-1:0][NUM_COL-1:0] ();
 
     
-    
+    wire [NUM_ROW-1:0] tag_locks;
+    wire [NUM_ROW-1:0][NUM_COL-1:0] tag_lock;
+    genvar a;
+    generate 
+        for(a=0; a<NUM_ROW; a=a+1) begin : tag_locks_gen
+            // AND reduction for each row
+            assign tag_locks[a] = &tag_lock[a];
+        end
+    endgenerate
   
     
     genvar m;
@@ -58,7 +66,22 @@ module pe_array_CONFIG #(
             );
         end 
 
+        for(m=0; m<NUM_ROW; m=m+1) begin : tag_allocator
+            tagAlloc #(
+                .NUM_COL(NUM_COL),
+                .DATA_WIDTH(DATA_WIDTH)
+            )(
+                .clk(clk),
+                .rstn(rstn),
+                .flush(UniV_BUS_CTRL_IF.flush),
+                .tag_in(),
+                .tag_out(),
+                .tag_lock(tag_locks[m])
+            )
+        end 
+
     endgenerate
+    
     
     genvar i, j;
     generate // instantiate Global PE Array
@@ -71,6 +94,7 @@ module pe_array_CONFIG #(
                     .clk(clk),
                     .rstn(rstn),
                     .external(external),
+                    .tag_lock(tag_lock[i][j]),
                     .BUS_IF(UniV_XBUS_IF[i]),
                     .PE_IITR(PE_IITR[i][j]),
                     .PE_OITR(PE_OITR[i][j])
@@ -81,6 +105,7 @@ module pe_array_CONFIG #(
 
     endgenerate
 
+    
     genvar k, l;
     generate 
         for(k=0; k<NUM_ROW-1; k=k+1) begin : data_conn

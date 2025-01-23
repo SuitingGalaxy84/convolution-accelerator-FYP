@@ -30,7 +30,7 @@ module glb_PE #(
     input wire clk,
     input wire rstn,
     input wire external,
-    output wire tag_lock,
+    output wire tag_lock, //tag lock: notify the controller the tag is stored 
     BUS_IF.MCASTER_port BUS_IF,
     PE_ITR.IN_port PE_IITR,
     PE_ITR.OUT_port PE_OITR
