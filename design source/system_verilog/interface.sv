@@ -346,8 +346,8 @@
         parameter NUM_ROW
         )();
 
-        logic [DATA_WIDTH-1:0] ifmap_data_G2B,
-        logic [DATA_WIDTH-1:0] fltr_data_G2B,
+        logic [DATA_WIDTH-1:0] ifmap_data_G2B;
+        logic [DATA_WIDTH-1:0] fltr_data_G2B;
         logic [2*DATA_WIDTH-1:0] psum_data_G2B;
 
         logic [DATA_WIDTH-1:0] ifmap_data_B2G;

@@ -24,17 +24,18 @@
 module ccd_pe_driver #(
     parameter DATA_WIDTH = 16,
     parameter NUM_COL = 4,
+    parameter NUM_ROW = 4,
     parameter CLK_PERIOD = 10
     )(
         input rstn,
         output reg pe_clk,
         output reg clk,
-        input X_ID,
-        input X_TAG, 
+        input [$clog2(NUM_COL)-1:0] X_ID,
+        input [$clog2(NUM_COL)-1:0] X_TAG, 
         
-        input Y_ID, 
-        input Y_TAG, 
-        X_BUS_CTR.Test_XBUS_CTRL Test_XBUS_CTRL
+        input [$clog2(NUM_ROW)-1:0] Y_ID, 
+        input [$clog2(NUM_ROW)-1:0] Y_TAG, 
+        BUS_CTRL.Test_XBUS_CTRL Test_XBUS_CTRL
 
     );
 
@@ -63,19 +64,22 @@ module ccd_pe_driver #(
 
     initial begin
         clk = 0;
-        pe_clk = 0;
-        forever #(CLK_PERIOD) clk = ~clk;
-        forever #(CLK_PERIOD*3) pe_clk = ~pe_clk;
+        forever #(CLK_PERIOD/2) clk = ~clk;
     end
+    
+    initial begin
+        pe_clk = 0;
+        forever #(CLK_PERIOD*NUM_COL/2) pe_clk =~ pe_clk;
+    end 
 
-    always_ff @(posedge clk or negdge rstn) begin
+    always_ff @(posedge clk or negedge rstn) begin
         if(!rstn) begin
             ifmap_data_G2B <= 0;
             fltr_data_G2B <= 0;
             psum_data_G2B <= 0;
         end else begin
             ifmap_data_G2B <= $urandom_range(MIN_NUM, MAX_NUM);
-            fltr_data_G2B <= $urandom_range(NIN_NUM, MAX_NUM);
+            fltr_data_G2B <= $urandom_range(MIN_NUM, MAX_NUM);
             psum_data_G2B <= $urandom_range(MIN_NUM, MAX_NUM);
         end
     end 
