@@ -42,7 +42,7 @@ module X_BusCtrl #(
     reg [$clog2(NUM_ROW)-1:0] Y_ID;
     
     reg [$clog2(NUM_COL)-1:0] X_ID;
-    
+    assign UniV_XBUS_IF.flush = flush;
     assign UniV_XBUS_IF.kernel_size = kernel_size;
     always_ff @(posedge clk) begin : STORE_Y_TAG
         if(flush) begin
