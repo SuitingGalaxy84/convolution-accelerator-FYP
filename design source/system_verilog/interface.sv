@@ -73,7 +73,7 @@
             parameter NUM_COL = 4
         )();
         logic [$clog2(NUM_COL)-1:0] ID;  // Column index
-        logic [$clog2(NUM_COL)-1:0] TAG;  // Column tag
+        //logic [$clog2(NUM_COL)-1:0] TAG;  // Column tag : This is replaced with an explicit port
     
         logic [DATA_WIDTH-1:0] ifmap_data_B2M;  // IFMAP from BUS to MultiCaster
         logic [DATA_WIDTH-1:0] fltr_data_B2M;  // Filter from BUS to MultiCaster
@@ -128,7 +128,7 @@
             input VALID,
 
             output ID,
-            output TAG,
+            //output TAG,
             input flush,
             input flush_BUSY,
             output kernel_size
@@ -154,7 +154,7 @@
             //input PE_VALID,
     
             input ID,
-            input TAG,
+            //input TAG,
             input flush,
             output flush_BUSY,
             input kernel_size
@@ -276,8 +276,6 @@
 
         logic [$clog2(NUM_ROW)-1:0] Y_ID;
         logic [$clog2(NUM_ROW)-1:0] Y_TAG;
-
-        logic flush;
 
         modport X_BUS_CTRL(
             input ifmap_data_G2B,
