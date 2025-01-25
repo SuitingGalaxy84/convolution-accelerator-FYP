@@ -30,8 +30,8 @@ module tb_glb_PE_Loop #(
     )();
     reg clk;
     reg rstn;
-    reg [$clog2(NUM_COL)-1:0] ID;
-    reg [$clog2(NUM_COL)-1:0] TAG;
+    reg [$clog2(NUM_COL):0] ID; // extended by 1 bit 
+    reg [$clog2(NUM_COL):0] TAG;// extended by 1 bit 
     reg READY;
     reg en;
     reg [7:0] kernel_size;

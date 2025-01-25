@@ -30,11 +30,11 @@ module ccd_pe_driver #(
         input rstn,
         output reg pe_clk,
         output reg clk,
-        input [$clog2(NUM_COL)-1:0] X_ID,
+        input [$clog2(NUM_COL):0] X_ID, // extended by 1 bit
         input flush,
         input [7:0] kernel_size,
-        input [$clog2(NUM_ROW)-1:0] Y_ID, 
-        input [$clog2(NUM_ROW)-1:0] Y_TAG, 
+        input [$clog2(NUM_ROW):0] Y_ID, // extended by 1 bit
+        input [$clog2(NUM_ROW):0] Y_TAG, // extended by 1 bit
         BUS_CTRL.Test_XBUS_CTRL Test_XBUS_CTRL
 
     );
@@ -49,7 +49,7 @@ module ccd_pe_driver #(
     //psum_data_B2G,
     //ID,
     //TAG,
-    reg [$clog2(NUM_COL)-1:0] X_TAG;
+    reg [$clog2(NUM_COL):0] X_TAG; // extended by 1 bit 
     always_ff@(posedge clk or negedge rstn) begin : atg_auto_gen
         if(~rstn) begin
             X_TAG <= 0;

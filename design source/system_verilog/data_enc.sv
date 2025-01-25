@@ -38,8 +38,8 @@ module Data_Enc #(
     output []
 );  
     
-    reg [$clog2(NUM_COL)-1:0] COL_ID;
-    reg [$clog2(NUM_ROW)-1:0] ROW_ID;
+    reg [$clog2(NUM_COL):0] COL_ID; // extended by 1 bit
+    reg [$clog2(NUM_ROW):0] ROW_ID; // extended by 1 bit
     reg [2*DATA_WIDTH-1:0] data;
 
     reg [2*DATA_WIDTH-1:0] pip_reg [NUM_ROW-1:0];

@@ -35,8 +35,8 @@
         logic [DATA_WIDTH-1:0] data_C2P;  // Data from CASTER to PE
         logic [DATA_WIDTH-1:0] data_P2C;  // Data from PE to CASTER
     
-        logic [$clog2(NUM_COL)-1:0] ID;  // Column index
-        logic [$clog2(NUM_COL)-1:0] TAG;  // Column tag
+        logic [$clog2(NUM_COL):0] ID;  // Column index // extended by 1 bit 
+        logic [$clog2(NUM_COL):0] TAG;  // Column tag // extended by 1 bit 
     
     
         logic PE_READY;                   // Indicates PE is ready to accept data
@@ -72,7 +72,7 @@
             parameter DATA_WIDTH = 16,
             parameter NUM_COL = 4
         )();
-        logic [$clog2(NUM_COL)-1:0] ID;  // Column index
+        logic [$clog2(NUM_COL):0] ID;  // Column index // extended by 1 bit 
         //logic [$clog2(NUM_COL)-1:0] TAG;  // Column tag : This is replaced with an explicit port
     
         logic [DATA_WIDTH-1:0] ifmap_data_B2M;  // IFMAP from BUS to MultiCaster
@@ -271,11 +271,11 @@
         logic [DATA_WIDTH-1:0] fltr_data_B2G;
         logic [2*DATA_WIDTH-1:0] psum_data_B2G;
 
-        logic [$clog2(NUM_COL)-1:0] X_ID;
-        logic [$clog2(NUM_COL)-1:0] X_TAG;
+        logic [$clog2(NUM_COL):0] X_ID; // extended by 1 bit 
+        logic [$clog2(NUM_COL):0] X_TAG; // extended by 1 bit
 
-        logic [$clog2(NUM_ROW)-1:0] Y_ID;
-        logic [$clog2(NUM_ROW)-1:0] Y_TAG;
+        logic [$clog2(NUM_ROW):0] Y_ID; // extended by 1 bit 
+        logic [$clog2(NUM_ROW):0] Y_TAG; // extended by 1 bit 
 
         modport X_BUS_CTRL(
             input ifmap_data_G2B,
@@ -352,11 +352,11 @@
         logic [DATA_WIDTH-1:0] fltr_data_B2G;
         logic [2*DATA_WIDTH-1:0] psum_data_B2G;
 
-        logic [$clog2(NUM_COL)-1:0] X_ID;
-        logic [$clog2(NUM_COL)-1:0] X_TAG;
+        logic [$clog2(NUM_COL):0] X_ID; // extended by 1 bit;
+        logic [$clog2(NUM_COL):0] X_TAG; // extended by 1 bit;
 
-        logic [$clog2(NUM_ROW)-1:0] Y_ID;
-        logic [$clog2(NUM_ROW)-1:0] Y_TAG;
+        logic [$clog2(NUM_ROW):0] Y_ID; // extended by 1 bit 
+        logic [$clog2(NUM_ROW):0] Y_TAG; // extended by 1 bit
 
         modport BUFF_port(
             output ifmap_data_G2B,

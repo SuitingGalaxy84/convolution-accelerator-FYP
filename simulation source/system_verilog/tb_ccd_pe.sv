@@ -34,10 +34,10 @@ module tb_ccd_pe();
 
     
     reg [7:0] kernel_size;
-    reg [$clog2(NUM_COL)-1:0] X_ID;
-    
-    reg [$clog2(NUM_ROW)-1:0] Y_ID;
-    reg [$clog2(NUM_ROW)-1:0] Y_TAG;
+    reg [$clog2(NUM_COL):0] X_ID; // extended by 1 bit 
+     
+    reg [$clog2(NUM_ROW):0] Y_ID; // extended by 1 bit
+    reg [$clog2(NUM_ROW):0] Y_TAG; // extended by 1 bit 
     
     reg external;
     reg flush;
@@ -79,7 +79,7 @@ module tb_ccd_pe();
     );
 
     wire [NUM_COL-1:0] tag_locks;
-    wire [NUM_COL-1:0][$clog2(NUM_COL)-1:0] tag_out;
+    wire [NUM_COL-1:0][$clog2(NUM_COL):0] tag_out; // extended by 1 bit
 
     tagAlloc #(
         .NUM_COL(NUM_COL)

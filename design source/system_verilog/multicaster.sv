@@ -29,7 +29,7 @@ module MultiCaster #(
 )(
     input wire clk,
     input wire rstn,
-    input wire [$clog2(NUM_COL)-1:0] tag_in,
+    input wire [$clog2(NUM_COL):0] tag_in, // extended by 1 bit
     BUS_IF.MCASTER_port BUS_IF,
     PE_IF.MC_port PE_IF,
     input PE_ITR_READY,
@@ -117,7 +117,7 @@ module MultiCaster #(
         //assign fltr_CASTER.PE_VALID = BUS_IF.PE_VALID;
         //assign psum_CASTER.PE_VALID = BUS_IF.PE_VALID;
         
-        reg [$clog2(NUM_COL)-1:0] id;
+        reg [$clog2(NUM_COL):0] id; // extended by 1 bit 
         always_ff @(posedge clk or negedge rstn) begin : GET_ID // facilitate the PE matching
             if(~rstn) begin
                 id <= 0;
@@ -126,7 +126,7 @@ module MultiCaster #(
             end 
         end
             
-        wire [$clog2(NUM_COL)-1:0] tag;    
+        wire [$clog2(NUM_COL):0] tag;    // extended by 1 bit
         
         tagBuff #(
             .NUM_COL(NUM_COL)

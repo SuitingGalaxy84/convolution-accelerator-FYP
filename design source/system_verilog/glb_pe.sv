@@ -31,7 +31,7 @@ module glb_PE #(
     input wire pe_clk,
     input wire rstn,
     input wire external,
-    input wire [$clog2(NUM_COL)-1:0] tag,
+    input wire [$clog2(NUM_COL):0] tag, // extended by 1 bit 
     output wire tag_lock, //tag lock: notify the controller the tag is stored 
     BUS_IF.MCASTER_port BUS_IF,
     PE_ITR.IN_port PE_IITR,

@@ -38,10 +38,10 @@ module X_BusCtrl #(
         BUS_CTRL.X_BUS_CTRL UniV_BUS_CTRL
 
     );
-    reg [$clog2(NUM_ROW)-1:0] Y_TAG;
-    reg [$clog2(NUM_ROW)-1:0] Y_ID;
+    reg [$clog2(NUM_ROW):0] Y_TAG; // extendedby 1 bit
+    reg [$clog2(NUM_ROW):0] Y_ID; // extended by 1 bit 
     
-    reg [$clog2(NUM_COL)-1:0] X_ID;
+    reg [$clog2(NUM_COL):0] X_ID; // extended by 1 bit
     assign UniV_XBUS_IF.flush = flush;
     assign UniV_XBUS_IF.kernel_size = kernel_size;
     always_ff @(posedge clk) begin : STORE_Y_TAG

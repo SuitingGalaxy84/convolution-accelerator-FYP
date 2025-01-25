@@ -26,13 +26,13 @@ module tagBuff #(
     input clk,
     input rstn,
     input flush,
-    input [$clog2(NUM_COL)-1:0] tag_in,
-    output [$clog2(NUM_COL)-1:0] tag_out,
+    input [$clog2(NUM_COL):0] tag_in, // extended by 1 bit 
+    output [$clog2(NUM_COL):0] tag_out, // extended by 1 bit
     output tag_lock
     );
     
-    reg [$clog2(NUM_COL)-1:0] tag;
-    reg [$clog2(NUM_COL)-1:0] next_tag;
+    reg [$clog2(NUM_COL):0] tag; // extended by 1 bit
+    reg [$clog2(NUM_COL):0] next_tag; // extended by 1 bit
     reg lock;
     assign tag_out = tag_in;
     assign tag_lock = lock;

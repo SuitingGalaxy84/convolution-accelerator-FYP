@@ -31,8 +31,8 @@ module SV_glb_PE_driver #(
         output reg clk,
         input rstn,
         BUS_IF.BUS_port BUS_IF,
-        input [$clog2(NUM_COL)-1:0] ID,
-        input [$clog2(NUM_COL)-1:0] TAG,
+        input [$clog2(NUM_COL):0] ID, // extended by 1 bit
+        input [$clog2(NUM_COL):0] TAG, // extended by 1 bit
         input READY,
         input EN,
         input [7:0] kernel_size

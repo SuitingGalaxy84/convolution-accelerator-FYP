@@ -25,13 +25,13 @@ module tagAlloc #(
     input  wire                     clk,    
     input  wire                     rstn,    
     input  wire                     flush,  
-    input  wire [$clog2(NUM_COL)-1:0]    tag_in, 
+    input  wire [$clog2(NUM_COL):0]    tag_in, //extended by 1 bit
     input wire [NUM_COL-1:0] tag_locks,
-    output wire [NUM_COL-1:0][$clog2(NUM_COL)-1:0] tag_out 
+    output wire [NUM_COL-1:0][$clog2(NUM_COL):0] tag_out //extended by 1 bit
 );
 
     // Register array to store the shifting data
-    reg [$clog2(NUM_COL)-1:0] tag_reg [NUM_COL-1:0];
+    reg [$clog2(NUM_COL):0] tag_reg [NUM_COL-1:0];//extended by 1 bit
     
     
     genvar j;
