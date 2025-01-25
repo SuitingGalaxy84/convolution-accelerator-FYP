@@ -24,7 +24,7 @@ module tb_ccd_pe();
 
     parameter CLK_PERIOD = 10;
     parameter DATA_WIDTH = 16;
-    parameter NUM_COL = 4;
+    parameter NUM_COL = 10;
     parameter NUM_ROW = 2;
 
     BUS_IF #(DATA_WIDTH) UniV_XBUS_IF();
@@ -41,8 +41,10 @@ module tb_ccd_pe();
     
     reg external;
     reg flush;
+    wire flush_busy;
     wire rst_busy;
     reg rstn;
+   
     
     // instantiate ccd_pe_driver
     ccd_pe_driver #(
@@ -87,9 +89,11 @@ module tb_ccd_pe();
         .clk(clk),
         .rstn(rstn),
         .flush(flush),
+        .kernel_size(kernel_size),
         .tag_in(UniV_BUS_CTRL_IF.X_TAG),
         .tag_out(tag_out),
-        .tag_locks(tag_locks)
+        .tag_locks(tag_locks),
+        .flush_busy(flush_busy)
     );
     genvar i;
     generate
@@ -113,10 +117,15 @@ module tb_ccd_pe();
     endgenerate
     
     initial begin
-    external=1; rstn = 1;flush = 0;Y_ID = 0; Y_TAG = 1;kernel_size = 5;
+    external=1; rstn = 1;flush = 0;Y_ID = 0; Y_TAG = 1;kernel_size = 3;
     #30 rstn = 0;
     #30 rstn = 1;
     #10 flush=1;
+    #100 flush = 0;
+    #20 rstn = 0;
+    #40 rstn = 1;
+    #50 kernel_size = 6;
+    #20 flush = 1;
     #300 $stop;
     end  
 endmodule 
