@@ -1,90 +1,112 @@
-module tb_AsyncFIFO;
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 02/13/2024 05:47:50 PM
+// Design Name: async_fifo_test
+// Module Name: ccd_pe_driver
+// Project Name: COnvolution Accelerator for PyTorch Deep Learning Framework
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
-    // Parameters (match these with your FIFO implementation)
-    parameter DATA_WIDTH = 8;
-    parameter FIFO_DEPTH = 16;
 
-    // Clock signals
-    logic wr_clk, rd_clk;
-    logic rst;
+module tb_async_fifo();
+    
+    localparam NUM_FIFO = 16;
+    localparam DATA_WIDTH = 16;
+    localparam CLK_PERIOD = 10;
+    
 
-    // Write interface
-    logic wr_en;
-    logic [DATA_WIDTH-1:0] wr_data;
+    reg rd_en [NUM_FIFO-1:0];
+    wire empty [NUM_FIFO-1:0];
+    wire full [NUM_FIFO-1:0];
+    wire [DATA_WIDTH-1:0] rd_data [NUM_FIFO-1:0];
+    wire [DATA_WIDTH-1:0] wr_data [NUM_FIFO-1:0];
 
-    // Read interface
-    logic rd_en;
-    logic [DATA_WIDTH-1:0] rd_data;
+    //instantiate fifo reader
+    genvar i;
+    generate 
+        for(i=0; i<NUM_FIFO; i=i+1) begin : async_fifo_reader_gen
+            async_fifo_reader #(
+                .DATA_WIDTH(DATA_WIDTH),
+                .FIFO_DEPTH(NUM_FIFO)
+            )(
+                .rd_clk(rd_clk),
+                .rd_rstn(rd_rstn),
+                .rd_en(rd_en[i]),
+                .empty(empty[i]),
+                .rd_data(rd_data[])
+            );
+        end
+    endgenerate
 
-    // Status signals
-    logic full, empty;
+    //instantiate fifo
+    genvar j;
+    generate 
+        for(j=0; j<NUM_FIFO; j=j+1) begin : async_fifo_gen
+            async_fifo #(
+                .DATA_WIDTH(DATA_WIDTH),
+                .FIFO_DEPTH(NUM_FIFO)
+            )(
+                .wr_clk(wr_clk),
+                .wr_rstn(wr_rstn),
+                .wr_en(wr_en[j]),
+                .full(full[j]),
+                .wr_data(wr_data[j])
 
-    // Instantiate the FIFO (connect the testbench signals)
-    AsyncFIFO #(
+                .rd_clk(rd_clk),
+                .rd_rstn(rd_rstn),
+                .rd_en(rd_en[j]),
+                .empty(empty[j]),
+                .rd_data(rd_data[j])
+
+            );
+        end
+    endgenerate
+
+
+    //instantiate fifo writer
+    async_fifo_writer #(
         .DATA_WIDTH(DATA_WIDTH),
-        .FIFO_DEPTH(FIFO_DEPTH)
-    ) uut (
+        .FIFO_DEPTH(NUM_FIFO)
+    )(
         .wr_clk(wr_clk),
-        .rd_clk(rd_clk),
-        .rst(rst),
-        .wr_en(wr_en),
-        .wr_data(wr_data),
-        .rd_en(rd_en),
-        .rd_data(rd_data),
+        .wr_rstn(wr_rstn),
+        .wr_en(wr_en), 
         .full(full),
-        .empty(empty)
+        .wr_data(wr_data)
     );
+    
+    // Clock Generation
 
-    // Clock generation
-    always #5  wr_clk = ~wr_clk;  // Write clock: 100 MHz
-    always #7  rd_clk = ~rd_clk;  // Read clock: 71 MHz
-
-    // Test sequence
+    reg wr_clk;
+    reg rd_clk;
+    
     initial begin
-        // Initialize signals
         wr_clk = 0;
         rd_clk = 0;
-        rst = 1;
-        wr_en = 0;
-        rd_en = 0;
-        wr_data = 0;
+        forever #(CLK_PERIOD/2) wr_clk = ~wr_clk;
+        forever #(CLK_PERIOD*NUM_FIFO/2) rd_clk = ~rd_clk;
+    end 
 
-        // Apply reset
-        #20;
-        rst = 0;
+    //start behavioural simulation
+    initial begin
+        wr_rstn = 1; rd_rstn = 1; wr_en = 0; rd_en = 0;
+        #50 wr_rstn = 0; rd_rstn = 0;
+        #50 wr_rstn = 1; rd_rstn = 1;
+        #50 wr_en = 1; rd_en = 1;
+        #300 $stop;
+    end 
 
-        // Start writing to FIFO
-        $display("Start writing to FIFO...");
-        repeat (FIFO_DEPTH) begin
-            if (!full) begin
-                wr_en = 1;
-                wr_data = $random; // Random data
-                $display("Write: %0d", wr_data);
-                #10; // Wait for one write clock cycle
-            end else begin
-                wr_en = 0;
-                #10; // Wait for full condition to clear
-            end
-        end
-        wr_en = 0;
 
-        // Start reading from FIFO
-        $display("Start reading from FIFO...");
-        repeat (FIFO_DEPTH) begin
-            if (!empty) begin
-                rd_en = 1;
-                #10; // Wait for one read clock cycle
-                $display("Read: %0d", rd_data);
-            end else begin
-                rd_en = 0;
-                #10; // Wait for empty condition to clear
-            end
-        end
-        rd_en = 0;
-
-        // Finish simulation
-        $display("Testbench completed.");
-        $stop;
-    end
-
-endmodule
+endmodule 

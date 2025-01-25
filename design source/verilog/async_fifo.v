@@ -1,92 +1,96 @@
-module AsyncFIFO #(
+module async_fifo #(
     parameter DATA_WIDTH = 8,
     parameter FIFO_DEPTH = 16
-)(
-    input wire wr_clk,  // Write clock
-    input wire rd_clk,  // Read clock
-    input wire rst_n,   // Active-low reset
-    input wire wr_en,   // Write enable
-    input wire rd_en,   // Read enable
-    input wire [DATA_WIDTH-1:0] data_in,
-    output reg [DATA_WIDTH-1:0] data_out,
-    output wire full,
-    output wire empty
+) (
+    // Write domain
+    input  wire                  wr_clk,
+    input  wire                  wr_rstn,
+    input  wire                  wr_en,
+    input  wire [DATA_WIDTH-1:0] wr_data,
+    output wire                  full,
+    
+    // Read domain
+    input  wire                  rd_clk,
+    input  wire                  rd_rstn,
+    input  wire                  rd_en,
+    output wire [DATA_WIDTH-1:0] rd_data,
+    output wire                  empty
 );
 
-    // Internal memory
-    reg [DATA_WIDTH-1:0] fifo_mem [0:FIFO_DEPTH-1];
+    // Internal signals
+    reg [$clog2(FIFO_DEPTH):0]   wr_ptr_bin;
+    reg [$clog2(FIFO_DEPTH):0]   rd_ptr_bin;
+    wire [$clog2(FIFO_DEPTH):0]  wr_ptr_gray;
+    wire [$clog2(FIFO_DEPTH):0]  rd_ptr_gray;
+    reg [$clog2(FIFO_DEPTH):0]   wr_ptr_gray_sync [1:0];
+    reg [$clog2(FIFO_DEPTH):0]   rd_ptr_gray_sync [1:0];
 
-    // Write and read pointers
-    reg [$clog2(FIFO_DEPTH):0] wr_ptr = 0;
-    reg [$clog2(FIFO_DEPTH):0] rd_ptr = 0;
+    // Dual-port RAM instantiation
+    reg [DATA_WIDTH-1:0] mem [0:FIFO_DEPTH-1];
 
-    // Gray code pointers for synchronization
-    reg [$clog2(FIFO_DEPTH):0] wr_ptr_gray = 0;
-    reg [$clog2(FIFO_DEPTH):0] rd_ptr_gray = 0;
-    reg [$clog2(FIFO_DEPTH):0] wr_ptr_gray_sync1 = 0;
-    reg [$clog2(FIFO_DEPTH):0] wr_ptr_gray_sync2 = 0;
-    reg [$clog2(FIFO_DEPTH):0] rd_ptr_gray_sync1 = 0;
-    reg [$clog2(FIFO_DEPTH):0] rd_ptr_gray_sync2 = 0;
+    // Binary to Gray code conversion
+    assign wr_ptr_gray = wr_ptr_bin ^ (wr_ptr_bin >> 1);
+    assign rd_ptr_gray = rd_ptr_bin ^ (rd_ptr_bin >> 1);
 
-    // Write logic
-    always @(posedge wr_clk or negedge rst_n) begin
-        if (!rst_n) begin
-            wr_ptr <= 0;
-            wr_ptr_gray <= 0;
+    // Synchronization of pointers
+    always @(posedge wr_clk or negedge wr_rstn) begin
+        if (!wr_rstn) begin
+            rd_ptr_gray_sync[0] <= 0;
+            rd_ptr_gray_sync[1] <= 0;
+        end else begin
+            rd_ptr_gray_sync[0] <= rd_ptr_gray;
+            rd_ptr_gray_sync[1] <= rd_ptr_gray_sync[0];
+        end
+    end
+
+    always @(posedge rd_clk or negedge rd_rstn) begin
+        if (!rd_rstn) begin
+            wr_ptr_gray_sync[0] <= 0;
+            wr_ptr_gray_sync[1] <= 0;
+        end else begin
+            wr_ptr_gray_sync[0] <= wr_ptr_gray;
+            wr_ptr_gray_sync[1] <= wr_ptr_gray_sync[0];
+        end
+    end
+
+    // Write pointer logic
+    always @(posedge wr_clk or negedge wr_rstn) begin
+        if (!wr_rstn) begin
+            wr_ptr_bin <= 0;
         end else if (wr_en && !full) begin
-            fifo_mem[wr_ptr[$clog2(FIFO_DEPTH)-1:0]] <= data_in;
-            wr_ptr <= wr_ptr + 1;
-            wr_ptr_gray <= (wr_ptr + 1) ^ ((wr_ptr + 1) >> 1);
-        end else if (wr_en && full) begin
-            $display("FIFO full");
-        end else begin
-            wr_ptr <= wr_ptr;
-            wr_ptr_gray <= wr_ptr_gray;
+            wr_ptr_bin <= wr_ptr_bin + 1;
         end
     end
 
-    // Read logic
-    always @(posedge rd_clk or negedge rst_n) begin
-        if (!rst_n) begin
-            rd_ptr <= 0;
-            rd_ptr_gray <= 0;
-            data_out <= 0;
+    // Read pointer logic
+    always @(posedge rd_clk or negedge rd_rstn) begin
+        if (!rd_rstn) begin
+            rd_ptr_bin <= 0;
         end else if (rd_en && !empty) begin
-            data_out <= fifo_mem[rd_ptr[$clog2(FIFO_DEPTH)-1:0]];
-            rd_ptr <= rd_ptr + 1;
-            rd_ptr_gray <= (rd_ptr + 1) ^ ((rd_ptr + 1) >> 1);
+            rd_ptr_bin <= rd_ptr_bin + 1;
         end
     end
 
-    // Synchronize write pointer to read clock domain
-    always @(posedge rd_clk or negedge rst_n) begin
-        if (!rst_n) begin
-            wr_ptr_gray_sync1 <= 0;
-            wr_ptr_gray_sync2 <= 0;
-        end else begin
-            wr_ptr_gray_sync1 <= wr_ptr_gray;
-            wr_ptr_gray_sync2 <= wr_ptr_gray_sync1;
+    // Memory write operation
+    always @(posedge wr_clk) begin
+        if (wr_en && !full) begin
+            mem[wr_ptr_bin[$clog2(FIFO_DEPTH)-1:0]] <= wr_data;
         end
     end
 
-    // Synchronize read pointer to write clock domain
-    always @(posedge wr_clk or negedge rst_n) begin
-        if (!rst_n) begin
-            rd_ptr_gray_sync1 <= 0;
-            rd_ptr_gray_sync2 <= 0;
-        end else begin
-            rd_ptr_gray_sync1 <= rd_ptr_gray;
-            rd_ptr_gray_sync2 <= rd_ptr_gray_sync1;
-        end
-    end
+    // Memory read operation
+    assign rd_data = mem[rd_ptr_bin[$clog2(FIFO_DEPTH)-1:0]];
 
-    // Full and empty flag logic
-    wire [$clog2(FIFO_DEPTH):0] wr_ptr_bin = wr_ptr_gray_sync2 ^ (wr_ptr_gray_sync2 >> 1);
-    wire [$clog2(FIFO_DEPTH):0] rd_ptr_bin = rd_ptr_gray_sync2 ^ (rd_ptr_gray_sync2 >> 1);
+    // Full and Empty flag generation
+    wire [$clog2(FIFO_DEPTH):0] wr_ptr_gray_sync_rd;
+    wire [$clog2(FIFO_DEPTH):0] rd_ptr_gray_sync_wr;
+    
+    assign rd_ptr_gray_sync_wr = rd_ptr_gray_sync[1];
+    assign wr_ptr_gray_sync_rd = wr_ptr_gray_sync[1];
 
-    assign full = (wr_ptr[$clog2(FIFO_DEPTH):$clog2(FIFO_DEPTH)-1] == ~rd_ptr_bin[$clog2(FIFO_DEPTH):$clog2(FIFO_DEPTH)-1]) &&
-                  (wr_ptr[$clog2(FIFO_DEPTH)-2:0] == rd_ptr_bin[$clog2(FIFO_DEPTH)-2:0]);
+    assign full = (wr_ptr_gray[$clog2(FIFO_DEPTH):$clog2(FIFO_DEPTH)-1] != rd_ptr_gray_sync_wr[$clog2(FIFO_DEPTH):$clog2(FIFO_DEPTH)-1]) &&
+                 (wr_ptr_gray[$clog2(FIFO_DEPTH)-2:0] == rd_ptr_gray_sync_wr[$clog2(FIFO_DEPTH)-2:0]);
 
-    assign empty = (wr_ptr_gray_sync2 == rd_ptr_gray);
+    assign empty = (wr_ptr_gray_sync_rd == rd_ptr_gray);
 
 endmodule
