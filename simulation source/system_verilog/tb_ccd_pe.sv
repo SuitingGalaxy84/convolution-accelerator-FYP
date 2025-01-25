@@ -22,20 +22,19 @@
 
 module tb_ccd_pe();
 
-    localparam CLK_PERIOD = 10;
-    localparam DATA_WIDTH = 16;
-    localparam NUM_COL = 3;
-    localparam NUM_ROW = 1;
+    parameter CLK_PERIOD = 10;
+    parameter DATA_WIDTH = 16;
+    parameter NUM_COL = 4;
+    parameter NUM_ROW = 2;
 
     BUS_IF #(DATA_WIDTH) UniV_XBUS_IF();
-    BUS_CTRL #(DATA_WIDTH, NUM_ROW, NUM_COL) UniV_BUS_CTRL_IF();
+    BUS_CTRL #(DATA_WIDTH, NUM_COL, NUM_ROW) UniV_BUS_CTRL_IF();
     PE_ITR #(DATA_WIDTH) PE_ITR_inst1();
     PE_ITR #(DATA_WIDTH) PE_ITR_inst2();    
 
     
     reg [7:0] kernel_size;
     reg [$clog2(NUM_COL)-1:0] X_ID;
-    reg [$clog2(NUM_COL)-1:0] X_TAG;
     
     reg [$clog2(NUM_ROW)-1:0] Y_ID;
     reg [$clog2(NUM_ROW)-1:0] Y_TAG;
@@ -56,9 +55,10 @@ module tb_ccd_pe();
         .pe_clk(pe_clk),
         .clk(clk),
         .X_ID(X_ID),
-        .X_TAG(X_TAG),
+        .flush(flush),
         .Y_ID(Y_ID),
         .Y_TAG(Y_TAG),
+        .kernel_size(kernel_size),
         .Test_XBUS_CTRL(UniV_BUS_CTRL_IF)
     );
     
@@ -73,40 +73,38 @@ module tb_ccd_pe();
         .rstn(rstn),
         .flush(flush),
         .rst_busy(rst_busy),
-        
         .kernel_size(kernel_size),
         .UniV_XBUS_IF(UniV_XBUS_IF),
         .UniV_BUS_CTRL(UniV_BUS_CTRL_IF)
     );
 
-    wire tag_locks;
-    wire [NUM_COL-1:0] tag_lock;
-    genvar i;
+    wire [NUM_COL-1:0] tag_locks;
+    wire [NUM_COL-1:0][$clog2(NUM_COL)-1:0] tag_out;
 
     tagAlloc #(
-        .NUM_COL(NUM_COL), 
-        .DATA_WIDTH(DATA_WIDTH)
+        .NUM_COL(NUM_COL)
     ) tagAlloc(
         .clk(clk),
         .rstn(rstn),
-        .flush(UniV_BUS_CTRL_IF.flush),
-        .tag_in(),
-        .tag_out(),
-        .tag_lock(tag_locks)
-    )
-    
+        .flush(flush),
+        .tag_in(UniV_BUS_CTRL_IF.X_TAG),
+        .tag_out(tag_out),
+        .tag_locks(tag_locks)
+    );
+    genvar i;
     generate
         for(i=0; i<NUM_COL; i=i+1) begin : glb_PE
 
-            assign tag_locks = &tag_lock[i];
             glb_PE #(
                 .DATA_WIDTH(DATA_WIDTH),
                 .NUM_COL(NUM_COL)
             ) glb_PE(
                 .clk(clk),
+                .pe_clk(pe_clk),
                 .rstn(rstn),
                 .external(external),
-                .tag_lock(tag_lock[i])
+                .tag(tag_out[i]),
+                .tag_lock(tag_locks[i]),
                 .BUS_IF(UniV_XBUS_IF),
                 .PE_IITR(PE_ITR_inst1),
                 .PE_OITR(PE_ITR_inst2)
@@ -115,8 +113,10 @@ module tb_ccd_pe();
     endgenerate
     
     initial begin
-    external=1; rstn = 1;
+    external=1; rstn = 1;flush = 0;Y_ID = 0; Y_TAG = 1;kernel_size = 5;
     #30 rstn = 0;
+    #30 rstn = 1;
+    #10 flush=1;
     #300 $stop;
     end  
 endmodule 

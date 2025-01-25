@@ -32,22 +32,34 @@ module tagBuff #(
     );
     
     reg [$clog2(NUM_COL)-1:0] tag;
-    reg tag_lock;
+    reg [$clog2(NUM_COL)-1:0] next_tag;
+    reg lock;
     assign tag_out = tag_in;
-    
-    always@(posedge clk or negedge rstn) begin
-        if(~rstn) begin
-            tag <= 0;
-            tag_lock <= 0;
-        end else if(flush) begin
-            if(tag_lock) begin
-                tag <= tag;
+    assign tag_lock = lock;
+    reg next_lock;
+ 
+    always@(*) begin
+        if(~lock) begin
+            if(flush && tag_in > tag) begin
+                next_tag = tag_in;
+                next_lock <= 1;
             end else begin
-                tag <= tag_in;
-                tag_lock = 1;
+                next_tag = tag;
+                next_lock = 0;
             end 
         end else begin
-            tag <= tag;
+            next_lock = next_lock;
+            next_tag = next_tag;
+        end 
+    end 
+    
+    always @(posedge clk or negedge rstn) begin
+        if(~rstn) begin
+            tag <= 0;
+            lock <= 0;
+        end else begin
+            tag <= next_tag;
+            lock <= next_lock;
         end 
     end 
 endmodule

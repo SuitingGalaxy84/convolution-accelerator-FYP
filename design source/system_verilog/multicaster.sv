@@ -29,6 +29,7 @@ module MultiCaster #(
 )(
     input wire clk,
     input wire rstn,
+    input wire [$clog2(NUM_COL)-1:0] tag_in,
     BUS_IF.MCASTER_port BUS_IF,
     PE_IF.MC_port PE_IF,
     input PE_ITR_READY,
@@ -132,8 +133,8 @@ module MultiCaster #(
         ) tagBuff_inst(
             .clk(clk),
             .rstn(rstn),
-            .flush(flush),
-            .tag_in(BUS_IF.TAG),
+            .flush(BUS_IF.flush),
+            .tag_in(tag_in),
             .tag_out(tag),
             .tag_lock(tag_lock)
         );

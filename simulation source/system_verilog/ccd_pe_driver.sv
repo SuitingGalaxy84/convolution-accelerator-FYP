@@ -31,8 +31,8 @@ module ccd_pe_driver #(
         output reg pe_clk,
         output reg clk,
         input [$clog2(NUM_COL)-1:0] X_ID,
-        input [$clog2(NUM_COL)-1:0] X_TAG, 
-        
+        input flush,
+        input [7:0] kernel_size,
         input [$clog2(NUM_ROW)-1:0] Y_ID, 
         input [$clog2(NUM_ROW)-1:0] Y_TAG, 
         BUS_CTRL.Test_XBUS_CTRL Test_XBUS_CTRL
@@ -49,7 +49,18 @@ module ccd_pe_driver #(
     //psum_data_B2G,
     //ID,
     //TAG,
-
+    reg [$clog2(NUM_COL)-1:0] X_TAG;
+    always_ff@(posedge clk or negedge rstn) begin : atg_auto_gen
+        if(~rstn) begin
+            X_TAG <= 0;
+        end else if(flush && X_TAG < kernel_size) begin
+            X_TAG <= X_TAG + 1;
+        end else begin
+            X_TAG <= 0;
+        end
+    end
+    
+    assign Test_XBUS_CTRL.X_TAG = X_TAG;
     assign Test_XBUS_CTRL.ifmap_data_G2B = ifmap_data_G2B;
     assign Test_XBUS_CTRL.fltr_data_G2B = fltr_data_G2B;
     assign Test_XBUS_CTRL.psum_data_G2B = psum_data_G2B;
@@ -83,6 +94,8 @@ module ccd_pe_driver #(
             psum_data_G2B <= $urandom_range(MIN_NUM, MAX_NUM);
         end
     end 
+    
+    
 
 
 endmodule

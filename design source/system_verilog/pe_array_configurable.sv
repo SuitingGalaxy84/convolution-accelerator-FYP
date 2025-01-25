@@ -70,14 +70,14 @@ module pe_array_CONFIG #(
             tagAlloc #(
                 .NUM_COL(NUM_COL),
                 .DATA_WIDTH(DATA_WIDTH)
-            )(
+            )tagAlloc_inst(
                 .clk(clk),
                 .rstn(rstn),
                 .flush(UniV_BUS_CTRL_IF.flush),
                 .tag_in(),
                 .tag_out(),
                 .tag_lock(tag_locks[m])
-            )
+            );
         end 
 
     endgenerate
@@ -130,17 +130,6 @@ module pe_array_CONFIG #(
    
    
     endgenerate
-
-
-
-
-
-
-
-
-
-
-
 
 
 endmodule

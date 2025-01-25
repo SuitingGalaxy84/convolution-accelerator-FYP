@@ -18,23 +18,28 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "interface.sv"
 
 module tagAlloc #(
-    parameter NUM_COL    = 8,    // Depth of the shift register
-    parameter DATA_WIDTH = 32    // Width of each register stage
+    parameter NUM_COL    = 8    // Depth of the shift register   
 )(
     input  wire                     clk,    
     input  wire                     rstn,    
     input  wire                     flush,  
-    input  wire [DATA_WIDTH-1:0]    tag_in, 
-    input wire [NUM_COL-1:0] tag_lock,
-    output wire [NUM_COL-1:0][DATA_WIDTH-1:0] tag_out 
+    input  wire [$clog2(NUM_COL)-1:0]    tag_in, 
+    input wire [NUM_COL-1:0] tag_locks,
+    output wire [NUM_COL-1:0][$clog2(NUM_COL)-1:0] tag_out 
 );
 
     // Register array to store the shifting data
-    reg [DATA_WIDTH-1:0] tag_reg [NUM_COL-1:0];
+    reg [$clog2(NUM_COL)-1:0] tag_reg [NUM_COL-1:0];
     
+    
+    genvar j;
+    generate
+    for(j=0;j<NUM_COL;j=j+1) begin
+        assign tag_out[j] = tag_locks[j] ? 0 : tag_reg[j];
+    end 
+    endgenerate 
     integer i;
     always @(posedge clk or negedge rstn) begin
         if(~rstn) begin
@@ -43,8 +48,7 @@ module tagAlloc #(
             end
         end else begin 
             for(i=0; i<NUM_COL-1; i=i+1) begin
-                tag_reg[i+1] <= tag_reg[i];
-                tag_out[i] <= tag_lock ? tag_reg[i] : 0;
+                tag_reg[i+1] <= tag_locks[i] ? tag_reg[i] : 0;
             end 
         end 
     end 
@@ -58,4 +62,5 @@ module tagAlloc #(
             tag_reg[0] <= tag_reg[0];
         end
     end 
+    
 endmodule
