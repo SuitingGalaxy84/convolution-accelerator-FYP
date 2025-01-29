@@ -24,7 +24,9 @@ module tb_async_fifo();
     
     parameter NUM_FIFO = 4;
     parameter DATA_WIDTH = 16;
-    parameter CLK_PERIOD = 10;
+    parameter WR_CLK_PERIOD = 10;
+    parameter RD_CLK_PERIOD = WR_CLK_PERIOD * NUM_FIFO;
+    parameter FIFO_DEPTH = 32;
     
 
     wire rd_en [NUM_FIFO-1:0];
@@ -43,12 +45,12 @@ module tb_async_fifo();
     initial begin
         wr_clk = 0;
         
-        forever #(CLK_PERIOD/2) wr_clk = ~wr_clk;
+        forever #(WR_CLK_PERIOD/2) wr_clk = ~wr_clk;
         
     end 
     initial begin
         rd_clk = 0;
-        forever #(CLK_PERIOD*NUM_FIFO/4) rd_clk = ~rd_clk;
+        forever #(RD_CLK_PERIOD) rd_clk = ~rd_clk;
     end 
 
     //start behavioural simulation
@@ -83,7 +85,7 @@ module tb_async_fifo();
         for(j=0; j<NUM_FIFO; j=j+1) begin : async_fifo_gen
             async_fifo #(
                 .DATA_WIDTH(DATA_WIDTH),
-                .FIFO_DEPTH(2*NUM_FIFO)
+                .FIFO_DEPTH(FIFO_DEPTH)
             )aync_fifo_inst(
                 .wr_clk(wr_clk),
                 .wr_rstn(wr_rstn),
