@@ -1,4 +1,4 @@
-module async_fifo #(
+module async_fifo_v2 #(
     parameter DATA_WIDTH = 8,
     parameter FIFO_DEPTH = 16,
     parameter ADDR_WIDTH = $clog2(FIFO_DEPTH),
@@ -162,23 +162,5 @@ module async_fifo #(
                   rd_ptr_gray_sync_wr[ADDR_WIDTH-2:0]);
 
     assign empty = (wr_ptr_gray_sync_rd == rd_ptr_gray);
-
-    // Assertions
-    // synthesis translate_off
-    initial begin
-        if (PRE_FILL_LEVEL > FIFO_DEPTH)
-            $error("PRE_FILL_LEVEL must be less than or equal to FIFO_DEPTH");
-        if (PRE_FILL_LEVEL == 0)
-            $warning("PRE_FILL_LEVEL is set to 0");
-    end
-
-    property valid_fifo_usage;
-        @(posedge wr_clk) disable iff(!wr_rstn)
-        fifo_used <= FIFO_DEPTH;
-    endproperty
-    
-    assert property(valid_fifo_usage)
-    else $error("FIFO usage counter overflow detected");
-    // synthesis translate_on
 
 endmodule

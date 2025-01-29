@@ -1,4 +1,4 @@
-module async_fifo #(
+module async_fifo_with_prefill #(
     parameter DATA_WIDTH = 8,
     parameter FIFO_DEPTH = 16,
     parameter PRE_FILL_LEVEL = FIFO_DEPTH/2
@@ -29,7 +29,7 @@ module async_fifo #(
     reg [$clog2(FIFO_DEPTH):0]   rd_ptr_gray_sync [1:0];
 
     // FIFO usage counter for pre-fill detection
-    reg [$clog2(FIFO_DEPTH):0]   fifo_used;
+    reg [$clog2(FIFO_DEPTH)-1:0]   fifo_used;
     reg [1:0]                    pre_fill_done_sync_reg;
 
     // Dual-port RAM
@@ -39,7 +39,8 @@ module async_fifo #(
     assign wr_ptr_gray = wr_ptr_bin ^ (wr_ptr_bin >> 1);
     assign rd_ptr_gray = rd_ptr_bin ^ (rd_ptr_bin >> 1);
 
-    // FIFO usage tracking and pre-fill detection
+    
+   
     always @(posedge wr_clk or negedge wr_rstn) begin
         if (!wr_rstn) begin
             fifo_used <= 0;
@@ -53,12 +54,15 @@ module async_fifo #(
             endcase
 
             // Update pre-fill status
-            if (fifo_used >= PRE_FILL_LEVEL)
+            if (fifo_used >= PRE_FILL_LEVEL) begin
                 pre_fill_done <= 1;
-            else if (fifo_used < PRE_FILL_LEVEL)
-                pre_fill_done <= 0;
+            end else begin
+                pre_fill_done <= pre_fill_done;
+            end 
         end
     end
+
+
 
     // Synchronize pre_fill_done to read clock domain
     always @(posedge rd_clk or negedge rd_rstn) begin
@@ -131,30 +135,32 @@ module async_fifo #(
     assign rd_ptr_gray_sync_wr = rd_ptr_gray_sync[1];
     assign wr_ptr_gray_sync_rd = wr_ptr_gray_sync[1];
 
-    assign full = (wr_ptr_gray[$clog2(FIFO_DEPTH):$clog2(FIFO_DEPTH)-1] != 
-                  rd_ptr_gray_sync_wr[$clog2(FIFO_DEPTH):$clog2(FIFO_DEPTH)-1]) &&
+    assign full = (wr_ptr_gray[$clog2(FIFO_DEPTH):$clog2(FIFO_DEPTH)-1] == 
+                  ~rd_ptr_gray_sync_wr[$clog2(FIFO_DEPTH):$clog2(FIFO_DEPTH)-1]) &&
                  (wr_ptr_gray[$clog2(FIFO_DEPTH)-2:0] == 
                   rd_ptr_gray_sync_wr[$clog2(FIFO_DEPTH)-2:0]);
 
     assign empty = (wr_ptr_gray_sync_rd == rd_ptr_gray);
-
-    // Assertions for verification
-    // synthesis translate_off
-    // property valid_pre_fill_level;
-    //     @(posedge wr_clk) disable iff(!wr_rstn)
-    //     PRE_FILL_LEVEL > 0 && PRE_FILL_LEVEL <= FIFO_DEPTH;
-    // endproperty
     
-    // assert property(valid_pre_fill_level)
-    // else $error("Pre-fill level must be between 1 and FIFO_DEPTH");
-
-    // property valid_fifo_usage;
-    //     @(posedge wr_clk) disable iff(!wr_rstn)
-    //     fifo_used <= FIFO_DEPTH;
-    // endproperty
     
-    // assert property(valid_fifo_usage)
-    // else $error("FIFO usage counter overflow detected");
-    // // synthesis translate_on
-
 endmodule
+//     Assertions for verificationr
+//     synthesis translate_off
+//     property valid_pre_fill_level;
+//         @(posedge wr_clk) disable iff(!wr_rstn)
+//         PRE_FILL_LEVEL > 0 && PRE_FILL_LEVEL <= FIFO_DEPTH;
+//     endproperty
+    
+//     assert property(valid_pre_fill_level)
+//     else $error("Pre-fill level must be between 1 and FIFO_DEPTH");
+
+//     property valid_fifo_usage;
+//         @(posedge wr_clk) disable iff(!wr_rstn)
+//         fifo_used <= FIFO_DEPTH;
+//     endproperty
+    
+//     assert property(valid_fifo_usage)
+//     else $error("FIFO usage counter overflow detected");
+//     // synthesis translate_on
+
+
