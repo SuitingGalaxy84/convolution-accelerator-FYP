@@ -24,7 +24,7 @@
 `include "interface.sv"
 
 module SV_glb_PE_driver #(
-    parameter DATA_WIDTH = 16,
+    parameter DATA_WIDTH = 32,
     parameter NUM_COL = 4,
     parameter CLK_PERIOD = 10
     )(

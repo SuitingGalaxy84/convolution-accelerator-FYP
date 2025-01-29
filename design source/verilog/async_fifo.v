@@ -26,7 +26,7 @@ module async_fifo #(
     reg [$clog2(FIFO_DEPTH):0]   rd_ptr_gray_sync [1:0];
 
     // Dual-port RAM instantiation
-    reg [DATA_WIDTH-1:0] mem [0:FIFO_DEPTH-1];
+    reg [DATA_WIDTH-1:0] mem [FIFO_DEPTH-1:0];
 
     // Binary to Gray code conversion
     assign wr_ptr_gray = wr_ptr_bin ^ (wr_ptr_bin >> 1);
@@ -72,10 +72,17 @@ module async_fifo #(
     end
 
     // Memory write operation
-    always @(posedge wr_clk) begin
-        if (wr_en && !full) begin
+    integer j;
+    always @(posedge wr_clk or negedge wr_rstn) begin
+        if(~wr_rstn) begin
+            for(j=0;j<FIFO_DEPTH;j=j+1) begin
+                mem[j] <= 0;
+            end
+        end else if (wr_en && !full) begin
             mem[wr_ptr_bin[$clog2(FIFO_DEPTH)-1:0]] <= wr_data;
-        end
+        end else begin
+            mem[wr_ptr_bin[$clog2(FIFO_DEPTH)-1:0]] <= mem[wr_ptr_bin[$clog2(FIFO_DEPTH)-1:0]];
+        end 
     end
 
     // Memory read operation

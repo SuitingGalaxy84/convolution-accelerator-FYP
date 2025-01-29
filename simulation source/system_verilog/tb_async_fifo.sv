@@ -22,33 +22,60 @@
 
 module tb_async_fifo();
     
-    localparam NUM_FIFO = 16;
-    localparam DATA_WIDTH = 16;
-    localparam CLK_PERIOD = 10;
+    parameter NUM_FIFO = 4;
+    parameter DATA_WIDTH = 16;
+    parameter CLK_PERIOD = 10;
     
 
-    reg rd_en [NUM_FIFO-1:0];
+    wire rd_en [NUM_FIFO-1:0];
     wire empty [NUM_FIFO-1:0];
     wire full [NUM_FIFO-1:0];
     wire [DATA_WIDTH-1:0] rd_data [NUM_FIFO-1:0];
     wire [DATA_WIDTH-1:0] wr_data [NUM_FIFO-1:0];
+    reg writer_en;
+    reg reader_en;
+    reg wr_clk;
+    reg rd_clk;
+    reg wr_rstn;
+    reg rd_rstn;
+    wire wr_en [NUM_FIFO-1:0];
+    
+    initial begin
+        wr_clk = 0;
+        
+        forever #(CLK_PERIOD/2) wr_clk = ~wr_clk;
+        
+    end 
+    initial begin
+        rd_clk = 0;
+        forever #(CLK_PERIOD*NUM_FIFO/4) rd_clk = ~rd_clk;
+    end 
+
+    //start behavioural simulation
+    initial begin
+        wr_rstn = 1; rd_rstn = 1; writer_en = 0; reader_en = 0;
+        #50 wr_rstn = 0; rd_rstn = 0;
+        #50 wr_rstn = 1; rd_rstn = 1; 
+        #50 writer_en = 1;
+        #50 reader_en = 1;
+        #300 $stop;
+    end 
+
 
     //instantiate fifo reader
-    genvar i;
-    generate 
-        for(i=0; i<NUM_FIFO; i=i+1) begin : async_fifo_reader_gen
-            async_fifo_reader #(
-                .DATA_WIDTH(DATA_WIDTH),
-                .FIFO_DEPTH(NUM_FIFO)
-            )(
-                .rd_clk(rd_clk),
-                .rd_rstn(rd_rstn),
-                .rd_en(rd_en[i]),
-                .empty(empty[i]),
-                .rd_data(rd_data[])
-            );
-        end
-    endgenerate
+    async_fifo_reader #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .NUM_FIFO(NUM_FIFO)
+    )async_fifo_reader(
+        .rd_clk(rd_clk),
+        .rd_rstn(rd_rstn),
+        .reader_en(reader_en),
+        .empty(empty),
+        .rd_data(rd_data),
+        .rd_en(rd_en)
+    );
+
+
 
     //instantiate fifo
     genvar j;
@@ -56,13 +83,13 @@ module tb_async_fifo();
         for(j=0; j<NUM_FIFO; j=j+1) begin : async_fifo_gen
             async_fifo #(
                 .DATA_WIDTH(DATA_WIDTH),
-                .FIFO_DEPTH(NUM_FIFO)
-            )(
+                .FIFO_DEPTH(2*NUM_FIFO)
+            )aync_fifo_inst(
                 .wr_clk(wr_clk),
                 .wr_rstn(wr_rstn),
                 .wr_en(wr_en[j]),
                 .full(full[j]),
-                .wr_data(wr_data[j])
+                .wr_data(wr_data[j]),
 
                 .rd_clk(rd_clk),
                 .rd_rstn(rd_rstn),
@@ -78,10 +105,11 @@ module tb_async_fifo();
     //instantiate fifo writer
     async_fifo_writer #(
         .DATA_WIDTH(DATA_WIDTH),
-        .FIFO_DEPTH(NUM_FIFO)
-    )(
+        .NUM_FIFO(NUM_FIFO)
+    )aync_fifo_writer(
         .wr_clk(wr_clk),
         .wr_rstn(wr_rstn),
+        .writer_en(writer_en),
         .wr_en(wr_en), 
         .full(full),
         .wr_data(wr_data)
@@ -89,24 +117,6 @@ module tb_async_fifo();
     
     // Clock Generation
 
-    reg wr_clk;
-    reg rd_clk;
-    
-    initial begin
-        wr_clk = 0;
-        rd_clk = 0;
-        forever #(CLK_PERIOD/2) wr_clk = ~wr_clk;
-        forever #(CLK_PERIOD*NUM_FIFO/2) rd_clk = ~rd_clk;
-    end 
-
-    //start behavioural simulation
-    initial begin
-        wr_rstn = 1; rd_rstn = 1; wr_en = 0; rd_en = 0;
-        #50 wr_rstn = 0; rd_rstn = 0;
-        #50 wr_rstn = 1; rd_rstn = 1;
-        #50 wr_en = 1; rd_en = 1;
-        #300 $stop;
-    end 
 
 
 endmodule 
