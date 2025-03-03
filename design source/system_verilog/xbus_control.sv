@@ -36,8 +36,9 @@ module X_BusCtrl #(
         input [7:0] kernel_size,
         BUS_IF.BUS_port UniV_XBUS_IF, // a master interfaces for all the EPs
         BUS_CTRL.X_BUS_CTRL UniV_BUS_CTRL
-
     );
+    
+    
     reg [$clog2(NUM_ROW):0] Y_TAG; // extendedby 1 bit
     reg [$clog2(NUM_ROW):0] Y_ID; // extended by 1 bit 
     

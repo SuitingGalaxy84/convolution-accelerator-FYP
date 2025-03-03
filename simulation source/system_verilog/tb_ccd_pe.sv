@@ -109,7 +109,7 @@ module tb_ccd_pe();
                 .external(external),
                 .tag(tag_out[i]),
                 .tag_lock(tag_locks[i]),
-                .BUS_IF(UniV_XBUS_IF),
+                .UniV_XBUS_IF(UniV_XBUS_IF),
                 .PE_IITR(PE_ITR_inst1),
                 .PE_OITR(PE_ITR_inst2)
             );
@@ -124,7 +124,7 @@ module tb_ccd_pe();
     #100 flush = 0;
     #20 rstn = 0;
     #40 rstn = 1;
-    #50 kernel_size = 6;
+    #50 kernel_size = 7;
     #20 flush = 1;
     #300 $stop;
     end  

@@ -68,8 +68,7 @@ module pe_array_CONFIG #(
 
         for(m=0; m<NUM_ROW; m=m+1) begin : tag_allocator
             tagAlloc #(
-                .NUM_COL(NUM_COL),
-                .DATA_WIDTH(DATA_WIDTH)
+                .NUM_COL(NUM_COL)
             )tagAlloc_inst(
                 .clk(clk),
                 .rstn(rstn),

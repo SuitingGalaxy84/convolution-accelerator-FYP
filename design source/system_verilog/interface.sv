@@ -129,7 +129,7 @@
 
             output ID,
             //output TAG,
-            input flush,
+            output flush,
             input flush_BUSY,
             output kernel_size
         );
@@ -373,6 +373,7 @@
             output Y_ID, 
             output Y_TAG
         );
+
     endinterface
 `endif
 

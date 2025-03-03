@@ -33,14 +33,13 @@ module glb_PE #(
     input wire external,
     input wire [$clog2(NUM_COL):0] tag, // extended by 1 bit 
     output wire tag_lock, //tag lock: notify the controller the tag is stored 
-    BUS_IF.MCASTER_port BUS_IF,
+    BUS_IF.MCASTER_port UniV_XBUS_IF,
     PE_ITR.IN_port PE_IITR,
     PE_ITR.OUT_port PE_OITR
 );
 
 
     PE_IF #(DATA_WIDTH) PE_IF();
-    
     // Parsing the PE and the Multicaster
     SV_PE #(DATA_WIDTH) PE(
         .rstn(rstn),
@@ -55,7 +54,7 @@ module glb_PE #(
         .clk(clk),
         .rstn(rstn),
         .tag_in(tag),
-        .BUS_IF(BUS_IF),
+        .BUS_IF(UniV_XBUS_IF),
         .PE_IF(PE_IF),
         .PE_ITR_READY(PE_IITR.READY),
         .external(external),
