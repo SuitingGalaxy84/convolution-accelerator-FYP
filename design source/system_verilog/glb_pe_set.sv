@@ -22,7 +22,7 @@
 
 module glb_pe_set#(
     parameter DATA_WIDTH = 16,
-    parameter NUM_COL = 5,
+    parameter NUM_COL = 8,
     parameter NUM_ROW = 10
 )(
     input clk, 
@@ -31,15 +31,13 @@ module glb_pe_set#(
     input flush, 
     
     input external,
-    input [NUM_COL-1:0] kernel_size,
+    input [7:0] kernel_size,
     output rst_busy,
     output flush_busy,
 
     PE_ITR.IN_port PE_IITR_inst [NUM_COL-1:0],
     PE_ITR.OUT_port PE_OITR_inst [NUM_COL-1:0],
-    BUS_CTRL.X_BUS_CTRL UniV_BUS_CTRL_IF
-
-    
+    BUS_CTRL.X_BUS_CTRL UniV_BUS_CTRL_IF    
 );
     BUS_IF #(DATA_WIDTH) UniV_XBUS_IF();
     

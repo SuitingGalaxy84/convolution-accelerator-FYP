@@ -259,8 +259,8 @@
 
     interface BUS_CTRL #(
         parameter DATA_WIDTH = 16,
-        parameter NUM_COL = 4,
-        parameter NUM_ROW = 4
+        parameter NUM_COL = 8,
+        parameter NUM_ROW = 8
         )();
 
         logic [DATA_WIDTH-1:0] ifmap_data_G2B;
