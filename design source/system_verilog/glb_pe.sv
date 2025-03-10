@@ -38,6 +38,21 @@ module glb_PE #(
     PE_ITR.OUT_port PE_OITR
 );
 
+    PE_IF #(DATA_WIDTH) PE_BUFFER();
+    PE_IF #(DATA_WIDTH) MC_BUFFER();
+
+    SV_CCD_Buffer #(DATA_WIDTH, 16) CCD_BUFFER (
+        .rstn(rstn),
+        .bus_clk(clk),
+        .pe_clk(pe_clk),
+        .overflow(),
+        .empty(),
+        .buffer_busy(),
+        .buffer_busy_sync(),
+        .MC_BUFFER(MC_BUFFER),
+        .PE_BUFFER(PE_BUFFER)
+    );
+
 
     PE_IF #(DATA_WIDTH) PE_IF();
     // Parsing the PE and the Multicaster
@@ -45,7 +60,7 @@ module glb_PE #(
         .rstn(rstn),
         .clk(pe_clk),
         .external(external),
-        .PE_IF(PE_IF),
+        .PE_IF(PE_BUFFER),
         .PE_IITR(PE_IITR),
         .PE_OITR(PE_OITR)
     );
@@ -55,7 +70,7 @@ module glb_PE #(
         .rstn(rstn),
         .tag_in(tag),
         .BUS_IF(UniV_XBUS_IF),
-        .PE_IF(PE_IF),
+        .PE_IF(MC_BUFFER),
         .PE_ITR_READY(PE_IITR.READY),
         .external(external),
         .tag_lock(tag_lock)

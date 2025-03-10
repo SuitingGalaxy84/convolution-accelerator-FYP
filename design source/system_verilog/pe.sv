@@ -41,7 +41,7 @@ module SV_PE #(
     wire [DATA_WIDTH-1:0] fltr_data;
     wire [2*DATA_WIDTH-1:0] ipsum_data;
     wire [2*DATA_WIDTH-1:0] opsum_data;
-    wire READY; 
+    wire READY; // Attention: PE is controlled by the READY signal 
     
     assign READY = external ? PE_IF.READY : PE_IITR.READY;
     assign ifmap_data = external ? PE_IF.ifmap_data_M2P : PE_IITR.ifmap_data_P2P;

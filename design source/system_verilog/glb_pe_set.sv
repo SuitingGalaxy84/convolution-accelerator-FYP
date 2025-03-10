@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 `include "interface.sv"
 
-module glb_pe_set#(
+module glb_PE_SET#(
     parameter DATA_WIDTH = 16,
     parameter NUM_COL = 8,
     parameter NUM_ROW = 10
@@ -35,8 +35,8 @@ module glb_pe_set#(
     output rst_busy,
     output flush_busy,
 
-    PE_ITR.IN_port PE_IITR_inst [NUM_COL-1:0],
-    PE_ITR.OUT_port PE_OITR_inst [NUM_COL-1:0],
+    PE_ITR.IN_port PE_IITR_insts [NUM_COL-1:0],
+    PE_ITR.OUT_port PE_OITR_insts [NUM_COL-1:0],
     BUS_CTRL.X_BUS_CTRL UniV_BUS_CTRL_IF    
 );
     BUS_IF #(DATA_WIDTH) UniV_XBUS_IF();
@@ -70,7 +70,7 @@ module glb_pe_set#(
 
     genvar i;
     generate
-        for(i=0; i<NUM_COL; i=i+1) begin: PE_ITR_inst
+        for(i=0; i<NUM_COL; i=i+1) begin: PE_ITR_insts
         glb_PE #(.DATA_WIDTH(DATA_WIDTH), .NUM_COL(NUM_COL)) glb_PE_inst(
                     .clk(clk),
                     .pe_clk(pe_clk),
@@ -79,8 +79,8 @@ module glb_pe_set#(
                     .tag(tag_out[i]),
                     .tag_lock(tag_locks[i]),
                     .UniV_XBUS_IF(UniV_XBUS_IF),
-                    .PE_IITR(PE_IITR_inst[i]),
-                    .PE_OITR(PE_OITR_inst[i])
+                    .PE_IITR(PE_IITR_insts[i]),
+                    .PE_OITR(PE_OITR_insts[i])
                 );
             end
     endgenerate

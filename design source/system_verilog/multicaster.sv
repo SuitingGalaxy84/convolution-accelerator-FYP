@@ -71,11 +71,10 @@ module MultiCaster #(
         assign PE_IF.fltr_data_M2P = WeightBuff_OUT; //fltr_CASTER.data_C2P;
         assign PE_IF.psum_data_M2P = psum_CASTER.data_C2P;
 
-        assign PE_IF.PE_EN = ifmap_CASTER.PE_EN & 
-                             fltr_CASTER.PE_EN & 
-                             psum_CASTER.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
+        assign PE_IF.PE_EN = ifmap_CASTER.PE_EN & fltr_CASTER.PE_EN & psum_CASTER.PE_EN; // PE_EN writes the data to the buffer
+        
 
-        assign PE_IF.READY = ifmap_CASTER.PE_READY & fltr_CASTER.PE_READY & psum_CASTER.PE_READY;
+        assign PE_IF.READY = ifmap_CASTER.PE_READY & fltr_CASTER.PE_READY & psum_CASTER.PE_READY; // PE_READY starts the PE calculation
 
         assign ifmap_CASTER.PE_VALID = PE_IF.VALID;
         assign fltr_CASTER.PE_VALID = PE_IF.VALID;
