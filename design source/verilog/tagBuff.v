@@ -25,7 +25,7 @@ module tagBuff #(
     )(
     input clk,
     input rstn,
-    input flush,
+    input flush_tag,
     input [$clog2(NUM_COL):0] tag_in, // extended by 1 bit 
     output [$clog2(NUM_COL):0] tag_out, // extended by 1 bit
     output tag_lock
@@ -34,13 +34,13 @@ module tagBuff #(
     reg [$clog2(NUM_COL):0] tag; // extended by 1 bit
     reg [$clog2(NUM_COL):0] next_tag; // extended by 1 bit
     reg lock;
-    assign tag_out = tag_in;
+    assign tag_out = tag;
     assign tag_lock = lock;
     reg next_lock;
  
     always@(*) begin
         if(~lock) begin
-            if(flush && tag_in > tag) begin
+            if(flush_tag && tag_in > tag) begin
                 next_tag = tag_in;
                 next_lock <= 1;
             end else begin

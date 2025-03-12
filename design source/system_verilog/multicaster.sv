@@ -88,15 +88,12 @@ module MultiCaster #(
          //assign fltr_CASTER.data_B2C = BUS_IF.fltr_data_P2M;
          //assign psum_CASTER.data_B2C = BUS_IF.psum_data_P2M;
          //Allocate the CASTER_EN signal to the corresponding CASTER
-        
-        assign ifmap_CASTER.CASTER_EN = BUS_IF.CASTER_EN; // The BUS want to enable the ifmap_CASTER
-        assign fltr_CASTER.CASTER_EN = BUS_IF.CASTER_EN; // The BUS want to enable the fltr_CASTER
-        assign psum_CASTER.CASTER_EN = BUS_IF.CASTER_EN; // The BUS want to enable the psum_CASTER
+
 
          //READY (Output) signal notifies the BUS->BUFFER that the PE is ready to accept data ()
-        assign ifmap_CASTER.CASTER_READY = BUS_IF.READY & Buff_READY;
-        assign fltr_CASTER.CASTER_READY = BUS_IF.READY & Buff_READY;
-        assign psum_CASTER.CASTER_READY = BUS_IF.READY & Buff_READY;
+        assign ifmap_CASTER.CASTER_READY = Buff_READY;
+        assign fltr_CASTER.CASTER_READY =  Buff_READY;
+        assign psum_CASTER.CASTER_READY = Buff_READY;
         
         // VALID (Output) signal notifies the BUS that the calculation is done
         assign BUS_IF.VALID = ifmap_CASTER.CASTER_VALID & 
@@ -116,15 +113,8 @@ module MultiCaster #(
         //assign fltr_CASTER.PE_VALID = BUS_IF.PE_VALID;
         //assign psum_CASTER.PE_VALID = BUS_IF.PE_VALID;
         
-        reg [$clog2(NUM_COL):0] id; // extended by 1 bit 
-        always_ff @(posedge clk or negedge rstn) begin : GET_ID // facilitate the PE matching
-            if(~rstn) begin
-                id <= 0;
-            end else begin
-                id <= BUS_IF.ID;
-            end 
-        end
-            
+        wire [$clog2(NUM_COL):0] id; // extended by 1 bit 
+        assign id = BUS_IF.ID;
         wire [$clog2(NUM_COL):0] tag;    // extended by 1 bit
         
         tagBuff #(
@@ -132,7 +122,7 @@ module MultiCaster #(
         ) tagBuff_inst(
             .clk(clk),
             .rstn(rstn),
-            .flush(BUS_IF.flush),
+            .flush_tag(BUS_IF.flush_tag),
             .tag_in(tag_in),
             .tag_out(tag),
             .tag_lock(tag_lock)
@@ -156,7 +146,7 @@ module MultiCaster #(
             if(~rstn) begin
                 kernel_size <= 0;
             end else begin
-                if(BUS_IF.flush) begin
+                if(BUS_IF.flush_kernel) begin
                     kernel_size <= BUS_IF.kernel_size;
                 end else begin
                     kernel_size <= kernel_size;
@@ -164,13 +154,13 @@ module MultiCaster #(
             end
         end  
         
-        wire flush_BUSY;
-        assign BUS_IF.flush_BUSY = flush_BUSY;
+        wire kernel_busy;
+        assign BUS_IF.kernel_busy = kernel_busy;
         
         wire Buff_READY;
-        assign Buff_READY = ~flush_BUSY;
+        assign Buff_READY = ~kernel_busy;
         wire Buff_rden;
-        assign Buff_rden = (external ? BUS_IF.READY : PE_ITR_READY) && Buff_READY;
+        assign Buff_rden = PE_ITR_READY && Buff_READY;
        
         WeightBuff #(
             .DATA_WIDTH(DATA_WIDTH),
@@ -178,12 +168,12 @@ module MultiCaster #(
         ) WeightBuff(
             .clk(clk),
             .rstn(rstn),
-            .flush(BUS_IF.flush),
+            .flush_kernel(BUS_IF.flush_kernel),
             .kernel_size(kernel_size),
             .data_in(BUS_IF.fltr_data_B2M),
             .data_out(WeightBuff_OUT),//fltr_CASTER.data_B2C),
             .pseudo_out(),
-            .flush_BUSY(flush_BUSY),
+            .kernel_busy(kernel_busy),
             .read_VALID(read_VALID),
             .en(Buff_rden) // include:
         );

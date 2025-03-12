@@ -35,9 +35,9 @@ module caster#(
     assign CASTER_IF.PE_READY = CASTER_IF.CASTER_READY;
     assign CASTER_IF.CASTER_VALID = CASTER_IF.PE_VALID;
 
-    always_comb begin: PE_to_BUS//facilitate hte data output from PE to bus
-        case ({CASTER_IF.PE_VALID, CASTER_IF.CASTER_EN, (CASTER_IF.TAG == CASTER_IF.ID ? 1'b1 : 1'b0)})
-            3'b111 : begin 
+    always_comb begin: PE_to_BUS//facilitate the data output from PE to bus
+        case ({CASTER_IF.PE_VALID, (CASTER_IF.TAG == CASTER_IF.ID ? 1'b1 : 1'b0)})
+            2'b11 : begin 
                 CASTER_IF.data_C2B = CASTER_IF.data_P2C;
             end 
             default: begin 
@@ -47,8 +47,8 @@ module caster#(
     end
 
     always_comb begin : BUS_to_PE//facilitate the data input from bus to PE
-        case ({CASTER_IF.CASTER_READY, CASTER_IF.CASTER_EN, (CASTER_IF.TAG == CASTER_IF.ID ? 1'b1 : 1'b0)})
-            3'b111 : begin 
+        case ({CASTER_IF.CASTER_READY, (CASTER_IF.TAG == CASTER_IF.ID ? 1'b1 : 1'b0)})
+            2'b11 : begin 
                 CASTER_IF.PE_EN = 1'b1;
                 CASTER_IF.data_C2P = CASTER_IF.data_B2C;
             end 

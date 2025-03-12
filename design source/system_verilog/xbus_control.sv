@@ -30,8 +30,8 @@ module X_BusCtrl #(
     )(
         input wire clk,
         input wire rstn,
-        input flush,
-        output rst_busy,
+        input flush_tag,
+        input flush_kernel,
         
         input [7:0] kernel_size,
         BUS_IF.BUS_port UniV_XBUS_IF, // a master interfaces for all the EPs
@@ -42,11 +42,11 @@ module X_BusCtrl #(
     reg [$clog2(NUM_ROW):0] Y_TAG; // extendedby 1 bit
     reg [$clog2(NUM_ROW):0] Y_ID; // extended by 1 bit 
     
-    reg [$clog2(NUM_COL):0] X_ID; // extended by 1 bit
-    assign UniV_XBUS_IF.flush = flush;
+    assign UniV_XBUS_IF.flush_tag = flush_tag;
+    assign UniV_XBUS_IF.flush_kernel = flush_kernel;
     assign UniV_XBUS_IF.kernel_size = kernel_size;
     always_ff @(posedge clk) begin : STORE_Y_TAG
-        if(flush) begin
+        if(flush_tag) begin
             Y_TAG <= UniV_BUS_CTRL.Y_TAG;
         end else begin
             Y_TAG <= Y_TAG;
@@ -56,13 +56,8 @@ module X_BusCtrl #(
     always_ff @(posedge clk or negedge rstn) begin : GET_ID
         if(~rstn) begin
             Y_ID <= 0;
-            X_ID <= 0;
-        end else if (~rst_busy) begin
-            Y_ID <= UniV_BUS_CTRL.Y_ID;
-            X_ID <= UniV_BUS_CTRL.X_ID;
         end else begin
-            Y_ID <= 0;
-            X_ID <=0;
+            Y_ID <= UniV_BUS_CTRL.Y_ID;
         end
         
     end 
@@ -71,14 +66,20 @@ module X_BusCtrl #(
     wire [DATA_WIDTH-1:0] fltr_data;    
     wire [2*DATA_WIDTH-1:0] psum_data;
     
-    assign ifmap_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.ifmap_data_G2B : 0;
-    assign fltr_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.fltr_data_G2B : 0;
-    assign psum_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.psum_data_G2B : 0;
+//    assign ifmap_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.ifmap_data_G2B : 0;
+//    assign fltr_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.fltr_data_G2B : 0;
+//    assign psum_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.psum_data_G2B : 0;
+    /*
+        this sections is for simulation only
+    */
+    assign ifmap_data = UniV_BUS_CTRL.ifmap_data_G2B;
+    assign fltr_data = UniV_BUS_CTRL.fltr_data_G2B;
+    assign psum_data = 32;
 
     assign UniV_XBUS_IF.ifmap_data_B2M = ifmap_data;
     assign UniV_XBUS_IF.fltr_data_B2M = fltr_data;
     assign UniV_XBUS_IF.psum_data_B2M = psum_data;
-    assign UniV_XBUS_IF.ID = X_ID;
+    assign UniV_XBUS_IF.ID = UniV_BUS_CTRL.X_ID;
 
 
     

@@ -27,12 +27,12 @@ module WeightBuff #(
 )(
     input clk,
     input rstn,
-    input flush, //write enable 
+    input flush_kernel, //write enable 
     input [7:0] kernel_size,
     input [DATA_WIDTH-1:0] data_in,
     output [DATA_WIDTH-1:0] data_out,
     output [DATA_WIDTH-1:0] pseudo_out,
-    output flush_BUSY,
+    output kernel_busy,
     output read_VALID,
     input en   
 );
@@ -51,7 +51,6 @@ module WeightBuff #(
     localparam FLUSH_IDLE = 1'b0;
     localparam FLUSH_OP = 1'b1;
 
-
     localparam READ_IDEL = 1'b0;
     localparam READ_OP = 1'b1;
     
@@ -60,24 +59,37 @@ module WeightBuff #(
     
     reg write_current_state;
     reg write_next_state;
+    
+    reg un_configed;
+    always@(posedge clk or negedge rstn) begin
+        if(~rstn) begin
+            un_configed <= 1;
+        end else begin
+            if(flush_kernel) begin
+                un_configed <= 0;
+            end else begin
+                un_configed <= 1;
+            end 
+        end 
+    end 
 
-    assign flush_BUSY = write_current_state;
+    assign kernel_busy = write_current_state;
     assign read_VALID = read_current_state;
 
     assign pseudo_out = weight_buff[BUFFER_DEPTH-1];
     
 
     assign data_out = read_VALID ? weight_buff[rd_ptr] : 0;
-        
+    
     always @(*) begin //write_state_transition
         case(write_current_state)
             FLUSH_IDLE: begin
-                write_next_state = flush ? FLUSH_OP : FLUSH_IDLE;
+                write_next_state = flush_kernel&&un_configed ? FLUSH_OP : FLUSH_IDLE;
                 next_wr_ptr = 0;
             end 
             FLUSH_OP: begin
                 next_wr_ptr = wr_ptr+1;
-                write_next_state = (wr_ptr==kernel_size-1) ? FLUSH_IDLE : FLUSH_OP;
+                write_next_state = (wr_ptr==kernel_size) ? FLUSH_IDLE : FLUSH_OP;
             end
         endcase
     end 
@@ -119,7 +131,7 @@ module WeightBuff #(
             wr_ptr <= next_wr_ptr;
             write_current_state <= write_next_state;
             if(write_current_state == FLUSH_OP) begin
-                weight_buff[wr_ptr] <= data_in;
+                weight_buff[wr_ptr-1] <= data_in;
             end
         end 
     end 

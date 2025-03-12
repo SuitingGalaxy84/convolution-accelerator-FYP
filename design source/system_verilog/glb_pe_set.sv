@@ -28,25 +28,28 @@ module glb_PE_SET#(
     input clk, 
     input pe_clk,
     input rstn, 
-    input flush, 
+    input flush_tag,
+    input flush_kernel, 
     
     input external,
     input [7:0] kernel_size,
     output rst_busy,
-    output flush_busy,
+    output tag_busy,
+    output kernel_busy,
 
     PE_ITR.IN_port PE_IITR_insts [NUM_COL-1:0],
     PE_ITR.OUT_port PE_OITR_insts [NUM_COL-1:0],
     BUS_CTRL.X_BUS_CTRL UniV_BUS_CTRL_IF    
 );
     BUS_IF #(DATA_WIDTH) UniV_XBUS_IF();
+    assign kernel_busy = UniV_XBUS_IF.kernel_busy;
     
     
     X_BusCtrl #(.DATA_WIDTH(DATA_WIDTH), .NUM_COL(NUM_COL), .NUM_ROW(NUM_ROW)) X_BusCtrl_inst(
         .clk(clk),
         .rstn(rstn),
-        .flush(flush),
-        .rst_busy(rst_busy),
+        .flush_tag(flush_tag),
+        .flush_kernel(flush_kernel),
         .kernel_size(kernel_size),
         .UniV_XBUS_IF(UniV_XBUS_IF),
         .UniV_BUS_CTRL(UniV_BUS_CTRL_IF)
@@ -58,12 +61,12 @@ module glb_PE_SET#(
     tagAlloc #(.NUM_COL(NUM_COL)) tagAlloc_inst(
         .clk(clk),
         .rstn(rstn),
-        .flush(flush),
+        .flush_tag(flush_tag),
         .kernel_size(kernel_size),
         .tag_in(UniV_BUS_CTRL_IF.X_TAG),
         .tag_out(tag_out),
         .tag_locks(tag_locks),
-        .flush_busy(flush_busy)
+        .tag_busy(tag_busy)
     );
 
 

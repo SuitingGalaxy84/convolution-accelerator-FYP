@@ -46,8 +46,7 @@
         logic CASTER_VALID;               // Indicates CASTER is valid
     
         logic PE_EN;                      // Enable signal for PE
-        logic CASTER_EN;                  // Enable signal for CASTER
-    
+
     
         // CASTER modport: Used for the CASTER logic to interact with the BUS
         modport CASTER_port(
@@ -63,7 +62,6 @@
             
             input CASTER_READY,
             output CASTER_VALID,
-            input CASTER_EN,
             output PE_EN     
         );
     endinterface // caster interface
@@ -94,12 +92,12 @@
     
     
     
-        logic CASTER_EN;  // Enable signal for CASTER from BUS
-        logic READY;  // Indicates CASTER is ready
         logic VALID;
         logic [7:0] kernel_size;
-        logic flush;
-        logic flush_BUSY;
+        logic flush_tag;
+        logic tag_busy;
+        logic flush_kernel;
+        logic kernel_busy;
         //logic [2:0] PE_EN;
         //logic PE_READY;
         //logic PE_VALID;
@@ -123,14 +121,14 @@
             input psum_data_M2B,
 
 
-            output CASTER_EN,
-            output READY,
             input VALID,
 
             output ID,
             //output TAG,
-            output flush,
-            input flush_BUSY,
+            output flush_tag,
+            input tag_busy,
+            output flush_kernel,
+            input kernel_busy,
             output kernel_size
         );
 
@@ -144,8 +142,6 @@
             input psum_data_B2M,
             output psum_data_M2B,
 
-            input CASTER_EN,
-            input READY,
             output VALID,
     
     
@@ -155,8 +151,10 @@
     
             input ID,
             //input TAG,
-            input flush,
-            output flush_BUSY,
+            input flush_tag,
+            output tag_busy,
+            input flush_kernel,
+            output kernel_busy,
             input kernel_size
         );
     endinterface // bus interface
