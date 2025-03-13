@@ -303,7 +303,7 @@
             output X_TAG,
 
             output Y_ID, 
-            output Y_TAG    
+            output Y_TAG
         );
         
     endinterface // bus control

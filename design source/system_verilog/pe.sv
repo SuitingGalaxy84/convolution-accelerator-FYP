@@ -29,7 +29,7 @@ module SV_PE #(
 )(
     input logic rstn,
     input logic clk,
-    input logic external,
+    input external,
     PE_IF.PE_port PE_IF,
     // input mult_seln,
     // input acc_seln// PE control interface
@@ -43,10 +43,13 @@ module SV_PE #(
     wire [2*DATA_WIDTH-1:0] opsum_data;
     wire READY; // Attention: PE is controlled by the READY signal 
     
-    assign READY = external ? PE_IF.READY : PE_IITR.READY;
+    
+    
+    assign READY = external ? PE_IF.READY : PE_IITR.READY; // ready signal from 1) external ready 2) internal ready
     assign ifmap_data = external ? PE_IF.ifmap_data_M2P : PE_IITR.ifmap_data_P2P;
     assign fltr_data = PE_IF.fltr_data_M2P;//external ? PE_IF.fltr_data_M2P : PE_IITR.fltr_data_P2P;
     assign ipsum_data = ipsum_seln ? 0 : (external ? PE_IF.psum_data_M2P : PE_IITR.psum_data_P2P);
+    
     
     shifter #(
         .DATA_WIDTH(2*DATA_WIDTH),

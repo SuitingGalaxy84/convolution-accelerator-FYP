@@ -38,7 +38,6 @@ module GLB_BUF#(
     input flush_kernel,
     input start,
     
-    
     input [$clog2(BUFFER_SIZE)-1:0] addr_in,
     input [DATA_WIDTH + $clog2(NUM_COL):0] data_in,
     

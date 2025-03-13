@@ -108,7 +108,7 @@ module async_fifo_with_prefill #(
     always @(posedge rd_clk or negedge rd_rstn) begin
         if (!rd_rstn) begin
             rd_ptr_bin <= 0;
-        end else if (rd_en && !empty) begin
+        end else if (rd_en) begin
             rd_ptr_bin <= rd_ptr_bin + 1;
         end
     end

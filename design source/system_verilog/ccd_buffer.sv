@@ -32,6 +32,7 @@ module SV_CCD_Buffer#(
     input wire bus_clk,
     input wire pe_clk,
     
+    output kernel_rden,
     output wire overflow,
     output wire empty,
     output wire buffer_busy,
@@ -62,7 +63,20 @@ module SV_CCD_Buffer#(
 
     assign overflow = ifmap_overflow || fltr_overflow || psum_overflow;
     assign empty = ifmap_empty || fltr_empty || psum_empty;
+    assign kernel_rden = rd_en;
 
+    pulse_accumulator rd_en_synchronizer (
+        .fast_clk(bus_clk),
+        .fast_pulse(MC_BUFFER.PE_EN),
+        .rstn(rstn),
+        
+        .slow_clk(pe_clk),
+        .slow_pulse(rd_en)
+    );
+    
+    wire [DATA_WIDTH-1:0] ifmap_rd_data;
+    wire [2*DATA_WIDTH-1:0] psum_rd_data;
+    
     async_fifo_with_prefill #(
         .DATA_WIDTH(DATA_WIDTH),
         .FIFO_DEPTH(FIFO_DEPTH)
@@ -76,33 +90,21 @@ module SV_CCD_Buffer#(
 
         .rd_clk(pe_clk),
         .rd_rstn(rstn),
-        .rd_en(MC_BUFFER.READY), 
-        .rd_data(PE_BUFFER.ifmap_data_M2P), 
+        .rd_en(rd_en), 
+        .rd_data(ifmap_rd_data), 
         .empty(ifmap_empty),
         .pre_fill_done_sync(buffer_busy_sync_ifmap)
     );
 
-    async_fifo_with_prefill #(
-        .DATA_WIDTH(DATA_WIDTH),
-        .FIFO_DEPTH(FIFO_DEPTH)
-    ) WEIGHT_FIFO(
-        .wr_clk(bus_clk),
-        .wr_rstn(rstn),
-        .wr_en(MC_BUFFER.PE_EN),
-        .wr_data(MC_BUFFER.fltr_data_M2P),
-        .full(fltr_overflow),
-        .pre_fill_done(buffer_busy_fltr),
+    assign PE_BUFFER.fltr_data_M2P = MC_BUFFER.fltr_data_M2P;
+//    assign PE_BUFFER.ifmap_data_M2P = rd_en ? ifmap_rd_data : 0;
+//    assign PE_BUFFER.psum_data_M2P = rd_en ? psum_rd_data : 0;
+    assign PE_BUFFER.ifmap_data_M2P = ifmap_rd_data;
+    assign PE_BUFFER.psum_data_M2P = psum_rd_data;
 
-        .rd_clk(pe_clk),
-        .rd_rstn(rstn),
-        .rd_en(MC_BUFFER.READY),
-        .rd_data(PE_BUFFER.fltr_data_M2P),
-        .empty(fltr_empty),
-        .pre_fill_done_sync(buffer_busy_sync_fltr)
-    );
 
     async_fifo_with_prefill #(
-        .DATA_WIDTH(DATA_WIDTH),
+        .DATA_WIDTH(2*DATA_WIDTH),
         .FIFO_DEPTH(FIFO_DEPTH)
     ) PSUM_FIFO(
         .wr_clk(bus_clk),
@@ -114,8 +116,8 @@ module SV_CCD_Buffer#(
 
         .rd_clk(pe_clk),
         .rd_rstn(rstn),
-        .rd_en(MC_BUFFER.READY),
-        .rd_data(PE_BUFFER.psum_data_M2P),
+        .rd_en(rd_en),
+        .rd_data(psum_rd_data),
         .empty(psum_empty),
         .pre_fill_done_sync(buffer_busy_sync_psum)
     );

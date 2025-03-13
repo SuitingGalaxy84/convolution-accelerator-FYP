@@ -28,12 +28,15 @@ module MultiCaster #(
     parameter NUM_COL = 4
 )(
     input wire clk,
+    input wire pe_clk,
     input wire rstn,
     input wire [$clog2(NUM_COL):0] tag_in, // extended by 1 bit
+    input wire kernel_rden,
     BUS_IF.MCASTER_port BUS_IF,
     PE_IF.MC_port PE_IF,
     input PE_ITR_READY,
-    output tag_lock
+    output tag_lock,
+    output external
 );
     wire [DATA_WIDTH-1:0] WeightBuff_OUT;
     CASTER_IF #(DATA_WIDTH, NUM_COL) ifmap_CASTER();
@@ -45,7 +48,7 @@ module MultiCaster #(
     caster #(2*DATA_WIDTH, NUM_COL) psum_caster(clk, rstn, psum_CASTER.CASTER_port);
     
     
-    
+   
 
 
     /* Parsing Three Casters into One MultiCaster Begin */
@@ -106,19 +109,7 @@ module MultiCaster #(
             .tag_out(tag),
             .tag_lock(tag_lock)
         );
-//        reg [$clog2(NUM_COL)-1:0] tag;
-//        always_ff @(posedge clk or negedge rstn) begin : STORE_TAG
-//            if(~rstn) begin // the difference btw flush signal and rst signal is !!!!!
-//                tag <= 0;
-//            end else begin
-//                if(BUS_IF.flush) begin
-//                    tag <= BUS_IF.TAG;                  
-//                end else begin
-//                    tag <= tag;
-//                end
-//            end 
-//        end 
-        
+
         
         reg [7:0] kernel_size;
         always_ff @(posedge clk or negedge rstn) begin: STORE_KERNEL_SIZE
@@ -142,23 +133,35 @@ module MultiCaster #(
         assign Tag_READY = tag_lock;
        
        
+        reg external;
+        always_ff@(posedge clk or negedge rstn) begin
+            if(~rstn) begin
+                external <= 1;
+            end else begin
+                if(PE_IF.PE_EN) begin
+                    external <= 1;
+                end else if (PE_ITR_READY) begin
+                    external <= 0;
+                end else begin
+                    external <= external;
+                end 
+            end 
+        end 
         wire Buff_rden; 
-        assign Buff_rden = (Fltr_READY && Fltr_READY)&& (PE_ITR_READY || PE_IF.PE_EN); // read kernel weight from the weight buffer
+        assign Buff_rden = (Fltr_READY && Fltr_READY)&& (external ? kernel_rden : PE_ITR_READY); // read kernel weight from the weight buffer
        /*
             Fltr_READY: Weight Buffer is correctly loaded
             Tag_READY: Tag Buffer is correctly loaded
             
             PE_ITR_READY: PE is available for another calculation (Recieving data from another PE)
-            PE_IF.PE_EN: PE is enabled by the external data
-            
-            
-            
+            kernel_rden: PE is enabled by the external data
        */
         WeightBuff #(
             .DATA_WIDTH(DATA_WIDTH),
             .BUFFER_DEPTH(16)
         ) WeightBuff(
             .clk(clk),
+            .pe_clk(pe_clk),
             .rstn(rstn),
             .flush_kernel(BUS_IF.flush_kernel),
             .kernel_size(kernel_size),
@@ -168,7 +171,7 @@ module MultiCaster #(
             .kernel_busy(kernel_busy),
             .un_configed(un_configed),
             .read_VALID(read_VALID),
-            .en(Buff_rden) // include:
+            .rd_en(Buff_rden) // include:
         );
 
         assign ifmap_CASTER.TAG = tag;

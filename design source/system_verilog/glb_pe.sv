@@ -39,11 +39,13 @@ module glb_PE #(
 
     PE_IF #(DATA_WIDTH) PE_BUFFER();
     PE_IF #(DATA_WIDTH) MC_BUFFER();
+    wire external;
 
     SV_CCD_Buffer #(DATA_WIDTH, 16) CCD_BUFFER (
         .rstn(rstn),
         .bus_clk(clk),
         .pe_clk(pe_clk),
+        .kernel_rden(kernel_rden),
         .overflow(),
         .empty(),
         .buffer_busy(),
@@ -66,12 +68,15 @@ module glb_PE #(
 
     MultiCaster #(DATA_WIDTH, NUM_COL) MC(
         .clk(clk),
+        .pe_clk(pe_clk),
         .rstn(rstn),
         .tag_in(tag),
+        .kernel_rden(kernel_rden),
         .BUS_IF(UniV_XBUS_IF),
         .PE_IF(MC_BUFFER),
         .PE_ITR_READY(PE_IITR.READY),
-        .tag_lock(tag_lock)
+        .tag_lock(tag_lock),
+        .external(external)
     );
 
 endmodule

@@ -37,7 +37,7 @@ module tb_glb_PE_set();
     parameter BUFFER_SIZE = 512;
     
     
-    reg clk, pe_clk;
+    reg clk, pe_clk, rstn;
 
     initial begin
         clk = 1;
@@ -49,12 +49,14 @@ module tb_glb_PE_set();
         forever #(PE_CLK_PERIOD/2) pe_clk = ~pe_clk;
     end 
 
-    reg rstn, load_ifmap, start, load_fltr, load_psum;
+    reg load_ifmap, load_fltr, load_psum;
+    reg start;
     reg flush_kernel, flush_tag;
     reg [7:0] kernel_size;
     wire ram_rst_busy, tag_busy, kernel_busy;
     wire ram_load_busy;
     wire full;
+    
 
     
     //start simulation
@@ -65,13 +67,13 @@ module tb_glb_PE_set();
         #50 rstn = 0;
         #50 rstn = 1;
         wait(ram_rst_busy==1'b0); load_ifmap = 1; load_ifmap = 1;load_fltr = 1; load_psum=1;
-        #200 load_ifmap = 0; load_fltr = 0; load_psum = 0;
+        #300 load_ifmap = 0; load_fltr = 0; load_psum = 0;
         #20 flush_tag=1;
         #50 wait(tag_busy==1'b0); flush_tag=0; //tag config
         #20 flush_kernel=1;
         #50 wait(kernel_busy==1'b0); flush_kernel=0;
         #50 start = 1;
-        #200 $stop;
+        #500 $stop;
     end
    
     

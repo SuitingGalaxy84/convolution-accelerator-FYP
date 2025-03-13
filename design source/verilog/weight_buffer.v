@@ -26,6 +26,7 @@ module WeightBuff #(
         parameter BUFFER_DEPTH = 16
 )(
     input clk,
+    input pe_clk,
     input rstn,
     input flush_kernel, //write enable 
     input [7:0] kernel_size,
@@ -35,7 +36,7 @@ module WeightBuff #(
     output kernel_busy,
     output reg un_configed,
     output read_VALID,
-    input en   
+    input rd_en   
 );
 
     reg [DATA_WIDTH-1:0] weight_buff [BUFFER_DEPTH-1:0];
@@ -97,19 +98,19 @@ module WeightBuff #(
     always @(*) begin // read_state_transition
         case(read_current_state)
             READ_IDEL: begin
-                read_next_state = en ? READ_OP : 0;
+                read_next_state = rd_en ? READ_OP : 0;
                 next_rd_ptr = 0;
             end 
             READ_OP: begin
                 next_rd_ptr = rd_ptr+1;
-                read_next_state = (rd_ptr==kernel_size) ? READ_IDEL : READ_OP;
+                read_next_state = (rd_ptr==kernel_size-1) ? READ_IDEL : READ_OP;
             end
         endcase
     end  
 
 
 
-    always @(posedge clk or negedge rstn) begin // read
+   always @(posedge pe_clk or negedge rstn) begin // read
         if(~rstn) begin
             rd_ptr <= 0;
             read_current_state <= 0;
