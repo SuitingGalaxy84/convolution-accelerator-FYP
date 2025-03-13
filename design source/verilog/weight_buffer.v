@@ -33,6 +33,7 @@ module WeightBuff #(
     output [DATA_WIDTH-1:0] data_out,
     output [DATA_WIDTH-1:0] pseudo_out,
     output kernel_busy,
+    output reg un_configed,
     output read_VALID,
     input en   
 );
@@ -60,7 +61,6 @@ module WeightBuff #(
     reg write_current_state;
     reg write_next_state;
     
-    reg un_configed;
     always@(posedge clk or negedge rstn) begin
         if(~rstn) begin
             un_configed <= 1;
@@ -68,7 +68,7 @@ module WeightBuff #(
             if(flush_kernel) begin
                 un_configed <= 0;
             end else begin
-                un_configed <= 1;
+                un_configed <= un_configed;
             end 
         end 
     end 

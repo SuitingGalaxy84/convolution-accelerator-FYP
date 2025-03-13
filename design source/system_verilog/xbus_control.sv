@@ -74,7 +74,7 @@ module X_BusCtrl #(
     */
     assign ifmap_data = UniV_BUS_CTRL.ifmap_data_G2B;
     assign fltr_data = UniV_BUS_CTRL.fltr_data_G2B;
-    assign psum_data = 32;
+    assign psum_data = UniV_BUS_CTRL.psum_data_G2B;
 
     assign UniV_XBUS_IF.ifmap_data_B2M = ifmap_data;
     assign UniV_XBUS_IF.fltr_data_B2M = fltr_data;

@@ -124,8 +124,8 @@ module SV_PE #(
     assign PE_IF.psum_data_P2M = opsum_seln ? {2*DATA_WIDTH{1'b0}} : MAC_result;
     assign opsum_data = opsum_seln ? {2*DATA_WIDTH{1'b0}} : MAC_result;
 
-    assign PE_IF.VALID = ~opsum_seln;
-    assign PE_OITR.VALID = ~opsum_seln;
+    assign PE_IF.VALID = ~opsum_seln; // PE calculation completed 
+    assign PE_OITR.VALID = ~opsum_seln; // PE calculation completed 
 
     // Pipeline registers for the accumulator
     always_ff @(posedge clk or negedge rstn) begin

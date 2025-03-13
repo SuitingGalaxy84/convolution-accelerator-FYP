@@ -28,7 +28,6 @@ module caster#(
 )(
     input wire clk,
     input wire rstn,
-
     CASTER_IF.CASTER_port CASTER_IF
     );
 
@@ -48,6 +47,10 @@ module caster#(
 
     always_comb begin : BUS_to_PE//facilitate the data input from bus to PE
         case ({CASTER_IF.CASTER_READY, (CASTER_IF.TAG == CASTER_IF.ID ? 1'b1 : 1'b0)})
+            /*
+                CASTER_IF.CASTER_READY: Weight Buff and Tag Buff are correctly loaded
+                CASTER_IF.TAG == CASTER_IF.ID: Data ID matches PE TAG
+            */
             2'b11 : begin 
                 CASTER_IF.PE_EN = 1'b1;
                 CASTER_IF.data_C2P = CASTER_IF.data_B2C;

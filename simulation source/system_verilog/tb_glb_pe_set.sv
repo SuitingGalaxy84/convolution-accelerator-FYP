@@ -49,7 +49,7 @@ module tb_glb_PE_set();
         forever #(PE_CLK_PERIOD/2) pe_clk = ~pe_clk;
     end 
 
-    reg rstn, load_ifmap, start, load_fltr;
+    reg rstn, load_ifmap, start, load_fltr, load_psum;
     reg flush_kernel, flush_tag;
     reg [7:0] kernel_size;
     wire ram_rst_busy, tag_busy, kernel_busy;
@@ -60,16 +60,16 @@ module tb_glb_PE_set();
     //start simulation
     initial begin
         kernel_size = KERNEL_SIZE; rstn = 1; start = 0; 
-        load_ifmap=0; load_fltr=0;
+        load_ifmap=0; load_fltr=0;;load_psum=0;
         flush_kernel = 0; flush_tag = 0; // initialization
         #50 rstn = 0;
         #50 rstn = 1;
-        wait(ram_rst_busy==1'b0); load_ifmap = 1; load_ifmap = 1;load_fltr = 1;
-        #200 load_ifmap = 0; load_fltr = 0;
+        wait(ram_rst_busy==1'b0); load_ifmap = 1; load_ifmap = 1;load_fltr = 1; load_psum=1;
+        #200 load_ifmap = 0; load_fltr = 0; load_psum = 0;
         #20 flush_tag=1;
         #50 wait(tag_busy==1'b0); flush_tag=0; //tag config
         #20 flush_kernel=1;
-        #200 flush_kernel=0;
+        #50 wait(kernel_busy==1'b0); flush_kernel=0;
         #50 start = 1;
         #200 $stop;
     end
@@ -80,12 +80,19 @@ module tb_glb_PE_set();
     PE_ITR#(.DATA_WIDTH(DATA_WIDTH)) PE_IITR_insts[NUM_COL-1:0]() ;
     PE_ITR#(.DATA_WIDTH(DATA_WIDTH)) PE_OITR_insts[NUM_COL-1:0]() ;
     
+    
+    
     wire [DATA_WIDTH-1:0] data;
     wire [$clog2(NUM_COL):0] id; 
     wire [$clog2(BUFFER_SIZE)-1:0] addr;
+    
     wire [DATA_WIDTH-1:0] fltr_data;
-    wire [DATA_WIDTH-1:0] fltr_addr;
+    wire [$clog2(BUFFER_SIZE)-1:0] fltr_addr;
    
+    wire [2*DATA_WIDTH-1:0] psum_data;
+    wire [$clog2(NUM_COL):0] psum_id;
+    wire [$clog2(BUFFER_SIZE)-1:0] psum_addr;
+    
     
     BUF_writer #(.DATA_WIDTH(DATA_WIDTH), .NUM_COL(NUM_COL), .BUFFER_SIZE(BUFFER_SIZE)) buf_writer_ifmap(
         .clk(clk),
@@ -107,6 +114,16 @@ module tb_glb_PE_set();
         .kernel_size(kernel_size)
     );
     
+    BUF_writer #(.DATA_WIDTH(DATA_WIDTH*2), .NUM_COL(NUM_COL), .BUFFER_SIZE(BUFFER_SIZE)) buf_writer_psum(
+        .clk(clk),
+        .rstn(rstn),
+        .load(load_psum),
+        .data_out(psum_data),
+        .id_out(psum_id),
+        .addr_out(psum_addr),
+        .kernel_size(kernel_size)
+    );
+    
     
     
     //instantiate PE writer
@@ -116,16 +133,23 @@ module tb_glb_PE_set();
         
         .load_ifmap(load_ifmap), //load ifmap
         .load_fltr(load_fltr), // load fltr
+        .load_psum(load_psum), // load psum
         
         .flush_tag(flush_tag), //flush: PE addr
         .flush_kernel(flush_kernel), // flush: kernel
         
         .addr_in(addr),
         .data_in({data, id}),
-        .kernel_size(kernel_size),
         
         .fltr_addr_in(fltr_addr),
         .fltr_data_in(fltr_data),
+        
+        .psum_addr_in(psum_addr),
+        .psum_data_in({psum_data, psum_id}),
+        
+        .kernel_size(kernel_size),
+        
+        
         
         .UniV_BUS_CTRL_IF(UniV_BUS_CTRL_IF),
         .ram_rst_busy(ram_rst_busy),
@@ -143,7 +167,6 @@ module tb_glb_PE_set();
         .flush_tag(flush_tag),
         .flush_kernel(flush_kernel),
         
-        .external(external),
         .kernel_size(kernel_size),
         .rst_busy(rst_busy),
         .tag_busy(tag_busy),

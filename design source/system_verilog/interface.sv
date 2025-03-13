@@ -190,7 +190,7 @@
             output fltr_data_P2M,
             output psum_data_P2M,
             input PE_EN,
-            input READY,
+            input READY, // READY signal: Data prepared for PE is READY
             output VALID,
             input kernel_size
         );
@@ -218,7 +218,6 @@
         logic [2*DATA_WIDTH-1:0] psum_data_P2P;
         logic READY;
         logic VALID;
-
         modport IN_port(
             input ifmap_data_P2P,
             input fltr_data_P2P,

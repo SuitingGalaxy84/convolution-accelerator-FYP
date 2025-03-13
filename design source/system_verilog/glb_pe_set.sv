@@ -31,7 +31,6 @@ module glb_PE_SET#(
     input flush_tag,
     input flush_kernel, 
     
-    input external,
     input [7:0] kernel_size,
     output rst_busy,
     output tag_busy,
@@ -78,7 +77,6 @@ module glb_PE_SET#(
                     .clk(clk),
                     .pe_clk(pe_clk),
                     .rstn(rstn),
-                    .external(external),
                     .tag(tag_out[i]),
                     .tag_lock(tag_locks[i]),
                     .UniV_XBUS_IF(UniV_XBUS_IF),

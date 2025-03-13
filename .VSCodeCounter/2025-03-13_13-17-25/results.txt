@@ -1,0 +1,104 @@
+Date : 2025-03-13 13:17:25
+Directory : d:\Desktop\FYP\convolution-accelerator-FYP
+Total : 59 files,  3326 codes, 1138 comments, 833 blanks, all 5297 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| System Verilog     |         37 |      2,378 |        868 |        601 |      3,847 |
+| Verilog            |         12 |        835 |        262 |        194 |      1,291 |
+| Markdown           |          7 |         58 |          0 |         27 |         85 |
+| Python             |          1 |         43 |          8 |         10 |         61 |
+| JSON with Comments |          1 |         12 |          0 |          0 |         12 |
+| Log                |          1 |          0 |          0 |          1 |          1 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                         | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                            |         59 |      3,326 |      1,138 |        833 |      5,297 |
+| . (Files)                                                                                                                    |          2 |         64 |          0 |         17 |         81 |
+| design source                                                                                                                |         34 |      2,063 |        763 |        549 |      3,375 |
+| design source\spinalHDL                                                                                                      |          1 |          1 |          0 |          2 |          3 |
+| design source\system_verilog                                                                                                 |         20 |      1,226 |        501 |        351 |      2,078 |
+| design source\system_verilog (Files)                                                                                         |         15 |        953 |        338 |        257 |      1,548 |
+| design source\system_verilog\dummy_pe                                                                                        |          5 |        273 |        163 |         94 |        530 |
+| design source\verilog                                                                                                        |         13 |        836 |        262 |        196 |      1,294 |
+| design source\verilog (Files)                                                                                                |         10 |        564 |        125 |        124 |        813 |
+| design source\verilog\axi_example                                                                                            |          3 |        272 |        137 |         72 |        481 |
+| design source\verilog\axi_example\sample_generator                                                                           |          3 |        272 |        137 |         72 |        481 |
+| simulation log                                                                                                               |          1 |          0 |          0 |          1 |          1 |
+| simulation source                                                                                                            |         21 |      1,156 |        367 |        256 |      1,779 |
+| simulation source\spinalHDL                                                                                                  |          1 |          1 |          0 |          2 |          3 |
+| simulation source\system_verilog                                                                                             |         19 |      1,154 |        367 |        253 |      1,774 |
+| simulation source\verilog                                                                                                    |          1 |          1 |          0 |          1 |          2 |
+| vis                                                                                                                          |          1 |         43 |          8 |         10 |         61 |
++------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                                     | language           | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\Desktop\FYP\convolution-accelerator-FYP\README.md                                                                         | Markdown           |         52 |          0 |         17 |         69 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\spinalHDL\README.md                                                 | Markdown           |          1 |          0 |          2 |          3 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\README.md                                            | Markdown           |          1 |          0 |          2 |          3 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\bus_interconnect.sv                                  | System Verilog     |          0 |          0 |          3 |          3 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\caster.sv                                            | System Verilog     |         35 |         25 |          5 |         65 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\ccd_buffer.sv                                        | System Verilog     |         83 |         23 |         19 |        125 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\data_enc.sv                                          | System Verilog     |         20 |         21 |         10 |         51 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\dummy_pe\dummy_array_control.sv                      | System Verilog     |          3 |         20 |          1 |         24 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\dummy_pe\dummy_pe.sv                                 | System Verilog     |         60 |         34 |         23 |        117 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\dummy_pe\dummy_pe_array.sv                           | System Verilog     |         86 |         37 |         17 |        140 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\dummy_pe\dummy_pe_array_configurable.sv              | System Verilog     |         85 |         49 |         41 |        175 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\dummy_pe\dummy_pe_kl.sv                              | System Verilog     |         39 |         23 |         12 |         74 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\glb_buffer.sv                                        | System Verilog     |         12 |         21 |          2 |         35 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\glb_pe.sv                                            | System Verilog     |         47 |         22 |          8 |         77 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\glb_pe_set.sv                                        | System Verilog     |         59 |         19 |         11 |         89 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\global_buffer.sv                                     | System Verilog     |         29 |         21 |          8 |         58 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\interface.sv                                         | System Verilog     |        250 |         45 |         83 |        378 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\multicaster.sv                                       | System Verilog     |        100 |         52 |         37 |        189 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\pe.sv                                                | System Verilog     |        102 |         40 |         20 |        162 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\pe_array_configurable.sv                             | System Verilog     |         91 |         22 |         21 |        134 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\pe_ctrl.sv                                           | System Verilog     |         79 |          0 |         12 |         91 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\xbus_control.sv                                      | System Verilog     |         45 |         27 |         16 |         88 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\README.md                                                   | Markdown           |          1 |          0 |          2 |          3 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\async_fifo.v                                                | Verilog            |         77 |         11 |         16 |        104 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\async_fifo_claude.v                                         | Verilog            |        127 |         18 |         22 |        167 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\async_fifo_with_prefill.v                                   | Verilog            |        107 |         30 |         30 |        167 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\axi_example\sample_generator\sample_generator_v1_0.v        | Verilog            |         53 |         14 |         17 |         84 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\axi_example\sample_generator\sample_generator_v1_0_M_AXIS.v | Verilog            |        122 |         72 |         35 |        229 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\axi_example\sample_generator\sample_generator_v1_0_S_AXIS.v | Verilog            |         97 |         51 |         20 |        168 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\data_buffer.v                                               | Verilog            |         35 |          1 |         10 |         46 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\ram.v                                                       | Verilog            |          0 |          0 |          1 |          1 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\shifter.v                                                   | Verilog            |         28 |          5 |          6 |         39 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\tagAlloc.v                                                  | Verilog            |         53 |         20 |          6 |         79 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\tagBuff.v                                                   | Verilog            |         41 |         19 |          6 |         66 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\weight_buffer.v                                             | Verilog            |         95 |         21 |         25 |        141 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\hdl_source.code-workspace                                                         | JSON with Comments |         12 |          0 |          0 |         12 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation log\tb_glb_pe_set.log                                                  | Log                |          0 |          0 |          1 |          1 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\spinalHDL\README.md                                             | Markdown           |          1 |          0 |          2 |          3 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\README.md                                        | Markdown           |          1 |          0 |          1 |          2 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\buf_reader.sv                                    | System Verilog     |         24 |         19 |          3 |         46 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\ccd_fifo_reader.sv                               | System Verilog     |         45 |          6 |          5 |         56 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\ccd_fifo_writer.sv                               | System Verilog     |         48 |          6 |         12 |         66 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\ccd_pe_driver.sv                                 | System Verilog     |         57 |         28 |         16 |        101 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\glb_buffer.sv                                    | System Verilog     |        152 |         21 |         37 |        210 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\glb_buffer_writer.sv                             | System Verilog     |         53 |         19 |          8 |         80 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\glb_pe_driver.sv                                 | System Verilog     |         46 |         21 |          6 |         73 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\pe_driver.sv                                     | System Verilog     |         39 |         16 |          5 |         60 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_async_fifo.sv                                 | System Verilog     |         78 |         24 |         22 |        124 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_async_fifo_with_prefill.sv                    | System Verilog     |         91 |         24 |         21 |        136 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_ccd_pe.sv                                     | System Verilog     |         95 |         21 |         15 |        131 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_dummpy_pe_array.sv                            | System Verilog     |         71 |         31 |         16 |        118 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_glb_pe.sv                                     | System Verilog     |         46 |         21 |          8 |         75 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_glb_pe_loop.sv                                | System Verilog     |         78 |         21 |         11 |        110 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_glb_pe_set.sv                                 | System Verilog     |        114 |         26 |         42 |        182 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_pe.sv                                         | System Verilog     |         38 |         21 |         11 |         70 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_weight_buffer.sv                              | System Verilog     |         51 |         21 |          8 |         80 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\weight_buffer_driver.sv                          | System Verilog     |         27 |         21 |          6 |         54 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\verilog\README.md                                               | Markdown           |          1 |          0 |          1 |          2 |
+| d:\Desktop\FYP\convolution-accelerator-FYP\vis\pe_ctrl_viz.py                                                                | Python             |         43 |          8 |         10 |         61 |
+| Total                                                                                                                        |                    |      3,326 |      1,138 |        833 |      5,297 |
++------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

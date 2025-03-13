@@ -35,7 +35,7 @@ module BUF_writer#(
     output [$clog2(BUFFER_SIZE)-1:0] addr_out
 );
 
-    parameter MAX_RANGE = 2**DATA_WIDTH-1;
+    parameter MAX_RANGE = 2**(DATA_WIDTH/2);
     parameter MIN_RANGE = 0;
 
 

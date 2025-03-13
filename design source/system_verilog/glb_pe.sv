@@ -30,7 +30,6 @@ module glb_PE #(
     input wire clk,
     input wire pe_clk,
     input wire rstn,
-    input wire external,
     input wire [$clog2(NUM_COL):0] tag, // extended by 1 bit 
     output wire tag_lock, //tag lock: notify the controller the tag is stored 
     BUS_IF.MCASTER_port UniV_XBUS_IF,
@@ -72,7 +71,6 @@ module glb_PE #(
         .BUS_IF(UniV_XBUS_IF),
         .PE_IF(MC_BUFFER),
         .PE_ITR_READY(PE_IITR.READY),
-        .external(external),
         .tag_lock(tag_lock)
     );
 

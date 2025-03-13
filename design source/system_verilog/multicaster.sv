@@ -33,7 +33,6 @@ module MultiCaster #(
     BUS_IF.MCASTER_port BUS_IF,
     PE_IF.MC_port PE_IF,
     input PE_ITR_READY,
-    input external,
     output tag_lock
 );
     wire [DATA_WIDTH-1:0] WeightBuff_OUT;
@@ -80,38 +79,18 @@ module MultiCaster #(
         assign fltr_CASTER.PE_VALID = PE_IF.VALID;
         assign psum_CASTER.PE_VALID = PE_IF.VALID;
 
-         //assign BUS_IF.ifmap_data_M2P = ifmap_CASTER.data_C2P;
-         //assign BUS_IF.fltr_data_M2P = fltr_CASTER.data_C2P;
-         //assign BUS_IF.psum_data_M2P = psum_CASTER.data_C2P;
-
-         //assign ifmap_CASTER.data_B2C = BUS_IF.ifmap_data_P2M;
-         //assign fltr_CASTER.data_B2C = BUS_IF.fltr_data_P2M;
-         //assign psum_CASTER.data_B2C = BUS_IF.psum_data_P2M;
-         //Allocate the CASTER_EN signal to the corresponding CASTER
 
 
-         //READY (Output) signal notifies the BUS->BUFFER that the PE is ready to accept data ()
-        assign ifmap_CASTER.CASTER_READY = Buff_READY;
-        assign fltr_CASTER.CASTER_READY =  Buff_READY;
-        assign psum_CASTER.CASTER_READY = Buff_READY;
+         //Weight Buffer and Tag Buffer notify the CASTER that the PE is okay to receive ifmap data
+        assign ifmap_CASTER.CASTER_READY = Fltr_READY && Tag_READY;
+        assign fltr_CASTER.CASTER_READY =  Fltr_READY && Tag_READY;
+        assign psum_CASTER.CASTER_READY = Fltr_READY && Tag_READY;
         
         // VALID (Output) signal notifies the BUS that the calculation is done
         assign BUS_IF.VALID = ifmap_CASTER.CASTER_VALID & 
                                       fltr_CASTER.CASTER_VALID & 
                                        psum_CASTER.CASTER_VALID; // VALID (Output) signal notifies the BUS that the calculation is done
     
-        // PE_EN signal enables the PE from the CASTER to perform the calculation
-        //assign BUS_IF.PE_EN = ifmap_CASTER.PE_EN & 
-        //                       fltr_CASTER.PE_EN & 
-        //                       psum_CASTER.PE_EN; // PE_EN signal enables the PE from the CASTER to perform the calculation
-                               
-        //assign ifmap_CASTER.PE_READY = BUS_IF.PE_READY;
-        //assign fltr_CASTER.PE_READY = BUS_IF.PE_READY;
-        //assign psum_CASTER.PE_READY = BUS_IF.PE_READY;
-        
-        //assign ifmap_CASTER.PE_VALID = BUS_IF.PE_VALID;
-        //assign fltr_CASTER.PE_VALID = BUS_IF.PE_VALID;
-        //assign psum_CASTER.PE_VALID = BUS_IF.PE_VALID;
         
         wire [$clog2(NUM_COL):0] id; // extended by 1 bit 
         assign id = BUS_IF.ID;
@@ -154,14 +133,27 @@ module MultiCaster #(
             end
         end  
         
-        wire kernel_busy;
+        wire kernel_busy, un_configed;
         assign BUS_IF.kernel_busy = kernel_busy;
         
-        wire Buff_READY;
-        assign Buff_READY = ~kernel_busy;
-        wire Buff_rden;
-        assign Buff_rden = PE_ITR_READY && Buff_READY;
+        wire Fltr_READY;
+        assign Fltr_READY = ~kernel_busy && (~un_configed);
+        wire Tag_READY;
+        assign Tag_READY = tag_lock;
        
+       
+        wire Buff_rden; 
+        assign Buff_rden = (Fltr_READY && Fltr_READY)&& (PE_ITR_READY || PE_IF.PE_EN); // read kernel weight from the weight buffer
+       /*
+            Fltr_READY: Weight Buffer is correctly loaded
+            Tag_READY: Tag Buffer is correctly loaded
+            
+            PE_ITR_READY: PE is available for another calculation (Recieving data from another PE)
+            PE_IF.PE_EN: PE is enabled by the external data
+            
+            
+            
+       */
         WeightBuff #(
             .DATA_WIDTH(DATA_WIDTH),
             .BUFFER_DEPTH(16)
@@ -174,6 +166,7 @@ module MultiCaster #(
             .data_out(WeightBuff_OUT),//fltr_CASTER.data_B2C),
             .pseudo_out(),
             .kernel_busy(kernel_busy),
+            .un_configed(un_configed),
             .read_VALID(read_VALID),
             .en(Buff_rden) // include:
         );
