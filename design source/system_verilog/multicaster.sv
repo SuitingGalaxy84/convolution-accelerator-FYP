@@ -31,7 +31,7 @@ module MultiCaster #(
     input wire pe_clk,
     input wire rstn,
     input wire [$clog2(NUM_COL):0] tag_in, // extended by 1 bit
-    input wire kernel_rden,
+    input wire ccd_rden,
     BUS_IF.MCASTER_port BUS_IF,
     PE_IF.MC_port PE_IF,
     input PE_ITR_READY,
@@ -148,13 +148,13 @@ module MultiCaster #(
             end 
         end 
         wire Buff_rden; 
-        assign Buff_rden = (Fltr_READY && Fltr_READY)&& (external ? kernel_rden : PE_ITR_READY); // read kernel weight from the weight buffer
+        assign Buff_rden = (Fltr_READY && Fltr_READY)&& (external ? ccd_rden : PE_ITR_READY); // read kernel weight from the weight buffer
        /*
             Fltr_READY: Weight Buffer is correctly loaded
             Tag_READY: Tag Buffer is correctly loaded
             
             PE_ITR_READY: PE is available for another calculation (Recieving data from another PE)
-            kernel_rden: PE is enabled by the external data
+            ccd_rden: PE is enabled by the external data
        */
         WeightBuff #(
             .DATA_WIDTH(DATA_WIDTH),
@@ -170,7 +170,6 @@ module MultiCaster #(
             .pseudo_out(),
             .kernel_busy(kernel_busy),
             .un_configed(un_configed),
-            .read_VALID(read_VALID),
             .rd_en(Buff_rden) // include:
         );
 

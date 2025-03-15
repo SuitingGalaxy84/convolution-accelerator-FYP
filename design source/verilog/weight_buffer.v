@@ -35,7 +35,6 @@ module WeightBuff #(
     output [DATA_WIDTH-1:0] pseudo_out,
     output kernel_busy,
     output reg un_configed,
-    output read_VALID,
     input rd_en   
 );
 
@@ -75,12 +74,11 @@ module WeightBuff #(
     end 
 
     assign kernel_busy = write_current_state;
-    assign read_VALID = read_current_state;
 
     assign pseudo_out = weight_buff[BUFFER_DEPTH-1];
     
 
-    assign data_out = read_VALID ? weight_buff[rd_ptr] : 0;
+    assign data_out = rd_en ? weight_buff[rd_ptr] : 0;
     
     always @(*) begin //write_state_transition
         case(write_current_state)
@@ -99,7 +97,7 @@ module WeightBuff #(
         case(read_current_state)
             READ_IDEL: begin
                 read_next_state = rd_en ? READ_OP : 0;
-                next_rd_ptr = 0;
+                next_rd_ptr = read_next_state==READ_OP ? 1 : 0;
             end 
             READ_OP: begin
                 next_rd_ptr = rd_ptr+1;

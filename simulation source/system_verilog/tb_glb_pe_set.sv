@@ -67,12 +67,12 @@ module tb_glb_PE_set();
         #50 rstn = 0;
         #50 rstn = 1;
         wait(ram_rst_busy==1'b0); load_ifmap = 1; load_ifmap = 1;load_fltr = 1; load_psum=1;
-        #300 load_ifmap = 0; load_fltr = 0; load_psum = 0;
+        #500 load_ifmap = 0; load_fltr = 0; load_psum = 0;
         #20 flush_tag=1;
         #50 wait(tag_busy==1'b0); flush_tag=0; //tag config
         #20 flush_kernel=1;
         #50 wait(kernel_busy==1'b0); flush_kernel=0;
-        #50 start = 1;
+        #70 start = 1;
         #500 $stop;
     end
    
