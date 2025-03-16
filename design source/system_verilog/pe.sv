@@ -45,7 +45,7 @@ module SV_PE #(
     
     
     
-    assign READY = external ? PE_IF.READY : PE_IITR.READY; // ready signal from 1) external ready 2) internal ready
+    assign READY = external ? PE_IF.PE_EN : PE_IITR.READY; // ready signal from 1) external enable 2) internal ready
     assign ifmap_data = external ? PE_IF.ifmap_data_M2P : PE_IITR.ifmap_data_P2P;
     assign fltr_data = PE_IF.fltr_data_M2P;//external ? PE_IF.fltr_data_M2P : PE_IITR.fltr_data_P2P;
     assign ipsum_data = ipsum_seln ? 0 : (external ? PE_IF.psum_data_M2P : PE_IITR.psum_data_P2P);
@@ -100,17 +100,7 @@ module SV_PE #(
     wire ipsum_seln;
     wire hold_psum;
     
-    // Multiplier instantiation
-//    Multiplier_2 #(
-//        .DATA_WIDTH(DATA_WIDTH)
-//    ) mul_1 (
-//        .clk(clk),
-//        .rstn(rstn),
-//        .en(PE_IF.PE_EN),
-//        .a(PE_IF.ifmap_data_M2P),
-//        .b(PE_IF.fltr_data_M2P),
-//        .result(MULT_result)
-//    );
+
     wire mult_en;
     assign mult_en = ~opsum_seln;
     mult_gen_0 mult_gen_0(

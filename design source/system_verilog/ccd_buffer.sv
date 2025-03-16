@@ -65,6 +65,9 @@ module SV_CCD_Buffer#(
     assign overflow = ifmap_overflow || fltr_overflow || psum_overflow;
     assign empty = ifmap_empty || fltr_empty || psum_empty;
     assign ccd_rden = rd_en;
+    
+    assign PE_BUFFER.PE_EN = rd_en;
+    assign PE_BUFFER.kernel_size = MC_BUFFER.kernel_size;
 
     pulse_accumulator rd_en_synchronizer (
         .fast_clk(bus_clk),

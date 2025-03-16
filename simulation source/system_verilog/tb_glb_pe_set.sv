@@ -73,7 +73,6 @@ module tb_glb_PE_set();
         #20 flush_kernel=1;
         #50 wait(kernel_busy==1'b0); flush_kernel=0;
         #70 start = 1;
-        #500 $stop;
     end
    
     
