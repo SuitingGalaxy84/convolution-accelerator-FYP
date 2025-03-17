@@ -75,17 +75,17 @@ module SV_PE #(
             .depth_output(PE_OITR.ifmap_data_P2P)
         );
         
-    shifter #(
-        .DATA_WIDTH(DATA_WIDTH),
-        .SHIFT_DEPTH(8)
-        ) shifter_FLTR (
-            .clk(clk),
-            .rstn(rstn),
-            .serial_in(fltr_data),
-            .serial_out(),
-            .output_depth(PE_IF.kernel_size+1),
-            .depth_output(PE_OITR.fltr_data_P2P)
-        );
+//    shifter #(
+//        .DATA_WIDTH(DATA_WIDTH),
+//        .SHIFT_DEPTH(8)
+//        ) shifter_FLTR (
+//            .clk(clk),
+//            .rstn(rstn),
+//            .serial_in(fltr_data),
+//            .serial_out(),
+//            .output_depth(PE_IF.kernel_size+1),
+//            .depth_output(PE_OITR.fltr_data_P2P)
+//        );
 
 
     // Local signals for the PE datapath

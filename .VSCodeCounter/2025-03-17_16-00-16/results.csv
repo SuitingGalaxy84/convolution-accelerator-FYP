@@ -1,48 +1,52 @@
-"filename", "language", "Markdown", "Python", "JSON with Comments", "System Verilog", "Log", "Verilog", "comment", "blank", "total"
-"d:\Desktop\FYP\convolution-accelerator-FYP\README.md", "Markdown", 52, 0, 0, 0, 0, 0, 0, 17, 69
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\spinalHDL\README.md", "Markdown", 1, 0, 0, 0, 0, 0, 0, 2, 3
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\README.md", "Markdown", 1, 0, 0, 0, 0, 0, 0, 2, 3
+"filename", "language", "Log", "Python", "Markdown", "System Verilog", "JSON with Comments", "Verilog", "comment", "blank", "total"
+"d:\Desktop\FYP\convolution-accelerator-FYP\README.md", "Markdown", 0, 0, 52, 0, 0, 0, 0, 17, 69
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\spinalHDL\README.md", "Markdown", 0, 0, 1, 0, 0, 0, 0, 2, 3
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\README.md", "Markdown", 0, 0, 1, 0, 0, 0, 0, 2, 3
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\buf_pe_set.sv", "System Verilog", 0, 0, 0, 98, 0, 0, 27, 40, 165
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\bus_interconnect.sv", "System Verilog", 0, 0, 0, 0, 0, 0, 0, 3, 3
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\caster.sv", "System Verilog", 0, 0, 0, 35, 0, 0, 25, 5, 65
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\ccd_buffer.sv", "System Verilog", 0, 0, 0, 83, 0, 0, 23, 19, 125
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\ccd_buffer.sv", "System Verilog", 0, 0, 0, 83, 0, 0, 23, 23, 129
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\data_enc.sv", "System Verilog", 0, 0, 0, 20, 0, 0, 21, 10, 51
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\dummy_pe\dummy_array_control.sv", "System Verilog", 0, 0, 0, 3, 0, 0, 20, 1, 24
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\dummy_pe\dummy_pe.sv", "System Verilog", 0, 0, 0, 60, 0, 0, 34, 23, 117
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\dummy_pe\dummy_pe_array.sv", "System Verilog", 0, 0, 0, 86, 0, 0, 37, 17, 140
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\dummy_pe\dummy_pe_array_configurable.sv", "System Verilog", 0, 0, 0, 85, 0, 0, 49, 41, 175
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\dummy_pe\dummy_pe_kl.sv", "System Verilog", 0, 0, 0, 39, 0, 0, 23, 12, 74
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\glb_buffer.sv", "System Verilog", 0, 0, 0, 12, 0, 0, 21, 2, 35
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\glb_pe.sv", "System Verilog", 0, 0, 0, 47, 0, 0, 22, 8, 77
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\glb_buffer.sv", "System Verilog", 0, 0, 0, 152, 0, 0, 21, 36, 209
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\glb_buffer_writer.sv", "System Verilog", 0, 0, 0, 53, 0, 0, 19, 8, 80
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\glb_pe.sv", "System Verilog", 0, 0, 0, 52, 0, 0, 22, 8, 82
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\glb_pe_set.sv", "System Verilog", 0, 0, 0, 59, 0, 0, 19, 11, 89
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\global_buffer.sv", "System Verilog", 0, 0, 0, 29, 0, 0, 21, 8, 58
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\interface.sv", "System Verilog", 0, 0, 0, 250, 0, 0, 45, 83, 378
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\multicaster.sv", "System Verilog", 0, 0, 0, 100, 0, 0, 52, 37, 189
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\pe.sv", "System Verilog", 0, 0, 0, 102, 0, 0, 40, 20, 162
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\pe_array_configurable.sv", "System Verilog", 0, 0, 0, 91, 0, 0, 22, 21, 134
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\interface.sv", "System Verilog", 0, 0, 0, 247, 0, 0, 48, 83, 378
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\multicaster.sv", "System Verilog", 0, 0, 0, 117, 0, 0, 37, 37, 191
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\pe.sv", "System Verilog", 0, 0, 0, 91, 0, 0, 40, 24, 155
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\pe_array_configurable.sv", "System Verilog", 0, 0, 0, 67, 0, 0, 21, 24, 112
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\pe_ctrl.sv", "System Verilog", 0, 0, 0, 79, 0, 0, 0, 12, 91
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\system_verilog\xbus_control.sv", "System Verilog", 0, 0, 0, 45, 0, 0, 27, 16, 88
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\README.md", "Markdown", 1, 0, 0, 0, 0, 0, 0, 2, 3
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\README.md", "Markdown", 0, 0, 1, 0, 0, 0, 0, 2, 3
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\async_fifo.v", "Verilog", 0, 0, 0, 0, 0, 77, 11, 16, 104
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\async_fifo_claude.v", "Verilog", 0, 0, 0, 0, 0, 127, 18, 22, 167
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\async_fifo_with_prefill.v", "Verilog", 0, 0, 0, 0, 0, 107, 30, 30, 167
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\axi_example\sample_generator\sample_generator_v1_0.v", "Verilog", 0, 0, 0, 0, 0, 53, 14, 17, 84
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\axi_example\sample_generator\sample_generator_v1_0_M_AXIS.v", "Verilog", 0, 0, 0, 0, 0, 122, 72, 35, 229
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\axi_example\sample_generator\sample_generator_v1_0_S_AXIS.v", "Verilog", 0, 0, 0, 0, 0, 97, 51, 20, 168
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\ccd_sync.v", "Verilog", 0, 0, 0, 0, 0, 67, 18, 12, 97
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\data_buffer.v", "Verilog", 0, 0, 0, 0, 0, 35, 1, 10, 46
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\ram.v", "Verilog", 0, 0, 0, 0, 0, 0, 0, 1, 1
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\shifter.v", "Verilog", 0, 0, 0, 0, 0, 28, 5, 6, 39
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\synchronizer.v", "Verilog", 0, 0, 0, 0, 0, 33, 3, 4, 40
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\tagAlloc.v", "Verilog", 0, 0, 0, 0, 0, 53, 20, 6, 79
 "d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\tagBuff.v", "Verilog", 0, 0, 0, 0, 0, 41, 19, 6, 66
-"d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\weight_buffer.v", "Verilog", 0, 0, 0, 0, 0, 95, 21, 25, 141
-"d:\Desktop\FYP\convolution-accelerator-FYP\hdl_source.code-workspace", "JSON with Comments", 0, 0, 12, 0, 0, 0, 0, 0, 12
+"d:\Desktop\FYP\convolution-accelerator-FYP\design source\verilog\weight_buffer.v", "Verilog", 0, 0, 0, 0, 0, 94, 21, 25, 140
+"d:\Desktop\FYP\convolution-accelerator-FYP\hdl_source.code-workspace", "JSON with Comments", 0, 0, 0, 0, 12, 0, 0, 0, 12
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation log\tb_glb_pe_set.log", "Log", 0, 0, 0, 0, 0, 0, 0, 1, 1
-"d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\spinalHDL\README.md", "Markdown", 1, 0, 0, 0, 0, 0, 0, 2, 3
-"d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\README.md", "Markdown", 1, 0, 0, 0, 0, 0, 0, 1, 2
+"d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\spinalHDL\README.md", "Markdown", 0, 0, 1, 0, 0, 0, 0, 2, 3
+"d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\README.md", "Markdown", 0, 0, 1, 0, 0, 0, 0, 1, 2
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\buf_reader.sv", "System Verilog", 0, 0, 0, 24, 0, 0, 19, 3, 46
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\ccd_fifo_reader.sv", "System Verilog", 0, 0, 0, 45, 0, 0, 6, 5, 56
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\ccd_fifo_writer.sv", "System Verilog", 0, 0, 0, 48, 0, 0, 6, 12, 66
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\ccd_pe_driver.sv", "System Verilog", 0, 0, 0, 57, 0, 0, 28, 16, 101
-"d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\glb_buffer.sv", "System Verilog", 0, 0, 0, 152, 0, 0, 21, 37, 210
+"d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\glb_buffer.sv", "System Verilog", 0, 0, 0, 152, 0, 0, 21, 36, 209
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\glb_buffer_writer.sv", "System Verilog", 0, 0, 0, 53, 0, 0, 19, 8, 80
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\glb_pe_driver.sv", "System Verilog", 0, 0, 0, 46, 0, 0, 21, 6, 73
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\pe_driver.sv", "System Verilog", 0, 0, 0, 39, 0, 0, 16, 5, 60
@@ -52,10 +56,10 @@
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_dummpy_pe_array.sv", "System Verilog", 0, 0, 0, 71, 0, 0, 31, 16, 118
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_glb_pe.sv", "System Verilog", 0, 0, 0, 46, 0, 0, 21, 8, 75
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_glb_pe_loop.sv", "System Verilog", 0, 0, 0, 78, 0, 0, 21, 11, 110
-"d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_glb_pe_set.sv", "System Verilog", 0, 0, 0, 114, 0, 0, 26, 42, 182
+"d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_glb_pe_set.sv", "System Verilog", 0, 0, 0, 114, 0, 0, 26, 43, 183
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_pe.sv", "System Verilog", 0, 0, 0, 38, 0, 0, 21, 11, 70
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\tb_weight_buffer.sv", "System Verilog", 0, 0, 0, 51, 0, 0, 21, 8, 80
 "d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\system_verilog\weight_buffer_driver.sv", "System Verilog", 0, 0, 0, 27, 0, 0, 21, 6, 54
-"d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\verilog\README.md", "Markdown", 1, 0, 0, 0, 0, 0, 0, 1, 2
+"d:\Desktop\FYP\convolution-accelerator-FYP\simulation source\verilog\README.md", "Markdown", 0, 0, 1, 0, 0, 0, 0, 1, 2
 "d:\Desktop\FYP\convolution-accelerator-FYP\vis\pe_ctrl_viz.py", "Python", 0, 43, 0, 0, 0, 0, 8, 10, 61
-"Total", "-", 58, 43, 12, 2378, 0, 835, 1138, 833, 5297
+"Total", "-", 0, 43, 58, 2653, 12, 934, 1192, 942, 5834

@@ -214,13 +214,13 @@
         parameter DATA_WIDTH = 16
         )();
         logic [DATA_WIDTH-1:0] ifmap_data_P2P;
-        logic [DATA_WIDTH-1:0] fltr_data_P2P;
+        // logic [DATA_WIDTH-1:0] fltr_data_P2P;
         logic [2*DATA_WIDTH-1:0] psum_data_P2P;
         logic READY;
         logic VALID;
         modport IN_port(
             input ifmap_data_P2P,
-            input fltr_data_P2P,
+            // input fltr_data_P2P,
             input psum_data_P2P,
             input READY
             
@@ -228,7 +228,7 @@
 
         modport OUT_port(
             output ifmap_data_P2P,
-            output fltr_data_P2P,
+            // output fltr_data_P2P,
             output psum_data_P2P,
             output VALID
         );

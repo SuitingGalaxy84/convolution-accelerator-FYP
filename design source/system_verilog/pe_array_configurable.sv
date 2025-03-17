@@ -23,112 +23,90 @@
 
 `include "interface.sv"
 
-module pe_array_CONFIG #(
+module pe_array_configurable #(
     parameter DATA_WIDTH = 16,
-    parameter NUM_COL = 3,
-    parameter NUM_ROW = 3
-    )(
-        input wire clk,
-        input wire rstn
-    );
+    parameter NUM_COL = 7,
+    parameter NUM_ROW = 7,
+    parameter BUFFER_SIZE = 512
+)(
+    input clk,
+    input pe_clk,
+    input rstn,
 
-    BUS_IF #(DATA_WIDTH) UniV_XBUS_IF [NUM_ROW-1:0] ();
-    BUS_CTRL #(DATA_WIDTH, NUM_ROW, NUM_COL) UniV_BUS_CTRL_IF ();
-    PE_ITR #(DATA_WIDTH) PE_IITR [NUM_ROW-1:0][NUM_COL-1:0] ();
-    PE_ITR #(DATA_WIDTH) PE_OITR [NUM_ROW-1:0][NUM_COL-1:0] ();
-
+    input [NUM_ROW-1:0] load_ifmap,
+    input [NUM_ROW-1:0] load_fltr,
+    input [NUM_ROW-1:0] load_psum,
     
-    wire [NUM_ROW-1:0] tag_locks;
-    wire [NUM_ROW-1:0][NUM_COL-1:0] tag_lock;
-    genvar a;
-    generate 
-        for(a=0; a<NUM_ROW; a=a+1) begin : tag_locks_gen
-            // AND reduction for each row
-            assign tag_locks[a] = &tag_lock[a];
-        end
-    endgenerate
-  
-    
-    genvar m;
-    generate // instantiating row bus control and interfaces
-        for(m=0; m<NUM_ROW; m=m+1) begin : row_interface
-              X_BusCtrl #(
-            .DATA_WIDTH(DATA_WIDTH),
-            .NUM_COL(NUM_COL),
-            .NUM_ROW(NUM_ROW)
-            ) X_BusCtrl(
-                .clk(clk),
-                .rstn(rstn),
-                .flush(flush),
-                .rst_busy(rst_busy),
-                .UniV_XBUS_IF(UniV_XBUS_IF[m]),
-                .UniV_BUS_CTRL(UniV_BUS_CTRL_IF)
-            );
-        end 
+    input [NUM_ROW-1:0] flush_tag,
+    input [NUM_ROW-1:0] flush_kernel,
 
-        for(m=0; m<NUM_ROW; m=m+1) begin : tag_allocator
-            tagAlloc #(
-                .NUM_COL(NUM_COL)
-            )tagAlloc_inst(
-                .clk(clk),
-                .rstn(rstn),
-                .flush(UniV_BUS_CTRL_IF.flush),
-                .tag_in(),
-                .tag_out(),
-                .tag_lock(tag_locks[m])
-            );
-        end 
+    input [7:0] kernel_size,
 
-    endgenerate
+
+    input [NUM_ROW-1:0] start,
     
     
-    genvar i, j;
-    generate // instantiate Global PE Array
-        for(i=0; i<NUM_ROW; i=i+1) begin : row_gen
-            for(j=0; j<NUM_COL; j=j+1) begin : col_gen
-                glb_PE #(
-                    .DATA_WIDTH(DATA_WIDTH),
-                    .NUM_COL(NUM_COL)
-                ) glb_PE_inst(
-                    .clk(clk),
-                    .rstn(rstn),
-                    .external(external),
-                    .tag_lock(tag_lock[i][j]),
-                    .BUS_IF(UniV_XBUS_IF[i]),
-                    .PE_IITR(PE_IITR[i][j]),
-                    .PE_OITR(PE_OITR[i][j])
-                );
+    output [NUM_ROW-1:0] ram_rst_busy,
+    output [NUM_ROW-1:0] tag_busy,
+    output [NUM_ROW-1:0] kernel_busy,
+    output [NUM_ROW-1:0] ram_load_busy,
+    output [NUM_ROW-1:0] full
+);
 
-            end 
-        end 
-
-    endgenerate
-
+    PE_ITR#(.DATA_WIDTH(DATA_WIDTH)) PE_IITR_insts[NUM_ROW-1:0][NUM_COL-1:0]();
+    PE_ITR#(.DATA_WIDTH(DATA_WIDTH)) PE_OITR_insts[NUM_ROW-1:0][NUM_COL-1:0]();
     
-    genvar k, l;
-    generate 
-        for(k=0; k<NUM_ROW-1; k=k+1) begin : data_conn
-            for(l=0; l<NUM_COL-1; l=l+1) begin
-                assign PE_IITR[k+1][l+1].ifmap_data_P2P = PE_OITR[k][l].ifmap_data_P2P;
-                assign PE_IITR[k][l+1].fltr_data_P2P = PE_OITR[k][l].fltr_data_P2P;
-                assign PE_IITR[k+1][l].psum_data_P2P = PE_OITR[k][l].psum_data_P2P; 
-            end 
-        end
-         
-    endgenerate
     
-    genvar s, t;
+    
+    genvar i;
     generate
-        for(s=0; s<NUM_ROW-1; s=s+1) begin : handshake
-            for(t=0; t<NUM_COL-1; t=t+1) begin
-                assign PE_IITR[s+1][t+1].READY = PE_OITR[s][t].VALID;
-                assign PE_IITR[s][t+1].READY = PE_OITR[s][t].VALID;
-                assign PE_IITR[s+1][t].READY = PE_OITR[s][t].VALID;
-            end    
+        for(i=0;i<NUM_ROW;i=i+1) begin: generate_buffer_pe_set
+            BUF_PE_set #(.DATA_WIDTH(DATA_WIDTH), .NUM_COL(NUM_COL), .NUM_ROW(NUM_ROW), .BUFFER_SIZE(BUFFER_SIZE)) BUF_PE_set(
+            .clk(clk),
+            .pe_clk(pe_clk),
+            .rstn(rstn), 
+            
+            .load_ifmap(load_ifmap[i]),
+            .load_fltr(load_fltr[i]),
+            .load_psum(load_psum[i]),
+            
+            .flush_kernel(flush_kernel[i]),
+            .flush_tag(flush_tag[i]),
+            .kernel_size(kernel_size),
+
+            .start(start[i]),
+            
+            .ram_rst_busy(ram_rst_busy[i]),
+            .tag_busy(tag_busy[i]),
+            .kernel_busy(kernel_busy[i]),
+            .ram_load_busy(ram_load_busy[i]),
+            .full(full[i]),
+            
+            .PE_IITR_insts(PE_IITR_insts[i]),
+            .PE_OITR_insts(PE_OITR_insts[i])
+        );
         end 
-   
-   
     endgenerate
+    
 
+    genvar x, y;
+    generate
+    for(y=0;y<NUM_ROW;y=y+1) begin
+        for(x=0;x<NUM_COL;x=x+1) begin
+            if(y<NUM_ROW-1&&x<NUM_COL-1) begin
+                assign PE_IITR_insts[y+1][x+1].ifmap_data_P2P = PE_OITR_insts[y][x].ifmap_data_P2P; //diagnal connection of ifmaps
+                assign PE_IITR_insts[y+1][x].psum_data_P2P = PE_OITR_insts[y][x].psum_data_P2P; // vertical connection of psum
+            end
+            if(y>0 && x > 0 ) begin 
+                assign PE_IITR_insts[y][x].READY = (PE_OITR_insts[y-1][x].VALID && PE_OITR_insts[y-1][x-1].VALID);
+            end else if(y>0 && x == 0) begin
+                assign PE_IITR_insts[y][x].READY =  PE_OITR_insts[y-1][x].VALID;
+            end          
+        end 
+    end 
+    endgenerate 
+        
 
+    
+    
 endmodule
