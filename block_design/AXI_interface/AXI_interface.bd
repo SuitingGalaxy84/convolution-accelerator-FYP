@@ -1,0 +1,211 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0xEF0F8C9B83BC556D",
+      "device": "xczu2cg-sbva484-1-e",
+      "name": "AXI_interface",
+      "rev_ctrl_bd_flag": "RevCtrlBdOff",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2022.1"
+    },
+    "design_tree": {
+      "axi_bram_ctrl_0": "",
+      "blk_mem_gen_0": "",
+      "clk_wiz_0": "",
+      "conv_top_0": ""
+    },
+    "ports": {
+      "clk_100MHz": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "FREQ_HZ": {
+            "value": "100000000"
+          }
+        }
+      },
+      "reset_rtl_0": {
+        "type": "rst",
+        "direction": "I",
+        "parameters": {
+          "POLARITY": {
+            "value": "ACTIVE_HIGH"
+          }
+        }
+      }
+    },
+    "components": {
+      "axi_bram_ctrl_0": {
+        "vlnv": "xilinx.com:ip:axi_bram_ctrl:4.1",
+        "xci_name": "AXI_interface_axi_bram_ctrl_0_0",
+        "xci_path": "ip\\AXI_interface_axi_bram_ctrl_0_0\\AXI_interface_axi_bram_ctrl_0_0.xci",
+        "inst_hier_path": "axi_bram_ctrl_0"
+      },
+      "blk_mem_gen_0": {
+        "vlnv": "xilinx.com:ip:blk_mem_gen:8.4",
+        "xci_name": "AXI_interface_blk_mem_gen_0_0",
+        "xci_path": "ip\\AXI_interface_blk_mem_gen_0_0\\AXI_interface_blk_mem_gen_0_0.xci",
+        "inst_hier_path": "blk_mem_gen_0",
+        "parameters": {
+          "EN_SAFETY_CKT": {
+            "value": "true"
+          },
+          "Enable_32bit_Address": {
+            "value": "true"
+          },
+          "Enable_B": {
+            "value": "Use_ENB_Pin"
+          },
+          "Memory_Type": {
+            "value": "True_Dual_Port_RAM"
+          },
+          "Port_B_Clock": {
+            "value": "100"
+          },
+          "Port_B_Enable_Rate": {
+            "value": "100"
+          },
+          "Port_B_Write_Rate": {
+            "value": "50"
+          },
+          "Register_PortA_Output_of_Memory_Primitives": {
+            "value": "false"
+          },
+          "Register_PortB_Output_of_Memory_Primitives": {
+            "value": "false"
+          },
+          "Use_RSTA_Pin": {
+            "value": "true"
+          },
+          "use_bram_block": {
+            "value": "BRAM_Controller"
+          }
+        }
+      },
+      "clk_wiz_0": {
+        "vlnv": "xilinx.com:ip:clk_wiz:6.0",
+        "xci_name": "AXI_interface_clk_wiz_0_0",
+        "xci_path": "ip\\AXI_interface_clk_wiz_0_0\\AXI_interface_clk_wiz_0_0.xci",
+        "inst_hier_path": "clk_wiz_0",
+        "parameters": {
+          "CLKOUT1_DRIVES": {
+            "value": "Buffer"
+          },
+          "CLKOUT1_JITTER": {
+            "value": "96.640"
+          },
+          "CLKOUT1_PHASE_ERROR": {
+            "value": "79.592"
+          },
+          "CLKOUT1_REQUESTED_OUT_FREQ": {
+            "value": "140"
+          },
+          "CLKOUT2_DRIVES": {
+            "value": "Buffer"
+          },
+          "CLKOUT2_JITTER": {
+            "value": "138.478"
+          },
+          "CLKOUT2_PHASE_ERROR": {
+            "value": "79.592"
+          },
+          "CLKOUT2_REQUESTED_OUT_FREQ": {
+            "value": "20"
+          },
+          "CLKOUT2_USED": {
+            "value": "true"
+          },
+          "CLKOUT3_DRIVES": {
+            "value": "Buffer"
+          },
+          "CLKOUT4_DRIVES": {
+            "value": "Buffer"
+          },
+          "CLKOUT5_DRIVES": {
+            "value": "Buffer"
+          },
+          "CLKOUT6_DRIVES": {
+            "value": "Buffer"
+          },
+          "CLKOUT7_DRIVES": {
+            "value": "Buffer"
+          },
+          "CLK_OUT1_PORT": {
+            "value": "clk"
+          },
+          "CLK_OUT2_PORT": {
+            "value": "pe_clk"
+          },
+          "MMCM_BANDWIDTH": {
+            "value": "OPTIMIZED"
+          },
+          "MMCM_CLKFBOUT_MULT_F": {
+            "value": "14"
+          },
+          "MMCM_CLKOUT0_DIVIDE_F": {
+            "value": "10"
+          },
+          "MMCM_CLKOUT1_DIVIDE": {
+            "value": "70"
+          },
+          "MMCM_COMPENSATION": {
+            "value": "AUTO"
+          },
+          "NUM_OUT_CLKS": {
+            "value": "2"
+          },
+          "PRIMITIVE": {
+            "value": "PLL"
+          }
+        }
+      },
+      "conv_top_0": {
+        "vlnv": "YuchengSun:user:conv_top:1.0",
+        "xci_name": "AXI_interface_conv_top_0_0",
+        "xci_path": "ip\\AXI_interface_conv_top_0_0\\AXI_interface_conv_top_0_0.xci",
+        "inst_hier_path": "conv_top_0"
+      }
+    },
+    "interface_nets": {
+      "axi_bram_ctrl_0_BRAM_PORTA": {
+        "interface_ports": [
+          "blk_mem_gen_0/BRAM_PORTA",
+          "axi_bram_ctrl_0/BRAM_PORTA"
+        ]
+      },
+      "axi_bram_ctrl_0_BRAM_PORTB": {
+        "interface_ports": [
+          "blk_mem_gen_0/BRAM_PORTB",
+          "axi_bram_ctrl_0/BRAM_PORTB"
+        ]
+      }
+    },
+    "nets": {
+      "clk_100MHz_1": {
+        "ports": [
+          "clk_100MHz",
+          "clk_wiz_0/clk_in1"
+        ]
+      },
+      "clk_wiz_0_clk": {
+        "ports": [
+          "clk_wiz_0/clk",
+          "axi_bram_ctrl_0/s_axi_aclk",
+          "conv_top_0/clk"
+        ]
+      },
+      "clk_wiz_0_pe_clk": {
+        "ports": [
+          "clk_wiz_0/pe_clk",
+          "conv_top_0/pe_clk"
+        ]
+      },
+      "reset_rtl_0_1": {
+        "ports": [
+          "reset_rtl_0",
+          "clk_wiz_0/reset"
+        ]
+      }
+    }
+  }
+}

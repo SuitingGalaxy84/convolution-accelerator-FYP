@@ -36,8 +36,7 @@ module tb_ccd_pe();
     reg [7:0] kernel_size;
     reg [$clog2(NUM_COL):0] X_ID; // extended by 1 bit 
      
-    reg [$clog2(NUM_ROW):0] Y_ID; // extended by 1 bit
-    reg [$clog2(NUM_ROW):0] Y_TAG; // extended by 1 bit 
+
     
     reg external;
     reg flush;
@@ -58,8 +57,6 @@ module tb_ccd_pe();
         .clk(clk),
         .X_ID(X_ID),
         .flush(flush),
-        .Y_ID(Y_ID),
-        .Y_TAG(Y_TAG),
         .kernel_size(kernel_size),
         .Test_XBUS_CTRL(UniV_BUS_CTRL_IF)
     );
@@ -117,7 +114,7 @@ module tb_ccd_pe();
     endgenerate
     
     initial begin
-    external=1; rstn = 1;flush = 0;Y_ID = 0; Y_TAG = 1;kernel_size = 3;
+    external=1; rstn = 1;flush = 0;Y_ID = 0; ;kernel_size = 3;
     #30 rstn = 0;
     #30 rstn = 1;
     #10 flush=1;

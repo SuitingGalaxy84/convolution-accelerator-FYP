@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_ccd_pe_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_ccd_pe" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="130.001 ns"></ZoomEndTime>
+      <Cursor1Time time="25.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="198"></NameColumnWidth>
+      <ValueColumnWidth column_width="107"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="20" />
+   <wvobject fp_name="/tb_ccd_pe/kernel_size" type="array">
+      <obj_property name="ElementShortName">kernel_size[7:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel_size[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/rstn" type="logic">
+      <obj_property name="ElementShortName">rstn</obj_property>
+      <obj_property name="ObjectShortName">rstn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/pe_clk" type="logic">
+      <obj_property name="ElementShortName">pe_clk</obj_property>
+      <obj_property name="ObjectShortName">pe_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/flush" type="logic">
+      <obj_property name="ElementShortName">flush</obj_property>
+      <obj_property name="ObjectShortName">flush</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/tagAlloc/flush_busy" type="logic">
+      <obj_property name="ElementShortName">flush_busy</obj_property>
+      <obj_property name="ObjectShortName">flush_busy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_locks" type="array">
+      <obj_property name="ElementShortName">tag_locks[9:0]</obj_property>
+      <obj_property name="ObjectShortName">tag_locks[9:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/tagAlloc/lock_mask" type="array">
+      <obj_property name="ElementShortName">lock_mask[9:0]</obj_property>
+      <obj_property name="ObjectShortName">lock_mask[9:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/tagAlloc/masked_locks" type="array">
+      <obj_property name="ElementShortName">masked_locks[9:0]</obj_property>
+      <obj_property name="ObjectShortName">masked_locks[9:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out" type="array">
+      <obj_property name="ElementShortName">tag_out[9:0][4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag_out[9:0][4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[9]" type="array">
+         <obj_property name="ElementShortName">[9][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[9][4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[8]" type="array">
+         <obj_property name="ElementShortName">[8][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[8][4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[7]" type="array">
+         <obj_property name="ElementShortName">[7][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[7][4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[6]" type="array">
+         <obj_property name="ElementShortName">[6][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[6][4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[5]" type="array">
+         <obj_property name="ElementShortName">[5][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[5][4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[4]" type="array">
+         <obj_property name="ElementShortName">[4][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[4][4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[3]" type="array">
+         <obj_property name="ElementShortName">[3][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[2]" type="array">
+         <obj_property name="ElementShortName">[2][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[1]" type="array">
+         <obj_property name="ElementShortName">[1][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[0]" type="array">
+         <obj_property name="ElementShortName">[0][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[9]" type="array">
+         <obj_property name="ElementShortName">[9][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[9][4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[8]" type="array">
+         <obj_property name="ElementShortName">[8][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[8][4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[7]" type="array">
+         <obj_property name="ElementShortName">[7][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[7][4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[6]" type="array">
+         <obj_property name="ElementShortName">[6][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[6][4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[5]" type="array">
+         <obj_property name="ElementShortName">[5][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[5][4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[4]" type="array">
+         <obj_property name="ElementShortName">[4][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[4][4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[3]" type="array">
+         <obj_property name="ElementShortName">[3][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[2]" type="array">
+         <obj_property name="ElementShortName">[2][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[1]" type="array">
+         <obj_property name="ElementShortName">[1][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ccd_pe/tagAlloc/tag_out[0]" type="array">
+         <obj_property name="ElementShortName">[0][4:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][4:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/\glb_PE[0].glb_PE /MC/tagBuff_inst/tag" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">tag[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+      <obj_property name="label">PE1_tag[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/\glb_PE[1].glb_PE /MC/tagBuff_inst/tag" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">tag[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+      <obj_property name="label">PE2_tag[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/\glb_PE[2].glb_PE /MC/tagBuff_inst/tag" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">tag[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+      <obj_property name="label">PE3_tag[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/\glb_PE[3].glb_PE /MC/tagBuff_inst/tag" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">tag[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+      <obj_property name="label">PE4_tag[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/\glb_PE[4].glb_PE /MC/tagBuff_inst/tag" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">tag[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+      <obj_property name="label">PE5_tag[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/\glb_PE[5].glb_PE /MC/tagBuff_inst/tag" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">tag[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+      <obj_property name="label">PE6_tag[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/\glb_PE[6].glb_PE /MC/tagBuff_inst/tag" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">tag[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+      <obj_property name="label">PE7_tag[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/\glb_PE[7].glb_PE /MC/tagBuff_inst/tag" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">tag[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+      <obj_property name="label">PE8_tag[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/\glb_PE[8].glb_PE /MC/tagBuff_inst/tag" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">tag[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+      <obj_property name="label">PE9_tag[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ccd_pe/\glb_PE[9].glb_PE /MC/tagBuff_inst/tag" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">tag[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+      <obj_property name="label">PE10_tag[4:0]</obj_property>
+   </wvobject>
+</wave_config>

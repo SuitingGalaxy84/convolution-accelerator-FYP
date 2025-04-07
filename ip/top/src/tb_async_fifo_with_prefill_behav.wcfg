@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_async_fifo_with_prefill_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_async_fifo_with_prefill" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="10,316.666 ns"></ZoomStartTime>
+      <ZoomEndTime time="11,316.667 ns"></ZoomEndTime>
+      <Cursor1Time time="10,637.956 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="286"></NameColumnWidth>
+      <ValueColumnWidth column_width="98"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="18" />
+   <wvobject fp_name="/tb_async_fifo_with_prefill/wr_en" type="array">
+      <obj_property name="ElementShortName">wr_en[3:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_en[3:0]</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/rd_en" type="array">
+      <obj_property name="ElementShortName">rd_en[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_en[3:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/full" type="array">
+      <obj_property name="ElementShortName">full[3:0]</obj_property>
+      <obj_property name="ObjectShortName">full[3:0]</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/empty" type="array">
+      <obj_property name="ElementShortName">empty[3:0]</obj_property>
+      <obj_property name="ObjectShortName">empty[3:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/async_fifo_reader/reader_en" type="logic">
+      <obj_property name="ElementShortName">reader_en</obj_property>
+      <obj_property name="ObjectShortName">reader_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/rd_data" type="array">
+      <obj_property name="ElementShortName">rd_data[3:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_data[3:0][15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/wr_data" type="array">
+      <obj_property name="ElementShortName">wr_data[3:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data[3:0][15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/writer_en" type="logic">
+      <obj_property name="ElementShortName">writer_en</obj_property>
+      <obj_property name="ObjectShortName">writer_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/reader_en" type="logic">
+      <obj_property name="ElementShortName">reader_en</obj_property>
+      <obj_property name="ObjectShortName">reader_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/wr_clk" type="logic">
+      <obj_property name="ElementShortName">wr_clk</obj_property>
+      <obj_property name="ObjectShortName">wr_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/rd_clk" type="logic">
+      <obj_property name="ElementShortName">rd_clk</obj_property>
+      <obj_property name="ObjectShortName">rd_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/wr_rstn" type="logic">
+      <obj_property name="ElementShortName">wr_rstn</obj_property>
+      <obj_property name="ObjectShortName">wr_rstn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/rd_rstn" type="logic">
+      <obj_property name="ElementShortName">rd_rstn</obj_property>
+      <obj_property name="ObjectShortName">rd_rstn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/\async_fifo_gen[0].aync_fifo_inst /mem" type="array">
+      <obj_property name="ElementShortName">mem[15:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">mem[15:0][15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/\async_fifo_gen[1].aync_fifo_inst /mem" type="array">
+      <obj_property name="ElementShortName">mem[15:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">mem[15:0][15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/\async_fifo_gen[2].aync_fifo_inst /mem" type="array">
+      <obj_property name="ElementShortName">mem[15:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">mem[15:0][15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/\async_fifo_gen[3].aync_fifo_inst /mem" type="array">
+      <obj_property name="ElementShortName">mem[15:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">mem[15:0][15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_async_fifo_with_prefill/\async_fifo_gen[0].aync_fifo_inst /pre_fill_done_sync" type="logic">
+      <obj_property name="ElementShortName">pre_fill_done_sync</obj_property>
+      <obj_property name="ObjectShortName">pre_fill_done_sync</obj_property>
+   </wvobject>
+</wave_config>

@@ -34,7 +34,8 @@ module glb_PE #(
     output wire tag_lock, //tag lock: notify the controller the tag is stored 
     BUS_IF.MCASTER_port UniV_XBUS_IF,
     PE_ITR.IN_port PE_IITR,
-    PE_ITR.OUT_port PE_OITR
+    PE_ITR.OUT_port PE_OITR,
+    output kernel_busy
 );
 
     PE_IF #(DATA_WIDTH) PE_BUFFER();
@@ -76,7 +77,8 @@ module glb_PE #(
         .PE_IF(MC_BUFFER),
         .PE_ITR_READY(PE_IITR.READY),
         .tag_lock(tag_lock),
-        .external(external)
+        .external(external),
+        .kernel_busy(kernel_busy)
     );
 
 endmodule

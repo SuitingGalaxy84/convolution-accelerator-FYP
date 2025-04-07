@@ -33,8 +33,6 @@ module ccd_pe_driver #(
         input [$clog2(NUM_COL):0] X_ID, // extended by 1 bit
         input flush,
         input [7:0] kernel_size,
-        input [$clog2(NUM_ROW):0] Y_ID, // extended by 1 bit
-        input [$clog2(NUM_ROW):0] Y_TAG, // extended by 1 bit
         BUS_CTRL.Test_XBUS_CTRL Test_XBUS_CTRL
 
     );

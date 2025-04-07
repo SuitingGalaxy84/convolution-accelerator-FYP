@@ -1,0 +1,27 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"1.0",
+   "Default View_TopLeft":"-321,-173",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
+#  -string -flagsOSRD
+preplace port port-id_clk_100MHz -pg 1 -lvl 0 -x -60 -y 20 -defaultsOSRD
+preplace port port-id_reset_rtl_0 -pg 1 -lvl 0 -x -60 -y -50 -defaultsOSRD
+preplace inst axi_bram_ctrl_0 -pg 1 -lvl 2 -x 320 -y 200 -defaultsOSRD
+preplace inst blk_mem_gen_0 -pg 1 -lvl 3 -x 620 -y 70 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 1 -x 70 -y -40 -defaultsOSRD
+preplace inst conv_top_0 -pg 1 -lvl 2 -x 320 -y -30 -defaultsOSRD
+preplace netloc clk_100MHz_1 1 0 1 -40J -30n
+preplace netloc clk_wiz_0_clk 1 1 1 160 -60n
+preplace netloc reset_rtl_0_1 1 0 1 NJ -50
+preplace netloc clk_wiz_0_pe_clk 1 1 1 N -40
+preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 2 1 460 60n
+preplace netloc axi_bram_ctrl_0_BRAM_PORTB 1 2 1 470 80n
+levelinfo -pg 1 -60 70 320 620 770
+pagesize -pg 1 -db -bbox -sgen -190 -160 770 280
+"
+}
+{
+   "da_board_cnt":"2",
+   "da_bram_cntlr_cnt":"5"
+}

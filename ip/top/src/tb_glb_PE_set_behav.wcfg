@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_glb_PE_set_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_glb_PE_set" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="2,625.001 ns"></ZoomEndTime>
+      <Cursor1Time time="2,000.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="196"></NameColumnWidth>
+      <ValueColumnWidth column_width="87"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="13" />
+   <wvobject fp_name="/tb_glb_PE_set/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE_set/pe_clk" type="logic">
+      <obj_property name="ElementShortName">pe_clk</obj_property>
+      <obj_property name="ObjectShortName">pe_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE_set/kernel_size" type="array">
+      <obj_property name="ElementShortName">kernel_size[7:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel_size[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE_set/rstn" type="logic">
+      <obj_property name="ElementShortName">rstn</obj_property>
+      <obj_property name="ObjectShortName">rstn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE_set/ram_rst_busy" type="logic">
+      <obj_property name="ElementShortName">ram_rst_busy</obj_property>
+      <obj_property name="ObjectShortName">ram_rst_busy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE_set/glb_buffer/full" type="logic">
+      <obj_property name="ElementShortName">full</obj_property>
+      <obj_property name="ObjectShortName">full</obj_property>
+   </wvobject>
+   <wvobject fp_name="vbus386" type="vbus">
+      <obj_property name="label">tag_configuration[verified]</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_glb_PE_set/flush_tag" type="logic">
+         <obj_property name="ElementShortName">flush_tag</obj_property>
+         <obj_property name="ObjectShortName">flush_tag</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/tag_busy" type="logic">
+         <obj_property name="ElementShortName">tag_busy</obj_property>
+         <obj_property name="ObjectShortName">tag_busy</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /MC/tagBuff_inst/tag" type="array">
+         <obj_property name="ElementShortName">tag[4:0]</obj_property>
+         <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[1].glb_PE_inst /MC/tagBuff_inst/tag" type="array">
+         <obj_property name="ElementShortName">tag[4:0]</obj_property>
+         <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[2].glb_PE_inst /MC/tagBuff_inst/tag" type="array">
+         <obj_property name="ElementShortName">tag[4:0]</obj_property>
+         <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[3].glb_PE_inst /MC/tagBuff_inst/tag" type="array">
+         <obj_property name="ElementShortName">tag[4:0]</obj_property>
+         <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[4].glb_PE_inst /MC/tagBuff_inst/tag" type="array">
+         <obj_property name="ElementShortName">tag[4:0]</obj_property>
+         <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[5].glb_PE_inst /MC/tagBuff_inst/tag" type="array">
+         <obj_property name="ElementShortName">tag[4:0]</obj_property>
+         <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[6].glb_PE_inst /MC/tagBuff_inst/tag" type="array">
+         <obj_property name="ElementShortName">tag[4:0]</obj_property>
+         <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[7].glb_PE_inst /MC/tagBuff_inst/tag" type="array">
+         <obj_property name="ElementShortName">tag[4:0]</obj_property>
+         <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[8].glb_PE_inst /MC/tagBuff_inst/tag" type="array">
+         <obj_property name="ElementShortName">tag[4:0]</obj_property>
+         <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[9].glb_PE_inst /MC/tagBuff_inst/tag" type="array">
+         <obj_property name="ElementShortName">tag[4:0]</obj_property>
+         <obj_property name="ObjectShortName">tag[4:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus387" type="vbus">
+      <obj_property name="label">buffer_wr[verified]</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <wvobject fp_name="/tb_glb_PE_set/glb_buffer/UniV_BUS_CTRL_IF/ifmap_data_G2B" type="array">
+         <obj_property name="ElementShortName">ifmap_data_G2B[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ifmap_data_G2B[15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_buffer/UniV_BUS_CTRL_IF/fltr_data_G2B" type="array">
+         <obj_property name="ElementShortName">fltr_data_G2B[15:0]</obj_property>
+         <obj_property name="ObjectShortName">fltr_data_G2B[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_buffer/UniV_BUS_CTRL_IF/psum_data_G2B" type="array">
+         <obj_property name="ElementShortName">psum_data_G2B[31:0]</obj_property>
+         <obj_property name="ObjectShortName">psum_data_G2B[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_buffer/UniV_BUS_CTRL_IF/X_ID" type="array">
+         <obj_property name="ElementShortName">X_ID[4:0]</obj_property>
+         <obj_property name="ObjectShortName">X_ID[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus852" type="vbus">
+      <obj_property name="label">caster functoning [verified]</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[1].glb_PE_inst /MC/fltr_CASTER/CASTER_READY" type="logic">
+         <obj_property name="ElementShortName">CASTER_READY</obj_property>
+         <obj_property name="ObjectShortName">CASTER_READY</obj_property>
+         <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /UniV_XBUS_IF/ifmap_data_B2M" type="array">
+         <obj_property name="ElementShortName">ifmap_data_B2M[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ifmap_data_B2M[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /MC/PE_IF/PE_EN" type="logic">
+         <obj_property name="ElementShortName">PE_EN</obj_property>
+         <obj_property name="ObjectShortName">PE_EN</obj_property>
+         <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus825" type="vbus">
+      <obj_property name="label">kernel_configuration[verified]</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /MC/WeightBuff/flush_kernel" type="logic">
+         <obj_property name="ElementShortName">flush_kernel</obj_property>
+         <obj_property name="ObjectShortName">flush_kernel</obj_property>
+         <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /MC/WeightBuff/kernel_busy" type="logic">
+         <obj_property name="ElementShortName">kernel_busy</obj_property>
+         <obj_property name="ObjectShortName">kernel_busy</obj_property>
+         <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /UniV_XBUS_IF/fltr_data_B2M" type="array">
+      <obj_property name="ElementShortName">fltr_data_B2M[15:0]</obj_property>
+      <obj_property name="ObjectShortName">fltr_data_B2M[15:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="vbus206" type="vbus">
+      <obj_property name="label">ccd_buffer_data[verified]</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="CustomSignalColor">#FFA500</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /MC_BUFFER/PE_EN" type="logic">
+         <obj_property name="ElementShortName">PE_EN</obj_property>
+         <obj_property name="ObjectShortName">PE_EN</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[1].glb_PE_inst /MC_BUFFER/PE_EN" type="logic">
+         <obj_property name="ElementShortName">PE_EN</obj_property>
+         <obj_property name="ObjectShortName">PE_EN</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[2].glb_PE_inst /MC_BUFFER/PE_EN" type="logic">
+         <obj_property name="ElementShortName">PE_EN</obj_property>
+         <obj_property name="ObjectShortName">PE_EN</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[3].glb_PE_inst /CCD_BUFFER/MC_BUFFER/PE_EN" type="logic">
+         <obj_property name="ElementShortName">PE_EN</obj_property>
+         <obj_property name="ObjectShortName">PE_EN</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[4].glb_PE_inst /CCD_BUFFER/MC_BUFFER/PE_EN" type="logic">
+         <obj_property name="ElementShortName">PE_EN</obj_property>
+         <obj_property name="ObjectShortName">PE_EN</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /MC/WeightBuff/rd_en" type="logic">
+         <obj_property name="ElementShortName">rd_en</obj_property>
+         <obj_property name="ObjectShortName">rd_en</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[1].glb_PE_inst /CCD_BUFFER/rd_en_synchronizer/slow_pulse" type="logic">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">slow_pulse</obj_property>
+         <obj_property name="ObjectShortName">slow_pulse</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+         <obj_property name="label">rd_en</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[2].glb_PE_inst /CCD_BUFFER/rd_en_synchronizer/slow_pulse" type="logic">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">slow_pulse</obj_property>
+         <obj_property name="ObjectShortName">slow_pulse</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+         <obj_property name="label">rd_en</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[3].glb_PE_inst /CCD_BUFFER/rd_en_synchronizer/slow_pulse" type="logic">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">slow_pulse</obj_property>
+         <obj_property name="ObjectShortName">slow_pulse</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+         <obj_property name="label">rd_en</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[4].glb_PE_inst /CCD_BUFFER/rd_en_synchronizer/slow_pulse" type="logic">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">slow_pulse</obj_property>
+         <obj_property name="ObjectShortName">slow_pulse</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+         <obj_property name="label">rd_en</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE_BUFFER/ifmap_data_M2P" type="array">
+         <obj_property name="ElementShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE_BUFFER/fltr_data_M2P" type="array">
+         <obj_property name="ElementShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE_BUFFER/psum_data_M2P" type="array">
+         <obj_property name="ElementShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="ObjectShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[1].glb_PE_inst /PE_BUFFER/ifmap_data_M2P" type="array">
+         <obj_property name="ElementShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[1].glb_PE_inst /PE_BUFFER/fltr_data_M2P" type="array">
+         <obj_property name="ElementShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[1].glb_PE_inst /PE_BUFFER/psum_data_M2P" type="array">
+         <obj_property name="ElementShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="ObjectShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[2].glb_PE_inst /PE_BUFFER/ifmap_data_M2P" type="array">
+         <obj_property name="ElementShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[2].glb_PE_inst /PE_BUFFER/fltr_data_M2P" type="array">
+         <obj_property name="ElementShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[2].glb_PE_inst /PE_BUFFER/psum_data_M2P" type="array">
+         <obj_property name="ElementShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="ObjectShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[3].glb_PE_inst /CCD_BUFFER/PE_BUFFER/ifmap_data_M2P" type="array">
+         <obj_property name="ElementShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[3].glb_PE_inst /CCD_BUFFER/PE_BUFFER/fltr_data_M2P" type="array">
+         <obj_property name="ElementShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[3].glb_PE_inst /CCD_BUFFER/PE_BUFFER/psum_data_M2P" type="array">
+         <obj_property name="ElementShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="ObjectShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[4].glb_PE_inst /CCD_BUFFER/PE_BUFFER/ifmap_data_M2P" type="array">
+         <obj_property name="ElementShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[4].glb_PE_inst /CCD_BUFFER/PE_BUFFER/fltr_data_M2P" type="array">
+         <obj_property name="ElementShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[4].glb_PE_inst /CCD_BUFFER/PE_BUFFER/psum_data_M2P" type="array">
+         <obj_property name="ElementShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="ObjectShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[5].glb_PE_inst /CCD_BUFFER/rd_en_synchronizer/slow_pulse" type="logic">
+         <obj_property name="ElementShortName">slow_pulse</obj_property>
+         <obj_property name="ObjectShortName">slow_pulse</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[5].glb_PE_inst /CCD_BUFFER/PE_BUFFER/ifmap_data_M2P" type="array">
+         <obj_property name="ElementShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ifmap_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[5].glb_PE_inst /CCD_BUFFER/PE_BUFFER/fltr_data_M2P" type="array">
+         <obj_property name="ElementShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="ObjectShortName">fltr_data_M2P[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[5].glb_PE_inst /CCD_BUFFER/PE_BUFFER/psum_data_M2P" type="array">
+         <obj_property name="ElementShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="ObjectShortName">psum_data_M2P[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FFA500</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus410" type="vbus">
+      <obj_property name="label">PE [verified]</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="CustomSignalColor">#FF0080</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /CCD_BUFFER/PE_BUFFER/PE_EN" type="logic">
+         <obj_property name="ElementShortName">PE_EN</obj_property>
+         <obj_property name="ObjectShortName">PE_EN</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE/PE_OITR/VALID" type="logic">
+         <obj_property name="ElementShortName">VALID</obj_property>
+         <obj_property name="ObjectShortName">VALID</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE/ipsum_seln" type="logic">
+         <obj_property name="ElementShortName">ipsum_seln</obj_property>
+         <obj_property name="ObjectShortName">ipsum_seln</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE/mult_seln" type="logic">
+         <obj_property name="ElementShortName">mult_seln</obj_property>
+         <obj_property name="ObjectShortName">mult_seln</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE/acc_seln" type="logic">
+         <obj_property name="ElementShortName">acc_seln</obj_property>
+         <obj_property name="ObjectShortName">acc_seln</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE/opsum_seln" type="logic">
+         <obj_property name="ElementShortName">opsum_seln</obj_property>
+         <obj_property name="ObjectShortName">opsum_seln</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE/ifmap_data" type="array">
+         <obj_property name="ElementShortName">ifmap_data[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ifmap_data[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE/fltr_data" type="array">
+         <obj_property name="ElementShortName">fltr_data[15:0]</obj_property>
+         <obj_property name="ObjectShortName">fltr_data[15:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE/ipsum_data" type="array">
+         <obj_property name="ElementShortName">ipsum_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ipsum_data[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_glb_PE_set/glb_PE_SET_inst/\PE_ITR_insts[0].glb_PE_inst /PE/opsum_data" type="array">
+         <obj_property name="ElementShortName">opsum_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">opsum_data[31:0]</obj_property>
+         <obj_property name="CustomSignalColor">#FF0080</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

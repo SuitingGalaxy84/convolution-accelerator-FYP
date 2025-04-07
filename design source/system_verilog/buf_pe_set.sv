@@ -41,6 +41,8 @@ module BUF_PE_set#(
     
     input flush_kernel, 
     input flush_tag, 
+    input [$clog2(NUM_ROW):0] y_tag, //extended by 1 bit
+    output y_tag_lock,
    
     input [7:0] kernel_size,
     
@@ -51,13 +53,24 @@ module BUF_PE_set#(
     output kernel_busy,
     output ram_load_busy,
     output full,
-    
+
+    YBUS_IF.PEA_port YBUS_IF,
     PE_ITR.IN_port PE_IITR_insts [NUM_COL-1:0],
     PE_ITR.OUT_port PE_OITR_insts [NUM_COL-1:0]
 );
 
     
     
+
+    wire [$clog2(NUM_ROW):0] tag;
+    tagBuff #(.NUM_COL(NUM_ROW)) tagBuff_inst(
+        .clk(clk),
+        .rstn(rstn),
+        .flush_tag(flush_tag),
+        .tag_in(y_tag),
+        .tag_out(tag),
+        .tag_lock(tag_lock)
+    );
 
     
  //instantiate interfaces
@@ -67,47 +80,47 @@ module BUF_PE_set#(
     
     
     
-    wire [DATA_WIDTH-1:0] data;
-    wire [$clog2(NUM_COL):0] id; 
-    wire [$clog2(BUFFER_SIZE)-1:0] addr;
+    // wire [DATA_WIDTH-1:0] data;
+    // wire [$clog2(NUM_COL):0] id; 
+    // wire [$clog2(BUFFER_SIZE)-1:0] addr;
     
-    wire [DATA_WIDTH-1:0] fltr_data;
-    wire [$clog2(BUFFER_SIZE)-1:0] fltr_addr;
+    // wire [DATA_WIDTH-1:0] fltr_data;
+    // wire [$clog2(BUFFER_SIZE)-1:0] fltr_addr;
    
-    wire [2*DATA_WIDTH-1:0] psum_data;
-    wire [$clog2(NUM_COL):0] psum_id;
-    wire [$clog2(BUFFER_SIZE)-1:0] psum_addr;
+    // wire [2*DATA_WIDTH-1:0] psum_data;
+    // wire [$clog2(NUM_COL):0] psum_id;
+    // wire [$clog2(BUFFER_SIZE)-1:0] psum_addr;
     
     
-    BUF_writer #(.DATA_WIDTH(DATA_WIDTH), .NUM_COL(NUM_COL), .BUFFER_SIZE(BUFFER_SIZE)) buf_writer_ifmap(
-        .clk(clk),
-        .rstn(rstn),
-        .load(load_ifmap),
-        .data_out(data),
-        .id_out(id),
-        .addr_out(addr),
-        .kernel_size(kernel_size)
-    );
+    // BUF_writer #(.DATA_WIDTH(DATA_WIDTH), .NUM_COL(NUM_COL), .BUFFER_SIZE(BUFFER_SIZE)) buf_writer_ifmap(
+    //     .clk(clk),
+    //     .rstn(rstn),
+    //     .load(load_ifmap),
+    //     .data_out(data),
+    //     .id_out(id),
+    //     .addr_out(addr),
+    //     .kernel_size(kernel_size)
+    // );
     
-    BUF_writer #(.DATA_WIDTH(DATA_WIDTH), .NUM_COL(NUM_COL), .BUFFER_SIZE(BUFFER_SIZE)) buf_writer_fltr(
-        .clk(clk),
-        .rstn(rstn),
-        .load(load_fltr),
-        .data_out(fltr_data),
-        .id_out(),
-        .addr_out(fltr_addr),
-        .kernel_size(kernel_size)
-    );
+    // BUF_writer #(.DATA_WIDTH(DATA_WIDTH), .NUM_COL(NUM_COL), .BUFFER_SIZE(BUFFER_SIZE)) buf_writer_fltr(
+    //     .clk(clk),
+    //     .rstn(rstn),
+    //     .load(load_fltr),
+    //     .data_out(fltr_data),
+    //     .id_out(),
+    //     .addr_out(fltr_addr),
+    //     .kernel_size(kernel_size)
+    // );
     
-    BUF_writer #(.DATA_WIDTH(DATA_WIDTH*2), .NUM_COL(NUM_COL), .BUFFER_SIZE(BUFFER_SIZE)) buf_writer_psum(
-        .clk(clk),
-        .rstn(rstn),
-        .load(load_psum),
-        .data_out(psum_data),
-        .id_out(psum_id),
-        .addr_out(psum_addr),
-        .kernel_size(kernel_size)
-    );
+    // BUF_writer #(.DATA_WIDTH(DATA_WIDTH*2), .NUM_COL(NUM_COL), .BUFFER_SIZE(BUFFER_SIZE)) buf_writer_psum(
+    //     .clk(clk),
+    //     .rstn(rstn),
+    //     .load(load_psum),
+    //     .data_out(psum_data),
+    //     .id_out(psum_id),
+    //     .addr_out(psum_addr),
+    //     .kernel_size(kernel_size)
+    // );
     
     
     
@@ -123,14 +136,14 @@ module BUF_PE_set#(
         .flush_tag(flush_tag), //flush: PE addr
         .flush_kernel(flush_kernel), // flush: kernel
         
-        .addr_in(addr),
-        .data_in({data, id}),
+        .addr_in(YBUS_IF.ifmap_addr),
+        .data_in(YBUS_IF.ifmap_data),
         
-        .fltr_addr_in(fltr_addr),
-        .fltr_data_in(fltr_data),
+        .fltr_addr_in(YBUS_IF.fltr_addr),
+        .fltr_data_in(YBUS_IF.fltr_data),
         
-        .psum_addr_in(psum_addr),
-        .psum_data_in({psum_data, psum_id}),
+        .psum_addr_in(YBUS_IF.psum_addr),
+        .psum_data_in(YBUS_IF.psum_data),
         
         .kernel_size(kernel_size),
         
@@ -162,4 +175,4 @@ module BUF_PE_set#(
         .UniV_BUS_CTRL_IF(UniV_BUS_CTRL_IF)
     );
 
-endmodule 
+endmodule

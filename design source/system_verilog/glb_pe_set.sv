@@ -41,7 +41,7 @@ module glb_PE_SET#(
     BUS_CTRL.X_BUS_CTRL UniV_BUS_CTRL_IF    
 );
     BUS_IF #(DATA_WIDTH) UniV_XBUS_IF();
-    assign kernel_busy = UniV_XBUS_IF.kernel_busy;
+    assign kernel_busy = |kernel_busy_;
     
     
     X_BusCtrl #(.DATA_WIDTH(DATA_WIDTH), .NUM_COL(NUM_COL), .NUM_ROW(NUM_ROW)) X_BusCtrl_inst(
@@ -56,7 +56,7 @@ module glb_PE_SET#(
 
     wire [NUM_COL-1:0] tag_locks;
     wire [NUM_COL-1:0] [$clog2(NUM_COL):0] tag_out; // extended by 1 bit
-
+    wire [NUM_COL-1:0] kernel_busy_;
     tagAlloc #(.NUM_COL(NUM_COL)) tagAlloc_inst(
         .clk(clk),
         .rstn(rstn),
@@ -81,7 +81,8 @@ module glb_PE_SET#(
                     .tag_lock(tag_locks[i]),
                     .UniV_XBUS_IF(UniV_XBUS_IF),
                     .PE_IITR(PE_IITR_insts[i]),
-                    .PE_OITR(PE_OITR_insts[i])
+                    .PE_OITR(PE_OITR_insts[i]),
+                    .kernel_busy(kernel_busy_[i])
                 );
             end
     endgenerate

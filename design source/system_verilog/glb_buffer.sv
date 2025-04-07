@@ -60,7 +60,7 @@ module GLB_BUF#(
 );
     wire rstb_busy_ifmap, rsta_busy_ifmap;
     wire rsta_busy_fltr, rstb_busy_fltr;
-    assign ram_rst_busy = rstb_busy_ifmap | rsta_busy_ifmap | rsta_busy_fltr | rstb_busy_fltr;
+    assign ram_rst_busy = rstb_busy_ifmap | rsta_busy_ifmap | rsta_busy_fltr | rstb_busy_fltr | rsta_busy_psum | rstb_busy_psum;
 
 
 
@@ -137,7 +137,7 @@ module GLB_BUF#(
             data_counter <= 16'b0;
             ram_load_busy <= 0;
         end else begin
-            if(load_ifmap) begin
+            if(load_ifmap || load_fltr || load_psum) begin
                 ram_load_busy <= 1;
                 data_counter <= data_counter + 1;
             end else begin

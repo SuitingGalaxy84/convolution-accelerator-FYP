@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_glb_PE_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_glb_PE" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="249.732 ns"></ZoomEndTime>
+      <Cursor1Time time="83.035 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="182"></NameColumnWidth>
+      <ValueColumnWidth column_width="84"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="17" />
+   <wave_markers>
+      <marker time="50000" label="" />
+      <marker time="100000" label="" />
+      <marker time="150000" label="" />
+      <marker time="300000" label="" />
+      <marker time="250000" label="" />
+   </wave_markers>
+   <wvobject fp_name="/tb_glb_PE/glb_PE/PE/PE_ctrl/kernel_size" type="array">
+      <obj_property name="ElementShortName">kernel_size[7:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel_size[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/rstn" type="logic">
+      <obj_property name="ElementShortName">rstn</obj_property>
+      <obj_property name="ObjectShortName">rstn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/glb_PE/PE/PE_IF/PE_EN" type="logic">
+      <obj_property name="ElementShortName">PE_EN</obj_property>
+      <obj_property name="ObjectShortName">PE_EN</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/BUS_IF_inst/READY" type="logic">
+      <obj_property name="ElementShortName">READY</obj_property>
+      <obj_property name="ObjectShortName">READY</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/BUS_IF_inst/VALID" type="logic">
+      <obj_property name="ElementShortName">VALID</obj_property>
+      <obj_property name="ObjectShortName">VALID</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/glb_PE/PE/ipsum_seln" type="logic">
+      <obj_property name="ElementShortName">ipsum_seln</obj_property>
+      <obj_property name="ObjectShortName">ipsum_seln</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/glb_PE/PE/mult_seln" type="logic">
+      <obj_property name="ElementShortName">mult_seln</obj_property>
+      <obj_property name="ObjectShortName">mult_seln</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/glb_PE/PE/acc_seln" type="logic">
+      <obj_property name="ElementShortName">acc_seln</obj_property>
+      <obj_property name="ObjectShortName">acc_seln</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/glb_PE/PE/opsum_seln" type="logic">
+      <obj_property name="ElementShortName">opsum_seln</obj_property>
+      <obj_property name="ObjectShortName">opsum_seln</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/TAG" type="array">
+      <obj_property name="ElementShortName">TAG[1:0]</obj_property>
+      <obj_property name="ObjectShortName">TAG[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/ID" type="array">
+      <obj_property name="ElementShortName">ID[1:0]</obj_property>
+      <obj_property name="ObjectShortName">ID[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/driver/ifmap_data_B2M" type="array">
+      <obj_property name="ElementShortName">ifmap_data_B2M[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_data_B2M[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/driver/fltr_data_B2M" type="array">
+      <obj_property name="ElementShortName">fltr_data_B2M[15:0]</obj_property>
+      <obj_property name="ObjectShortName">fltr_data_B2M[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/driver/psum_data_B2M" type="array">
+      <obj_property name="ElementShortName">psum_data_B2M[31:0]</obj_property>
+      <obj_property name="ObjectShortName">psum_data_B2M[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_glb_PE/BUS_IF_inst/psum_data_M2B" type="array">
+      <obj_property name="ElementShortName">psum_data_M2B[31:0]</obj_property>
+      <obj_property name="ObjectShortName">psum_data_M2B[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>

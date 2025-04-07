@@ -40,9 +40,9 @@ module tagAlloc #(
     assign masked_locks = (tag_locks & ~lock_mask) | lock_mask;
     always@(posedge clk or negedge rstn) begin
         if(~rstn) begin
-            tag_busy <= 0;
+            tag_busy <= 1;
         end else begin
-            tag_busy <= flush_tag ? (&masked_locks ? 1'b0 : 1'b1) : 1'b0;
+            tag_busy <= &masked_locks ? 1'b0 : 1'b1;
         end 
     end 
     

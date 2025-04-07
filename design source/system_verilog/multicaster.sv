@@ -36,7 +36,8 @@ module MultiCaster #(
     PE_IF.MC_port PE_IF,
     input PE_ITR_READY,
     output tag_lock,
-    output external
+    output external,
+    output kernel_busy
 );
     wire [DATA_WIDTH-1:0] WeightBuff_OUT;
     CASTER_IF #(DATA_WIDTH, NUM_COL) ifmap_CASTER();
@@ -125,7 +126,6 @@ module MultiCaster #(
         end  
         
         wire kernel_busy, un_configed;
-        assign BUS_IF.kernel_busy = kernel_busy;
         
         wire Fltr_READY;
         assign Fltr_READY = ~kernel_busy && (~un_configed);
@@ -167,7 +167,6 @@ module MultiCaster #(
             .kernel_size(kernel_size),
             .data_in(BUS_IF.fltr_data_B2M),
             .data_out(WeightBuff_OUT),//fltr_CASTER.data_B2C),
-            .pseudo_out(),
             .kernel_busy(kernel_busy),
             .un_configed(un_configed),
             .rd_en(Buff_rden) // include:

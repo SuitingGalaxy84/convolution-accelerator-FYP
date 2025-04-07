@@ -32,7 +32,6 @@ module WeightBuff #(
     input [7:0] kernel_size,
     input [DATA_WIDTH-1:0] data_in,
     output [DATA_WIDTH-1:0] data_out,
-    output [DATA_WIDTH-1:0] pseudo_out,
     output kernel_busy,
     output reg un_configed,
     input rd_en   
@@ -73,10 +72,7 @@ module WeightBuff #(
         end 
     end 
 
-    assign kernel_busy = write_current_state;
-
-    assign pseudo_out = weight_buff[BUFFER_DEPTH-1];
-    
+    assign kernel_busy = write_current_state || un_configed;
 
     assign data_out = rd_en ? weight_buff[rd_ptr] : 0;
     

@@ -39,39 +39,26 @@ module X_BusCtrl #(
     );
     
     
-    reg [$clog2(NUM_ROW):0] Y_TAG; // extendedby 1 bit
-    reg [$clog2(NUM_ROW):0] Y_ID; // extended by 1 bit 
+
     
     assign UniV_XBUS_IF.flush_tag = flush_tag;
     assign UniV_XBUS_IF.flush_kernel = flush_kernel;
     assign UniV_XBUS_IF.kernel_size = kernel_size;
-    always_ff @(posedge clk) begin : STORE_Y_TAG
-        if(flush_tag) begin
-            Y_TAG <= UniV_BUS_CTRL.Y_TAG;
-        end else begin
-            Y_TAG <= Y_TAG;
-        end
-    end 
 
-    always_ff @(posedge clk or negedge rstn) begin : GET_ID
-        if(~rstn) begin
-            Y_ID <= 0;
-        end else begin
-            Y_ID <= UniV_BUS_CTRL.Y_ID;
-        end
+
+//    always_ff @(posedge clk or negedge rstn) begin : GET_ID
+//        if(~rstn) begin
+//            Y_ID <= 0;
+//        end else begin
+//            Y_ID <= UniV_BUS_CTRL.Y_ID;
+//        end
         
-    end 
+//    end 
 
     wire [DATA_WIDTH-1:0] ifmap_data;
     wire [DATA_WIDTH-1:0] fltr_data;    
     wire [2*DATA_WIDTH-1:0] psum_data;
     
-//    assign ifmap_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.ifmap_data_G2B : 0;
-//    assign fltr_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.fltr_data_G2B : 0;
-//    assign psum_data = (Y_TAG == Y_ID) ? UniV_BUS_CTRL.psum_data_G2B : 0;
-    /*
-        this sections is for simulation only
-    */
     assign ifmap_data = UniV_BUS_CTRL.ifmap_data_G2B;
     assign fltr_data = UniV_BUS_CTRL.fltr_data_G2B;
     assign psum_data = UniV_BUS_CTRL.psum_data_G2B;

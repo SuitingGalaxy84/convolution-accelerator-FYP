@@ -97,7 +97,7 @@
         logic flush_tag;
         logic tag_busy;
         logic flush_kernel;
-        logic kernel_busy;
+        //logic kernel_busy;
         //logic [2:0] PE_EN;
         //logic PE_READY;
         //logic PE_VALID;
@@ -128,7 +128,7 @@
             output flush_tag,
             input tag_busy,
             output flush_kernel,
-            input kernel_busy,
+            //input kernel_busy,
             output kernel_size
         );
 
@@ -154,7 +154,7 @@
             input flush_tag,
             output tag_busy,
             input flush_kernel,
-            output kernel_busy,
+            //output kernel_busy,
             input kernel_size
         );
     endinterface // bus interface
@@ -271,8 +271,7 @@
         logic [$clog2(NUM_COL):0] X_ID; // extended by 1 bit 
         logic [$clog2(NUM_COL):0] X_TAG; // extended by 1 bit
 
-        logic [$clog2(NUM_ROW):0] Y_ID; // extended by 1 bit 
-        logic [$clog2(NUM_ROW):0] Y_TAG; // extended by 1 bit 
+
 
         modport X_BUS_CTRL(
             input ifmap_data_G2B,
@@ -284,10 +283,7 @@
             output psum_data_B2G,
             
             input X_ID,
-            input X_TAG, 
-            
-            input Y_ID,
-            input Y_TAG
+            input X_TAG
         );
 
         modport Test_XBUS_CTRL(
@@ -300,10 +296,7 @@
             input psum_data_B2G,
 
             output X_ID, 
-            output X_TAG,
-
-            output Y_ID, 
-            output Y_TAG
+            output X_TAG
         );
         
     endinterface // bus control
@@ -352,8 +345,6 @@
         logic [$clog2(NUM_COL):0] X_ID; // extended by 1 bit;
         logic [$clog2(NUM_COL):0] X_TAG; // extended by 1 bit;
 
-        logic [$clog2(NUM_ROW):0] Y_ID; // extended by 1 bit 
-        logic [$clog2(NUM_ROW):0] Y_TAG; // extended by 1 bit
 
         modport BUFF_port(
             output ifmap_data_G2B,
@@ -365,13 +356,45 @@
             input psum_data_B2G,
 
             output X_ID,
-            output X_TAG,
-
-            output Y_ID, 
-            output Y_TAG
+            output X_TAG
         );
-
     endinterface
+
+    interface YBUS_IF#(
+        parameter DATA_WIDTH=16,
+        parameter NUM_COL=7,
+        parameter NUM_ROW=7,
+        parameter BUFFER_SIZE=512
+    )();
+
+        logic [$clog2(BUFFER_SIZE)-1:0] ifmap_addr;
+        logic [$clog2(BUFFER_SIZE)-1:0] fltr_addr;
+        logic [$clog2(BUFFER_SIZE)-1:0] psum_addr;
+
+        logic [DATA_WIDTH + $clog2(NUM_COL):0] ifmap_data;
+        logic [DATA_WIDTH-1:0] fltr_data;
+        logic [DATA_WIDTH*2 + $clog2(NUM_COL):0] psum_data;
+        
+        modport PEA_port(
+            input ifmap_addr,
+            input fltr_addr, 
+            input psum_addr,
+            
+            input ifmap_data,
+            input fltr_data,
+            input psum_data
+        );
+        modport EXTRNL_port(
+            output ifmap_addr,
+            output fltr_addr, 
+            output psum_addr,
+            
+            output ifmap_data, 
+            output fltr_data,
+            output psum_data
+        );
+    endinterface
+
 `endif
 
 
